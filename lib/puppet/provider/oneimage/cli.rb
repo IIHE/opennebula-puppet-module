@@ -32,9 +32,10 @@ Puppet::Type.type(:oneimage).provide(:cli) do
     builder = Nokogiri::XML::Builder.new do |xml|
         xml.IMAGE do
             xml.NAME resource[:name]
-            xml.DESCRIPTION do
-                resource[:description]
-            end if resource[:description]
+            xml.DESCRIPTION resource[:description]
+            #xml.DESCRIPTION do
+            #    resource[:description]
+            #end if resource[:description]
             xml.TYPE do
                 resource[:type].to_s.upcase
             end if resource[:type]
