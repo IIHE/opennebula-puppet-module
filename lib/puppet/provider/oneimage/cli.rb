@@ -82,7 +82,7 @@ Puppet::Type.type(:oneimage).provide(:cli) do
             :source      => (image.xpath('./TEMPLATE/SOURCE') || image.xpath('./SOURCE')).text,
             :target      => (image.xpath('./TARGET').text unless image.xpath('./TARGET').nil?),
             #:type        => { '0' => :OS, '1' => :CDROM, '5' => :CONTEXT }[(image.xpath('./TEMPLATE/TYPE') || image.xpath('./TYPE')).text]
-            :type        => { '0' => :OS, '1' => :CDROM, '5' => :CONTEXT }[image.xpath('./TYPE')).text]
+            :type        => { '0' => :OS, '1' => :CDROM, '5' => :CONTEXT }[image.xpath('./TYPE').text]
         )
     end
   end
