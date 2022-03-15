@@ -34,7 +34,7 @@ Puppet::Type.type(:oneimage).provide(:cli) do
             xml.NAME resource[:name]
             xml.DESCRIPTION resource[:description] if resource[:description]
             xml.TYPE resource[:type].to_s.upcase if resource[:type]
-            xml.PERSISTENT (resource[:persistent] ? 1 : 0) if resource[:persistent]
+            xml.PERSISTENT (resource[:persistent] ? :1 : :0) if resource[:persistent]
             xml.DEV_PREFIX resource[:dev_prefix] if resource[:dev_prefix]
             xml.DRIVER resource[:driver] if resource[:driver]
             xml.PATH resource[:path] if resource[:path]
