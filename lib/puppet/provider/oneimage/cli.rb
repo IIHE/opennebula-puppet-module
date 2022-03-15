@@ -77,7 +77,7 @@ Puppet::Type.type(:oneimage).provide(:cli) do
             :fstype      => image.xpath('./FSTYPE').text,
             :path        => (image.xpath('./TEMPLATE/PATH').text || image.xpath('./PATH').text),
             #:persistent  => ((image.xpath('./TEMPLATE/PERSISTENT') || image.xpath('./PERSISTENT')).text == "1").to_s.to_sym,
-            :persistent  => { 'yes' => true, 'no' => false }[image.xpath('./PERSISTENT')).text],
+            :persistent  => { 'yes' => true, 'no' => false }[image.xpath('./PERSISTENT').text],
             :size        => image.xpath('./SIZE').text,
             :source      => (image.xpath('./TEMPLATE/SOURCE') || image.xpath('./SOURCE')).text,
             :target      => (image.xpath('./TARGET').text unless image.xpath('./TARGET').nil?),
