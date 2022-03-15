@@ -32,34 +32,15 @@ Puppet::Type.type(:oneimage).provide(:cli) do
     builder = Nokogiri::XML::Builder.new do |xml|
         xml.IMAGE do
             xml.NAME resource[:name]
-            xml.DESCRIPTION resource[:description]
-            #xml.DESCRIPTION do
-            #    resource[:description]
-            #end if resource[:description]
-            xml.TYPE do
-                resource[:type].to_s.upcase
-            end if resource[:type]
-            xml.PERSISTENT do
-                resource[:persistent]
-            end if resource[:persistent]
-            xml.DEV_PREFIX do
-                resource[:dev_prefix]
-            end if resource[:dev_prefix]
-            xml.DRIVER do
-                resource[:driver]
-            end if resource[:driver]
-            xml.PATH do
-                resource[:path]
-            end if resource[:path]
-            xml.SOURCE do
-                resource[:source]
-            end if resource[:source]
-            xml.FSTYPE do
-                resource[:fstype]
-            end if resource[:fstype]
-            xml.SIZE do
-                resource[:size]
-            end if resource[:size]
+            xml.DESCRIPTION resource[:description] if resource[:description]
+            xml.TYPE resource[:type].to_s.upcase if resource[:type]
+            xml.PERSISTENT resource[:persistent] if resource[:persistent]
+            xml.DEV_PREFIX resource[:dev_prefix] if resource[:dev_prefix]
+            xml.DRIVER resource[:driver] if resource[:driver]
+            xml.PATH resource[:path] if resource[:path]
+            xml.SOURCE resource[:source] if resource[:source]
+            xml.FSTYPE resource[:fstype] if resource[:fstype]
+            xml.SIZE resource[:size] if resource[:size]
         end
     end
     tempfile = builder.to_xml
