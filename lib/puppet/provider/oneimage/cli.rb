@@ -75,7 +75,7 @@ Puppet::Type.type(:oneimage).provide(:cli) do
             :dev_prefix  => image.xpath('./TEMPLATE/DEV_PREFIX').text,
             #:disk_type   => image.xpath('./DISK_TYPE').text,
             :driver      => (image.xpath('./TEMPLATE/DRIVER').text unless image.xpath('./TEMPLATE/DRIVER').nil?),
-            :fstype      => image.xpath('./FSTYPE').text,
+            :fstype      => image.xpath('./TEMPLATE/FSTYPE').text unless image.xpath('./TEMPLATE/FSTYPE').nil?),
             :path        => (image.xpath('./TEMPLATE/PATH').text || image.xpath('./PATH').text),
             #:persistent  => ((image.xpath('./TEMPLATE/PERSISTENT') || image.xpath('./PERSISTENT')).text == "1").to_s.to_sym,
             :persistent  => { '1' => :true, '0' => :false }[image.xpath('./PERSISTENT').text],
