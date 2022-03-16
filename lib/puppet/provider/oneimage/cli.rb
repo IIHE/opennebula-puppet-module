@@ -41,6 +41,7 @@ Puppet::Type.type(:oneimage).provide(:cli) do
             xml.SOURCE resource[:source] if resource[:source]
             xml.FSTYPE resource[:fstype] if resource[:fstype]
             xml.SIZE resource[:size] if resource[:size]
+            xml.TARGET resource[:target] if resource[:target]
         end
     end
     tempfile = builder.to_xml
@@ -72,17 +73,17 @@ Puppet::Type.type(:oneimage).provide(:cli) do
             :datastore   => image.xpath('./DATASTORE').text,
             :description => image.xpath('./TEMPLATE/DESCRIPTION').text,
             :dev_prefix  => image.xpath('./TEMPLATE/DEV_PREFIX').text,
-            :disk_type   => image.xpath('./DISK_TYPE').text,
-            :driver      => (image.xpath('./DRIVER').text unless image.xpath('./DRIVER').nil?),
+            #:disk_type   => image.xpath('./DISK_TYPE').text,
+            :driver      => (image.xpath('./TEMPLATE/DRIVER').text unless image.xpath('./TEMPLATE/DRIVER').nil?),
             :fstype      => image.xpath('./FSTYPE').text,
             :path        => (image.xpath('./TEMPLATE/PATH').text || image.xpath('./PATH').text),
             #:persistent  => ((image.xpath('./TEMPLATE/PERSISTENT') || image.xpath('./PERSISTENT')).text == "1").to_s.to_sym,
             :persistent  => { '1' => :true, '0' => :false }[image.xpath('./PERSISTENT').text],
             :size        => image.xpath('./SIZE').text,
             :source      => (image.xpath('./TEMPLATE/SOURCE') || image.xpath('./SOURCE')).text,
-            :target      => (image.xpath('./TARGET').text unless image.xpath('./TARGET').nil?),
+            :target      => (image.xpath('./TEMPLATE/TARGET').text unless image.xpath('./TEMPLATE/TARGET').nil?),
             #:type        => { '0' => :OS, '1' => :CDROM, '5' => :CONTEXT }[(image.xpath('./TEMPLATE/TYPE') || image.xpath('./TYPE')).text]
-            :type        => { '0' => :OS, '1' => :CDROM, '5' => :CONTEXT }[image.xpath('./TYPE').text]
+            :type        => { '0' => :OS, '1' => :CDROM, '2' => :DATABLOCK, '5' => :CONTEXT }[image.xpath('./TYPE').text]
         )
     end
   end
