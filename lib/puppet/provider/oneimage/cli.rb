@@ -73,16 +73,13 @@ Puppet::Type.type(:oneimage).provide(:cli) do
             :datastore   => image.xpath('./DATASTORE').text,
             :description => image.xpath('./TEMPLATE/DESCRIPTION').text,
             :dev_prefix  => image.xpath('./TEMPLATE/DEV_PREFIX').text,
-            #:disk_type   => image.xpath('./DISK_TYPE').text,
             :driver      => (image.xpath('./TEMPLATE/DRIVER').text unless image.xpath('./TEMPLATE/DRIVER').nil?),
-            :fstype      => image.xpath('./TEMPLATE/FSTYPE').text unless image.xpath('./TEMPLATE/FSTYPE').nil?),
-            :path        => (image.xpath('./TEMPLATE/PATH').text || image.xpath('./PATH').text),
-            #:persistent  => ((image.xpath('./TEMPLATE/PERSISTENT') || image.xpath('./PERSISTENT')).text == "1").to_s.to_sym,
+            :fstype      => (image.xpath('./TEMPLATE/FSTYPE').text unless image.xpath('./TEMPLATE/FSTYPE').nil?),
+            :path        => image.xpath('./TEMPLATE/PATH').text || image.xpath('./PATH').text,
             :persistent  => { '1' => :true, '0' => :false }[image.xpath('./PERSISTENT').text],
             :size        => image.xpath('./SIZE').text,
             :source      => (image.xpath('./TEMPLATE/SOURCE') || image.xpath('./SOURCE')).text,
             :target      => (image.xpath('./TEMPLATE/TARGET').text unless image.xpath('./TEMPLATE/TARGET').nil?),
-            #:type        => { '0' => :OS, '1' => :CDROM, '5' => :CONTEXT }[(image.xpath('./TEMPLATE/TYPE') || image.xpath('./TYPE')).text]
             :type        => { '0' => :OS, '1' => :CDROM, '2' => :DATABLOCK, '5' => :CONTEXT }[image.xpath('./TYPE').text]
         )
     end
