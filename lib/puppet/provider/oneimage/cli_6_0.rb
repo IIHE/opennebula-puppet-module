@@ -24,7 +24,7 @@ Puppet::Type.type(:oneimage).provide(:cli_6_0) do
       Gem::Version.new(one_version) > Gem::Version.new('6.0')
     end
   end
-  desc "oneimage provider for opennebula 6.0 and up"
+  desc "oneimage provider for opennebula 6.x"
 
   has_command(:oneimage, "oneimage") do
     environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'

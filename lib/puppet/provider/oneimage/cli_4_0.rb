@@ -14,9 +14,17 @@
 require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
-Puppet::Type.type(:oneimage).provide(:cli) do
+Puppet::Type.type(:oneimage).provide(:cli_4_0) do
   confine :feature => :nokogiri
-  desc "oneimage provider"
+  confine :true => begin
+    if File.exists?('/var/lib/one/remotes/VERSION')
+      file = File.open("/var/lib/one/remotes/VERSION", "r")
+      one_version = file.read
+      file.close
+      (Gem::Version.new(one_version) > Gem::Version.new('4.0')) && (Gem::Version.new(one_version) < Gem::Version.new('5.0')
+    end
+  end
+  desc "oneimage provider for OpenNebula 4.x"
 
   has_command(:oneimage, "oneimage") do
     environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
@@ -32,16 +40,33 @@ Puppet::Type.type(:oneimage).provide(:cli) do
     builder = Nokogiri::XML::Builder.new do |xml|
         xml.IMAGE do
             xml.NAME resource[:name]
-            xml.DESCRIPTION resource[:description] if resource[:description]
-            xml.TYPE resource[:type].to_s.upcase if resource[:type]
-            xml.PERSISTENT (resource[:persistent] ? 'yes' : 'no') if resource[:persistent]
-            xml.DEV_PREFIX resource[:dev_prefix] if resource[:dev_prefix]
-            xml.DRIVER resource[:driver] if resource[:driver]
-            xml.PATH resource[:path] if resource[:path]
-            xml.SOURCE resource[:source] if resource[:source]
-            xml.FSTYPE resource[:fstype] if resource[:fstype]
-            xml.SIZE resource[:size] if resource[:size]
-            xml.TARGET resource[:target] if resource[:target]
+            xml.DESCRIPTION do
+                resource[:description]
+            end if resource[:description]
+            xml.TYPE do
+                resource[:type].to_s.upcase
+            end if resource[:type]
+            xml.PERSISTENT do
+                resource[:persistent]
+            end if resource[:persistent]
+            xml.DEV_PREFIX do
+                resource[:dev_prefix]
+            end if resource[:dev_prefix]
+            xml.DRIVER do
+                resource[:driver]
+            end if resource[:driver]
+            xml.PATH do
+                resource[:path]
+            end if resource[:path]
+            xml.SOURCE do
+                resource[:source]
+            end if resource[:source]
+            xml.FSTYPE do
+                resource[:fstype]
+            end if resource[:fstype]
+            xml.SIZE do
+                resource[:size]
+            end if resource[:size]
         end
     end
     tempfile = builder.to_xml
@@ -73,14 +98,15 @@ Puppet::Type.type(:oneimage).provide(:cli) do
             :datastore   => image.xpath('./DATASTORE').text,
             :description => image.xpath('./TEMPLATE/DESCRIPTION').text,
             :dev_prefix  => image.xpath('./TEMPLATE/DEV_PREFIX').text,
-            :driver      => (image.xpath('./TEMPLATE/DRIVER').text unless image.xpath('./TEMPLATE/DRIVER').nil?),
-            :fstype      => (image.xpath('./TEMPLATE/FSTYPE').text unless image.xpath('./TEMPLATE/FSTYPE').nil?),
-            :path        => image.xpath('./TEMPLATE/PATH').text || image.xpath('./PATH').text,
-            :persistent  => { '1' => :true, '0' => :false }[image.xpath('./PERSISTENT').text],
+            :disk_type   => image.xpath('./DISK_TYPE').text,
+            :driver      => (image.xpath('./DRIVER').text unless image.xpath('./DRIVER').nil?),
+            :fstype      => image.xpath('./FSTYPE').text,
+            :path        => (image.xpath('./TEMPLATE/PATH').text || image.xpath('./PATH').text),
+            :persistent  => ((image.xpath('./TEMPLATE/PERSISTENT') || image.xpath('./PERSISTENT')).text == "1").to_s.to_sym,
             :size        => image.xpath('./SIZE').text,
             :source      => (image.xpath('./TEMPLATE/SOURCE') || image.xpath('./SOURCE')).text,
-            :target      => (image.xpath('./TEMPLATE/TARGET').text unless image.xpath('./TEMPLATE/TARGET').nil?),
-            :type        => { '0' => :OS, '1' => :CDROM, '2' => :DATABLOCK, '5' => :CONTEXT }[image.xpath('./TYPE').text]
+            :target      => (image.xpath('./TARGET').text unless image.xpath('./TARGET').nil?),
+            :type        => { '0' => :OS, '1' => :CDROM, '5' => :CONTEXT }[(image.xpath('./TEMPLATE/TYPE') || image.xpath('./TYPE')).text]
         )
     end
   end
