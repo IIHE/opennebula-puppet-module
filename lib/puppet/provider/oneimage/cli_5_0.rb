@@ -82,7 +82,7 @@ Puppet::Type.type(:oneimage).provide(:cli_5_0) do
             :description => image.xpath('./TEMPLATE/DESCRIPTION').text,
             :dev_prefix  => image.xpath('./TEMPLATE/DEV_PREFIX').text,
             :driver      => (image.xpath('./TEMPLATE/DRIVER').text unless image.xpath('./TEMPLATE/DRIVER').nil?),
-            :fstype      => (image.xpath('./TEMPLATE/FSTYPE').text unless image.xpath('./TEMPLATE/FSTYPE').nil?),
+            :fstype      => (image.xpath('./FSTYPE').text unless image.xpath('./FSTYPE').nil?),
             :path        => image.xpath('./TEMPLATE/PATH').text || image.xpath('./PATH').text,
             :persistent  => { '1' => :true, '0' => :false }[image.xpath('./PERSISTENT').text],
             :size        => image.xpath('./SIZE').text,
