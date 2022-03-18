@@ -21,7 +21,7 @@ Puppet::Type.type(:oneimage).provide(:cli_4_0) do
       file = File.open("/var/lib/one/remotes/VERSION", "r")
       one_version = file.read
       file.close
-      (Gem::Version.new(one_version) > Gem::Version.new('4.0')) && (Gem::Version.new(one_version) < Gem::Version.new('5.0')
+      (Gem::Version.new(one_version) > Gem::Version.new('4.0')) && (Gem::Version.new(one_version) < Gem::Version.new('5.0'))
     end
   end
   desc "oneimage provider for OpenNebula 4.x"
