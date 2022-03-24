@@ -17,7 +17,7 @@ class one::compute_node::libvirt_with_ceph (
       group  => 'root',
     }
     file { $secret_xml_path:
-      content => template('profile/secret.xml.erb'),
+      content => template('secret.xml.erb'),
       mode   => '0640',
       owner  => 'root',
       group  => 'root',
