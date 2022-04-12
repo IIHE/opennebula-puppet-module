@@ -223,7 +223,11 @@ class one::params {
           'ipset',
         ]
       }
-      $oned_packages   = ['opennebula', 'opennebula-server', 'opennebula-ruby']
+      if $one_version >= '6.0' {
+        $oned_packages   = ['opennebula', 'opennebula-rubygems', 'opennebula-tools']
+      } else {
+        $oned_packages   = ['opennebula', 'opennebula-server', 'opennebula-ruby']
+      }
       $dbus_srv        = 'messagebus'
       $dbus_pkg        = 'dbus'
       $oned_sunstone_packages = 'opennebula-sunstone'
