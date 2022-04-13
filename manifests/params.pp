@@ -230,7 +230,6 @@ class one::params {
       }
       $dbus_srv        = 'messagebus'
       $dbus_pkg        = 'dbus'
-      $oned_sunstone_packages = 'opennebula-sunstone'
       if $one_version >= '6.0' {
         $oned_sunstone_packages = ['opennebula-sunstone', 'opennebula-fireedge', 'opennebula-guacd']
       } else {
