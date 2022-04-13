@@ -231,6 +231,11 @@ class one::params {
       $dbus_srv        = 'messagebus'
       $dbus_pkg        = 'dbus'
       $oned_sunstone_packages = 'opennebula-sunstone'
+      if $one_version >= '6.0' {
+        $oned_sunstone_packages = ['opennebula-sunstone', 'opennebula-fireedge', 'opennebula-guacd']
+      } else {
+        $oned_sunstone_packages = 'opennebula-sunstone'
+      }
       $oned_sunstone_ldap_pkg = ['ruby-ldap','rubygem-net-ldap']
       # params for oneflow (optional, needs one::oneflow set to true)
       $oned_oneflow_packages = [
@@ -256,9 +261,19 @@ class one::params {
       ]
       $rubygems       = ['parse-cron', 'builder', 'sinatra']
       $oned_packages   = ['opennebula', 'opennebula-tools', 'ruby-opennebula']
+      if $one_version >= '6.0' {
+        $oned_packages   = ['opennebula', 'opennebula-rubygems', 'opennebula-tools']
+      } else {
+        $oned_packages   = ['opennebula', 'opennebula-tools', 'ruby-opennebula']
+      }
       $dbus_srv        = 'dbus'
       $dbus_pkg        = 'dbus'
       $oned_sunstone_packages = 'opennebula-sunstone'
+      if $one_version >= '6.0' {
+        $oned_sunstone_packages = ['opennebula-sunstone', 'opennebula-fireedge', 'opennebula-guacd']
+      } else {
+        $oned_sunstone_packages = 'opennebula-sunstone'
+      }
       $oned_sunstone_ldap_pkg = ['ruby-ldap','ruby-net-ldap']
       $oned_oneflow_packages = [
         'opennebula-flow',
