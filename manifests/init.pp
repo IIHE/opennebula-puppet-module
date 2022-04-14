@@ -95,7 +95,7 @@
 # ==== OpenNebula configuration parameters
 #
 # $oned_log_system - default 'file'
-#   the log subsystem to use, valid values are [file, syslog] 
+#   the log subsystem to use, valid values are [file, syslog]
 #
 # ===== OpenNebula Database configuration
 #
@@ -110,7 +110,7 @@
 #
 # $oned_db_host - default localhost
 #   oned database host
-# 
+#
 # ===== OpenNebula LDAP configuration
 # optional needs $ldap set to true
 #
@@ -125,7 +125,7 @@
 #
 # $oned_ldap_user - default cn=ldap_query,ou=user,dc=example,dc=com
 #   ldap user for queries - can be empty if anonymous query is possible
-#   
+#
 # $oned_ldap_pass - default default_password
 #   ldap user password for queries - can be empty if anonymous query is possible
 #
@@ -289,17 +289,17 @@
 # set in manifests/params for each os.
 #
 # $node_packages
-# $oned_packages 
-# $dbus_srv 
-# $dbus_pkg 
-# $oned_sunstone_packages 
-# $oned_sunstone_ldap_pkg 
-# $oned_oneflow_packages 
-# $oned_onegate_packages 
-# $libvirtd_srv 
-# $libvirtd_cfg 
-# $libvirtd_source 
-# $rubygems 
+# $oned_packages
+# $dbus_srv
+# $dbus_pkg
+# $oned_sunstone_packages
+# $oned_sunstone_ldap_pkg
+# $oned_oneflow_packages
+# $oned_onegate_packages
+# $libvirtd_srv
+# $libvirtd_cfg
+# $libvirtd_source
+# $rubygems
 #
 # $manage_sudoer_config - default true, set false to disable management of the sudoer
 #                         config. you'll have to manage the config yourself then
@@ -563,10 +563,12 @@ class one (
   # keys are the one_version_short for which we have templates
   # values are the folder paths to use
   $templated_versions_mapping = {
-    '5.0' => '5.0',
-    '5.2' => '5.2',
-    '5.4' => '5.4',
-    '5.8' => '5.8',
+    '5.0'  => '5.0',
+    '5.2'  => '5.2',
+    '5.4'  => '5.4',
+    '5.8'  => '5.8',
+    '5.12' => '5.12',
+    '6.2'  => '6.2',
   }
 
   if member(keys($templated_versions_mapping), $one_version_short) {

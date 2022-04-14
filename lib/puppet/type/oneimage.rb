@@ -53,7 +53,7 @@ Puppet::Type.newtype(:oneimage) do
   end
 
   newproperty(:target) do
-    desc "Target to use for disk image: hda, hdb, sda, sdb"
+    desc "Target to use for disk image: hda, hdb, sda, sdb, vda, vdb"
   end
 
   newproperty(:path) do
