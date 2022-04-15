@@ -98,7 +98,7 @@ class one::params {
   $vnc_proxy_cert            = hiera('one::oned::vnc_proxy_cert', '')
   $vnc_proxy_key             = hiera('one::oned::vnc_proxy_key', '')
   $vnc_proxy_ipv6            = hiera('one::oned::vnc_proxy_ipv6', 'false') # lint:ignore:quoted_booleans
-  $sunstone_fireedge         = hiera('one::sunstone_fireedge', 'false')
+  $sunstone_fireedge         = $one::sunstone_fireedge
 
   # generic params for nodes and oned
   $oneuid = '9869'
