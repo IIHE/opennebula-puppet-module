@@ -29,6 +29,7 @@ class one::oned::sunstone::config (
   $vnc_proxy_ipv6          = $one::vnc_proxy_ipv6,
   $sunstone_logo_png       = $one::sunstone_logo_png,
   $sunstone_logo_small_png = $one::sunstone_logo_small_png,
+  $fireedge                = $one::sunstone_fireedge,
 ) inherits one {
 
   $sunstone_views_root = $one::version_gte_5_8 ? {

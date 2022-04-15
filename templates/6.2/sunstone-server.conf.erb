@@ -277,5 +277,7 @@ ebug_level: <%= @debug_level %>
 # FireEdge
 ################################################################################
 
-:private_fireedge_endpoint: http://dom600.wn.iihe.ac.be:2616
-:public_fireedge_endpoint: http://dom600.wn.iihe.ac.be:2616
+<% if @fireedge == 'yes' -%>
+:private_fireedge_endpoint: http://localhost:2616
+:public_fireedge_endpoint: http://localhost:2616
+<% end -%>

@@ -16,7 +16,8 @@
 #
 class one::oned::sunstone::service (
   $sunstone_passenger = $one::sunstone_passenger,
-  $sunstone_novnc     = $one::sunstone_novnc
+  $sunstone_novnc     = $one::sunstone_novnc,
+  $sunstone_fireedge  = $one::sunstone_fireedge,
 ) {
   if $sunstone_passenger {
     $srv_ensure = stopped
@@ -37,5 +38,11 @@ class one::oned::sunstone::service (
   service { 'opennebula-novnc':
     ensure => $_sunstone_novnc_ensure,
     enable => $sunstone_novnc,
+  }
+  if $sunstone_fireedge {
+    service { 'opennebula-fireedge':
+      ensure => running,
+      enable => true,
+    }
   }
 }

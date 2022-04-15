@@ -76,6 +76,10 @@
 #   defines whether novnc should be started for sunstone web interface
 #   fully optional and only used if $sunstone is set to true
 #
+# $sunstone_fireedge - default false
+#   defines whether fireedge will be used
+#   fully optional and only used if $sunstone is set to true
+#
 # $ldap true|false - default false
 #   defines whether sunstone authentication to ldap should be enabled
 #   ldap is fully optional
@@ -359,6 +363,7 @@ class one (
   $sunstone           = false,
   $sunstone_passenger = false,
   $sunstone_novnc     = false,
+  $sunstone_fireedge  = false,
   $ldap               = false,
   $oneflow            = false,
   $onegate            = false,
@@ -485,6 +490,11 @@ class one (
 
   validate_absolute_path($oneadmin_sudoers_file)
   validate_absolute_path($imaginator_sudoers_file)
+
+  # fireedge is only available with ONE >=6
+  if ($sunstone_fireedge && versioncmp($one_version, '6.0') < 0) {
+    fail('Fireedge is only available as of OpenNebula 6')
+  }
 
   # the priv key is mandatory on the head.
   if ($ssh_pub_key == undef) {
