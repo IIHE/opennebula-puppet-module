@@ -98,7 +98,6 @@ class one::params {
   $vnc_proxy_cert            = hiera('one::oned::vnc_proxy_cert', '')
   $vnc_proxy_key             = hiera('one::oned::vnc_proxy_key', '')
   $vnc_proxy_ipv6            = hiera('one::oned::vnc_proxy_ipv6', 'false') # lint:ignore:quoted_booleans
-  $sunstone_fireedge         = $one::sunstone_fireedge
 
   # generic params for nodes and oned
   $oneuid = '9869'
@@ -233,13 +232,13 @@ class one::params {
       $dbus_pkg        = 'dbus'
       $oned_sunstone_packages = ['opennebula-sunstone']
 
-      if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge) {
-        case $::os::name {
+      if (versioncmp($one_version, '6') >= 0 and $one::sunstone_fireedge) {
+        case $facts['os']['name'] {
           'CentOS': {
             $oned_fireedge_packages = ['opennebula-fireedge', 'centos-release-scl-rh', 'opennebula-guacd']
           }
           default: {
-            fail("Your OS - ${::os::name} - is not yet supported.")
+            fail("Your OS - $facts['os']['name'] - is not yet supported.")
           }
         }
       } else {
