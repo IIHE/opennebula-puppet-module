@@ -231,8 +231,8 @@ class one::params {
       $dbus_srv        = 'messagebus'
       $dbus_pkg        = 'dbus'
       $oned_sunstone_packages = ['opennebula-sunstone']
-      $oned_fireedge_packages = []
-      if ($one_version >= '6.0' and $sunstone_fireedge) {
+      if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge) {
+        fail("I WAS HERE!!!")
         case $::os::name {
           'CentOS': {
             $oned_fireedge_packages = ['opennebula-fireedge', 'centos-release-scl-rh', 'opennebula-guacd']
@@ -241,6 +241,8 @@ class one::params {
             fail("Your OS - ${::os::name} - is not yet supported.")
           }
         }
+      } else {
+        $oned_fireedge_packages = []
       }
       $oned_sunstone_ldap_pkg = ['ruby-ldap','rubygem-net-ldap']
       # params for oneflow (optional, needs one::oneflow set to true)
