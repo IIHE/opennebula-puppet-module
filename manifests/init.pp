@@ -492,7 +492,7 @@ class one (
   validate_absolute_path($imaginator_sudoers_file)
 
   # fireedge is only available with ONE >=6
-  if ($sunstone_fireedge && versioncmp($one_version, '6.0') < 0) {
+  if ($sunstone_fireedge and versioncmp($one_version, '6.0') < 0) {
     fail('Fireedge is only available as of OpenNebula 6')
   }
 
