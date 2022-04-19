@@ -98,7 +98,6 @@ class one::params {
   $vnc_proxy_cert            = hiera('one::oned::vnc_proxy_cert', '')
   $vnc_proxy_key             = hiera('one::oned::vnc_proxy_key', '')
   $vnc_proxy_ipv6            = hiera('one::oned::vnc_proxy_ipv6', 'false') # lint:ignore:quoted_booleans
-  $sunstone_fireedge         = hiera('one::sunstone_fireedge', 'false')
 
   # generic params for nodes and oned
   $oneuid = '9869'
@@ -233,18 +232,6 @@ class one::params {
       $dbus_pkg        = 'dbus'
       $oned_sunstone_packages = ['opennebula-sunstone']
 
-      if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge) {
-        case $facts['os']['name'] {
-          'CentOS': {
-            $oned_fireedge_packages = ['opennebula-fireedge', 'centos-release-scl-rh', 'opennebula-guacd']
-          }
-          default: {
-            fail("Your OS - $facts['os']['name'] - is not yet supported.")
-          }
-        }
-      } else {
-        $oned_fireedge_packages = []
-      }
       $oned_sunstone_ldap_pkg = ['ruby-ldap','rubygem-net-ldap']
       # params for oneflow (optional, needs one::oneflow set to true)
       $oned_oneflow_packages = [
@@ -278,11 +265,6 @@ class one::params {
       $dbus_srv        = 'dbus'
       $dbus_pkg        = 'dbus'
       $oned_sunstone_packages = 'opennebula-sunstone'
-      if $one_version >= '6.0' {
-        $oned_sunstone_packages = ['opennebula-sunstone', 'opennebula-fireedge', 'opennebula-guacd']
-      } else {
-        $oned_sunstone_packages = 'opennebula-sunstone'
-      }
       $oned_sunstone_ldap_pkg = ['ruby-ldap','ruby-net-ldap']
       $oned_oneflow_packages = [
         'opennebula-flow',
