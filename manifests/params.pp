@@ -231,7 +231,7 @@ class one::params {
       $dbus_srv        = 'messagebus'
       $dbus_pkg        = 'dbus'
       $oned_sunstone_packages = ['opennebula-sunstone']
-
+      fail("DEBUG: $one::sunstone_fireedge")
       if (versioncmp($one_version, '6') >= 0 and $one::sunstone_fireedge) {
         case $facts['os']['name'] {
           'CentOS': {
