@@ -209,7 +209,7 @@ class one::params {
   # OS specific params for nodes
   case $::osfamily {
     'RedHat': {
-      if $::operatingsystemmajrelease == '7' {
+      if $::operatingsystemmajrelease >= '7' {
         $node_packages = [
           'device-mapper-libs',
           'opennebula-node-kvm',
