@@ -39,5 +39,7 @@ class one::oned::sunstone::install (
         fail("Your OS - $facts['os']['name'] - is not yet supported.")
       }
     }
+  } else {
+    fail("Should not be here...")
   }
 }
