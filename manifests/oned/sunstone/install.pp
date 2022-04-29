@@ -25,21 +25,19 @@ class one::oned::sunstone::install (
   package { $oned_sunstone_packages:
     ensure => $package_ensure,
   }
-  if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge and $package_ensure) {
+  if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge) {
     case $facts['os']['name'] {
       'CentOS': {
         package { 'centos-release-scl-rh':
-          ensure => installed,
+          ensure => $package_ensure,
         } ->
         package { ['opennebula-fireedge', 'opennebula-guacd']:
-          ensure => installed,
+          ensure => $package_ensure,
         }
       }
       default: {
         fail("Your OS - $facts['os']['name'] - is not yet supported.")
       }
     }
-  } else {
-    fail("Should not be here...")
   }
 }
