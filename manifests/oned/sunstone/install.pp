@@ -31,7 +31,7 @@ class one::oned::sunstone::install (
       'CentOS': {
         package { 'centos-release-scl-rh':
           ensure => $package_ensure,
-        } ->
+        }
         package { ['opennebula-fireedge', 'opennebula-guacd']:
           ensure => $package_ensure,
         }
@@ -41,6 +41,6 @@ class one::oned::sunstone::install (
       }
     }
   } else {
-    info("DEBUG: conditions for fireedge installation are not met!!!")
+    info("DEBUG: conditions for fireedge installation are not met!!!k")
   }
 }
