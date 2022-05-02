@@ -241,12 +241,12 @@ class one::params {
       ]
       # params for onegate (optional, needs one::onegate set to true)
       $oned_onegate_packages = ['opennebula-gate', 'rubygem-parse-cron']
-      $libvirtd_srv = 'libvirtd'
-      $libvirtd_cfg = '/etc/sysconfig/libvirtd'
-      $libvirtd_source = 'puppet:///modules/one/libvirtd.sysconfig'
-      $use_gems           = str2bool(hiera('one::oned::install::use_gems', 'true')) # lint:ignore:quoted_booleans
-      $rubygems           = ['builder', 'sinatra']
-      $rubygems_rpm       = ['rubygem-builder', 'rubygem-sinatra']
+      $libvirtd_srv    = 'libvirtd'
+      $libvirtd_cfg    = '/etc/sysconfig/libvirtd'
+      $libvirtd_source = 'one/libvirtd.sysconfig.erb'
+      $use_gems        = str2bool(hiera('one::oned::install::use_gems', 'true')) # lint:ignore:quoted_booleans
+      $rubygems        = ['builder', 'sinatra']
+      $rubygems_rpm    = ['rubygem-builder', 'rubygem-sinatra']
     }
     'Debian': {
       $use_gems        = true
@@ -274,7 +274,7 @@ class one::params {
       $oned_onegate_packages = ['opennebula-gate']
       $libvirtd_srv = 'libvirt-bin'
       $libvirtd_cfg = '/etc/default/libvirt-bin'
-      $libvirtd_source = 'puppet:///modules/one/libvirt-bin.debian'
+      $libvirtd_source = 'one/libvirt-bin.debian.erb'
     }
     default: {
       fail("Your OS - ${::osfamily} - is not yet supported.

@@ -45,6 +45,14 @@ class one::compute_node::config (
     'Debian' => '/var/lib/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla',
   }
 
+  #For RedHat: As of libvirtd 5.6.0, the libvirtd daemon uses systemd socket activation.
+  #For this reason, with CentOS 8, you must not use the --listen parameter.
+  #Source: https://bugzilla.redhat.com/show_bug.cgi?id=1750340
+  $systemd_socket_activation = false
+  if ( $::osfamily == 'RedHat' and $facts['os']['name'] == 'CentOS' ) {
+    $systemd_socket_activation = true
+  }
+
   file { '/etc/libvirt/libvirtd.conf':
     ensure => file,
     source => 'puppet:///modules/one/libvirtd.conf',
@@ -54,11 +62,11 @@ class one::compute_node::config (
   } ->
 
   file { $libvirtd_cfg:
-    ensure => file,
-    source => $libvirtd_source,
-    owner  => 'root',
-    group  => 'root',
-    notify => Service[$libvirtd_srv],
+    ensure  => file,
+    content => template($libvirtd_source),
+    owner   => 'root',
+    group   => 'root',
+    notify  => Service[$libvirtd_srv],
   } ->
 
   file { '/etc/udev/rules.d/80-kvm.rules':
