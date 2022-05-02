@@ -26,7 +26,6 @@ class one::oned::sunstone::install (
     ensure => $package_ensure,
   }
   if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge) {
-    info("DEBUG")
     case $facts['os']['name'] {
       'CentOS': {
         package { 'centos-release-scl-rh':
@@ -40,7 +39,5 @@ class one::oned::sunstone::install (
         fail("Your OS - $facts['os']['name'] - is not yet supported.")
       }
     }
-  } else {
-    info("DEBUG: conditions for fireedge installation are not met!!!k")
   }
 }

@@ -37,16 +37,16 @@ class one::oned::sunstone::config (
     default => '/etc/one/sunstone-views',
   }
 
-  File {
-    owner   => 'root',
-    group   => 'oneadmin',
-  }
-  file { '/usr/lib/one/sunstone':
-    ensure  => directory,
-    owner   => 'oneadmin',
-    mode    => '0755',
-    recurse => true,
-  } ->
+  # File {
+  #   owner   => 'root',
+  #   group   => 'oneadmin',
+  # }
+  # file { '/usr/lib/one/sunstone':
+  #   ensure  => directory,
+  #   owner   => 'oneadmin',
+  #   mode    => '0755',
+  #   recurse => true,
+  # } ->
   file { '/etc/one/sunstone-server.conf':
     ensure  => file,
     content => template("one/${::one::template_path}/sunstone-server.conf.erb"),
