@@ -37,10 +37,10 @@ class one::oned::sunstone::config (
     default => '/etc/one/sunstone-views',
   }
 
-  # File {
-  #   owner   => 'root',
-  #   group   => 'oneadmin',
-  # }
+  File {
+    owner   => 'root',
+    group   => 'oneadmin',
+  }
   # file { '/usr/lib/one/sunstone':
   #   ensure  => directory,
   #   owner   => 'oneadmin',

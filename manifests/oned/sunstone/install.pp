@@ -28,8 +28,10 @@ class one::oned::sunstone::install (
   if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge) {
     case $facts['os']['name'] {
       'CentOS': {
-        package { 'centos-release-scl-rh':
-          ensure => $package_ensure,
+        if ($::operatingsystemmajrelease == '7') {
+          package { 'centos-release-scl-rh':
+            ensure => $package_ensure,
+          }
         }
         package { ['opennebula-fireedge', 'opennebula-guacd']:
           ensure => $package_ensure,
