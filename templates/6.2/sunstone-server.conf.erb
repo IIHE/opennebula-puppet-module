@@ -277,7 +277,7 @@ ebug_level: <%= @debug_level %>
 # FireEdge
 ################################################################################
 
-<% if @fireedge == 'yes' -%>
-:private_fireedge_endpoint: http://localhost:2616
-:public_fireedge_endpoint: http://localhost:2616
+<% if @fireedge -%>
+:private_fireedge_endpoint: <%= @sunstone_fireedge_priv_endpoint %>
+:public_fireedge_endpoint: <%= @sunstone_fireedge_pub_endpoint %>
 <% end -%>
