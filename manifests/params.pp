@@ -240,7 +240,7 @@ class one::params {
         'rubygem-polyglot',
       ]
       # params for onegate (optional, needs one::onegate set to true)
-      $oned_onegate_packages = ['opennebula-gate', 'rubygem-parse-cron']
+      $oned_onegate_packages = ['opennebula-gate']
       $libvirtd_srv    = 'libvirtd'
       $libvirtd_cfg    = '/etc/sysconfig/libvirtd'
       $libvirtd_source = 'one/libvirtd.sysconfig.erb'
