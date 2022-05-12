@@ -128,7 +128,7 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
         [ k.to_s.upcase, v ]
       end
     }.map{|a| "#{a[0]} = #{a[1]}" unless a.nil? }.join("\n")
-    file.close
+    #file.close
     self.debug(IO.read file.path)
     onetemplate('update', resource[:name], file.path, '--append') unless @property_hash.empty?
     #file.delete
