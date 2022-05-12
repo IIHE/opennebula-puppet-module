@@ -131,7 +131,7 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
     file.close
     self.debug(IO.read file.path)
     onetemplate('update', resource[:name], file.path, '--append') unless @property_hash.empty?
-    file.delete
+    #file.delete
   end
 
 end
