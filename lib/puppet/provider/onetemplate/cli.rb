@@ -122,7 +122,7 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
   end
 
   def flush
-    file = Tempfile.new('onevnet')
+    file = Tempfile.new('onetemplate')
     tempfile = @property_hash.map { |k, v|
       unless resource[k].nil? or resource[k].to_s.empty? or [:name, :provider, :ensure].include?(k)
         [ k.to_s.upcase, v ]

@@ -645,6 +645,9 @@ tabs:
             image_info_tab: true
             image_vms_tab: true
             image_snapshots_tab: true
+        template_creation_tabs:
+            image: true
+            docker: true
         table_columns:
             - 0         # Checkbox
             - 1         # ID
@@ -664,7 +667,7 @@ tabs:
         actions:
             Image.refresh: true
             Image.create_dialog: true
-            Image.import_dialog: false
+            Image.import_dialog: true
             Image.upload_marketplace_dialog: true
             Image.rename: true
             Image.chown: true
