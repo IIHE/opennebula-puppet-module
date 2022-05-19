@@ -97,6 +97,7 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
     nic_hash['ip'] = xml.xpath('./IP').text
     nic_hash['model'] = xml.xpath('./MODEL').text
     nic_hash['network'] = xml.xpath('./NETWORK').text
+    nic_hash['network_uname'] = xml.xpath('./NETWORK_UNAME').text unless xml.xpath('./NETWORK_UNAME').text.nil?
     nic_hash
   end
 
