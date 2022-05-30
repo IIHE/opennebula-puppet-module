@@ -587,6 +587,7 @@ class one (
     '5.8'  => '5.8',
     '5.12' => '5.12',
     '6.2'  => '6.2',
+    '6.4'  => '6.4',
   }
 
   if member(keys($templated_versions_mapping), $one_version_short) {
