@@ -24,7 +24,7 @@ class one::prerequisites(
 
   case $::osfamily {
     'RedHat': {
-      if ( $one_repo_enable == 'true' ) { # lint:ignore:quoted_booleans
+      if ( $one_repo_enable ) {
         yumrepo { 'opennebula':
           baseurl  => "http://downloads.opennebula.org/repo/${::one::one_version_short}/CentOS/${::operatingsystemmajrelease}/x86_64/",
           descr    => 'OpenNebula',
@@ -34,7 +34,7 @@ class one::prerequisites(
       }
     }
     'Debian' : {
-      if ($one_repo_enable == 'true') { # lint:ignore:quoted_booleans
+      if ( $one_repo_enable ) {
         include ::apt
         case $::operatingsystem {
           'Debian': {

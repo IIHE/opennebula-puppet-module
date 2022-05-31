@@ -53,7 +53,7 @@ class one::params {
   $oned_ldap_mapping_default = hiera('one::oned::ldap_mapping_default','undef')
   $oned_ldap_mappings = hiera('one::oned::ldap_mappings',undef)
   # should we enable opennebula repos?
-  $one_repo_enable = hiera('one::enable_opennebula_repo', 'true' ) # lint:ignore:quoted_booleans
+  $one_repo_enable = hiera('one::enable_opennebula_repo', true)
   # Which version
   $one_version = hiera('one::one_version', '4.12' )
   # should VM_SUBMIT_ON_HOLD be enabled in oned.conf?
