@@ -20,7 +20,10 @@ features:
     # True to hide the CPU setting in the VM creation dialog
     instantiate_hide_cpu: false
 
-    # False to not scale the CPU. Number to scale from VCPU
+    # False to not scale the CPU.
+    # An integer value would be used as a multiplier as follows:
+    #     CPU = instantiate_cpu_factor * VCPU
+    # Set it to 1 to tie CPU and vCPU.
     instantiate_cpu_factor: false
 
     # True to show the option to make an instance persistent
@@ -42,6 +45,15 @@ features:
     show_attach_disk_advanced: true
 
     show_attach_nic_advanced: true
+
+    # True to show the network configuration to instantiate Service template
+    show_vnet_instantiate_flow: true
+
+    # True to show schedule actions section to instantiate VM
+    show_sched_actions_instantiate: true
+
+    # True to show boot order section to instantiate VM
+    show_boot_order: true
 tabs:
     provision-tab:
         panel_tabs:
@@ -90,15 +102,23 @@ tabs:
             VM.disk_snapshot_revert: true
             VM.disk_snapshot_rename: true
             VM.disk_snapshot_delete: true
-            VM.save_as_template: true
             VM.migrate_poff: false
             VM.migrate_poff_hard: false
+            VM.save_as_template: true
             VM.lockU: true
             VM.unlock: true
             VM.startvnc: true
+            VM.startvmrc: true
             VM.startspice: true
+            VM.vnc: true
+            VM.ssh: true
+            VM.rdp: true
             VM.save_rdp: true
             VM.save_virt_viewer: true
+            VM.updateconf: true
+            VM.attachsg: true
+            VM.detachsg: true
+            VM.instantiate_name: true
         dashboard:
             # Connected user's quotas
             quotas: true
@@ -137,9 +157,9 @@ tabs:
             Settings.change_view: true
             Settings.ssh_key: true
             Settings.login_token: true
+            Settings.two_factor_auth: true
             # Edit button in settings_quotas_tab
             User.quotas_dialog: false
-            User.two_factor_auth: true
     vms-tab:
         actions: *provisionactions
     images-tab:
@@ -158,17 +178,28 @@ tabs:
             - 11        # #VMs
             #- 12       # Target
     vnets-tab:
+        # Allows to instantiate a service with vnets
+        table_columns:
+            - 0         # Checkbox
+            - 1         # ID
+            - 2         # Name
+            #- 3         # Owner
+            - 4         # Group
+            - 5         # Status
+            #- 6         # Reservation
+            - 7         # Cluster
+            #- 8        # Bridge
+            #- 9         # Leases
+            #- 10        # VLAN ID
+    vnets-templates-tab:
+        # Allows to instantiate a service with vnets templates
         table_columns:
             - 0         # Checkbox
             - 1         # ID
             - 2         # Name
             #- 3        # Owner
             - 4         # Group
-            #- 5        # Reservation
             #- 6        # Cluster
-            #- 7        # Bridge
-            #- 8        # Leases
-            #- 9        # VLAN ID
     secgroups-tab:
         table_columns:
             - 0         # Checkbox
@@ -203,3 +234,28 @@ tabs:
             - 11        # Status
             #- 12       # Labels
             #- 13       # Search data
+    templates-tab:
+        table_columns:
+            - 0         # Checkbox
+            - 1         # ID
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
+            - 5         # Registration time
+            #- 6         # Labels
+            #- 7         # Search data
+        actions: *provisionactions
+        template_creation_tabs:
+            general: true
+            storage: true
+            network: true
+            os_booting: true
+            features: true
+            input_output: true
+            context: true
+            actions: true
+            scheduling: false
+            hybrid: false
+            vmgroup: true
+            other: true
+            numa: true

@@ -42,7 +42,6 @@ enabled_tabs:
     #- vdcs-tab
     #- acls-tab
     - settings-tab
-    #- support-tab
     - vmgroup-tab
 features:
     # True to show showback monthly reports, and VM cost
@@ -55,7 +54,10 @@ features:
     # True to hide the CPU setting in the VM creation dialog
     instantiate_hide_cpu: false
 
-    # False to not scale the CPU. Number to scale from VCPU
+    # False to not scale the CPU.
+    # An integer value would be used as a multiplier as follows:
+    #     CPU = instantiate_cpu_factor * VCPU
+    # Set it to 1 to tie CPU and vCPU.
     instantiate_cpu_factor: false
 
     # True to show the option to make an instance persistent
@@ -96,6 +98,15 @@ features:
     deploy_enforce: false
 
     migrate_enforce: false
+
+    # True to show the network configuration to instantiate Service template
+    show_vnet_instantiate_flow: true
+
+    # True to show schedule actions section to instantiate VM
+    show_sched_actions_instantiate: true
+
+    # True to show boot order section to instantiate VM
+    show_boot_order: true
 tabs:
     dashboard-tab:
         # The following widgets can be used inside any of the '_per_row' settings
@@ -137,15 +148,16 @@ tabs:
             - 1         # ID
             - 2         # Name
             - 3         # Group
-            - 4         # Auth driver
-            #- 5         # Password
-            - 6         # VMs
-            - 7         # Memory
-            - 8         # CPU
-            #- 9         # Group ID
-            #- 10        # Hidden User Data
-            #- 11        # Labels
-            #- 12        # Search data
+            - 4          # Enabled
+            - 5         # Auth driver
+            #- 6         # Password
+            - 7         # VMs
+            - 8         # Memory
+            - 9         # CPU
+            #- 10         # Group ID
+            #- 11        # Hidden User Data
+            #- 12        # Labels
+            #- 13        # Search data
         actions:
             User.refresh: true
             User.create_dialog: true
@@ -159,6 +171,8 @@ tabs:
             User.delete: true
             User.edit_labels: true
             User.menu_labels: true
+            User.enable: true
+            User.disable: true
     groups-tab:
         panel_tabs:
             group_info_tab: true
@@ -267,7 +281,7 @@ tabs:
             context: true
             actions: true
             scheduling: false
-            hybrid: true
+            hybrid: false
             vmgroup: true
             other: true
             numa: true
@@ -282,8 +296,9 @@ tabs:
             - 2         # Owner
             - 3         # Group
             - 4         # Name
-            #- 5        # Labels
-            #- 6        # Search data
+            - 5        # Registration time
+            #- 6        # Labels
+            #- 7        # Search data
         actions:
             ServiceTemplate.refresh: true
             ServiceTemplate.create_dialog: true
@@ -334,7 +349,7 @@ tabs:
             input_output: true
             context: true
             scheduling: true
-            hybrid: true
+            hybrid: false
             other: true
     instances-top-tab:
         panel_tabs:
@@ -358,16 +373,14 @@ tabs:
             - 3       # Group
             - 4       # Name
             - 5       # Status
-            #- 6       # Used CPU
-            #- 7       # Used Memory
-            - 8       # Host
-            - 9       # IPs
-            #- 10      # Start Time
-            - 11      # VNC
-            #- 12      # Hidden Template
-            #- 13      # Labels
-            - 14      # Search data
-            #- 15     # Clock leases
+            - 6       # Host
+            - 7       # IPs
+            #- 8      # Start Time
+            - 9      # VNC
+            #- 10      # Hidden Template
+            #- 11      # Labels
+            #- 12      # Search data
+            #- 13     # Clock leases
         actions:
             VM.refresh: true
             VM.create_dialog: true
@@ -416,10 +429,17 @@ tabs:
             VM.unlock: true
             VM.edit_labels: true
             VM.menu_labels: true
+            VM.startvnc: true
+            VM.startvmrc: true
+            VM.startspice: true
+            VM.vnc: true
+            VM.ssh: true
+            VM.rdp: true
             VM.save_rdp: true
             VM.save_virt_viewer: true
-            VM.startvnc: true
-            VM.startspice: true
+            VM.attachsg: true
+            VM.detachsg: true
+            VM.instantiate_name: true
     oneflow-services-tab:
         panel_tabs:
             service_info_tab: true
@@ -465,8 +485,10 @@ tabs:
             - 3         # Group
             - 4         # Name
             - 5         # State
-            #- 6        # Labels
-            #- 7        # Search data
+            - 6         # Registration time
+            #- 7        # Labels
+            - 8        # Leases
+            #- 9        # Search data
         actions:
             Service.refresh: true
             Service.create_dialog: true
@@ -534,6 +556,7 @@ tabs:
         panel_tabs:
             host_info_tab: true
             host_monitoring_tab: true
+            host_pool_tab: true
             host_vms_tab: true
             host_wilds_tab: true
             host_zombies_tab: true
@@ -547,16 +570,13 @@ tabs:
             - 2         # Name
             - 3         # Cluster
             - 4         # RVMs
-            #- 5         # Real CPU
-            - 6         # Allocated CPU
-            #- 7         # Real MEM
-            - 8         # Allocated MEM
-            - 9         # Status
-            #- 10        # IM MAD
-            #- 11        # VM MAD
-            #- 12        # Last monitored on
-            #- 13        # Labels
-            #- 14        # Search data
+            - 5         # Allocated CPU
+            - 6         # Allocated MEM
+            - 7         # Status
+            #- 8       # IM MAD
+            #- 9       # VM MAD
+            #- 10       # Labels
+            #- 11       # Search data
         actions:
             Host.refresh: true
             Host.create_dialog: true
@@ -626,6 +646,9 @@ tabs:
             image_info_tab: true
             image_vms_tab: true
             image_snapshots_tab: true
+        template_creation_tabs:
+            image: true
+            docker: true
         table_columns:
             - 0         # Checkbox
             - 1         # ID
@@ -737,7 +760,7 @@ tabs:
             #- 5         # Version
             - 6         # Size
             - 7         # State
-            #- 8         # Type
+            - 8         # Type
             - 9         # Registration
             - 10        # Marketplace
             - 11         # Zone
@@ -771,16 +794,17 @@ tabs:
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Owner
-            - 3         # Group
-            - 4         # Name
-            - 5         # Reservation
-            - 6         # Cluster
-            #- 7         # Bridge
-            - 8         # Leases
-            #- 9         # VLAN ID
-            #- 10         # Labels
-            #- 11        # Search data
+            - 2         # Name
+            - 3         # Owner
+            - 4         # Group
+            - 5         # Status
+            - 6         # Reservation
+            - 7         # Cluster
+            #- 8         # Bridge
+            - 9         # Leases
+            #- 10        # VLAN ID
+            #- 11        # Labels
+            #- 12        # Search data
         actions:
             Network.refresh: true
             Network.create_dialog: false
@@ -873,18 +897,6 @@ tabs:
             SecurityGroup.delete: true
             SecurityGroup.edit_labels: true
             SecurityGroup.menu_labels: true
-    support-tab:
-        panel_tabs:
-            support_info_tab: true
-        table_columns:
-            #- 0         # Checkbox
-            - 1         # ID
-            - 2         # Subject
-            - 3         # Created at
-            - 4         # Status
-        actions:
-            Support.refresh: true
-            Support.create_dialog: true
     settings-tab:
         panel_tabs:
             settings_info_tab: true

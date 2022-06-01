@@ -54,7 +54,10 @@ features:
     # True to hide the CPU setting in the VM creation dialog
     instantiate_hide_cpu: false
 
-    # False to not scale the CPU. Number to scale from VCPU
+    # False to not scale the CPU.
+    # An integer value would be used as a multiplier as follows:
+    #     CPU = instantiate_cpu_factor * VCPU
+    # Set it to 1 to tie CPU and vCPU.
     instantiate_cpu_factor: false
 
     # True to show the option to make an instance persistent
@@ -69,18 +72,18 @@ features:
     # True to show the vnet datatable to instantiate VM
     show_vnet_instantiate: true
 
-    # True to show the host datatable to instantiate VM
-    show_host_instantiate: true
-
     # True to show context section to instantiate Network
     show_context_instantiate_vnet: true
 
     # True to show context section to instantiate Network
     show_security_instantiate_vnet: true
 
+    # True to show the host datatable to instantiate VM
+    show_host_instantiate: true
+
     # True to show an input to specify the the VMs and Template path/folder where a vCenter VM will
     # deployed to
-    vcenter_vm_folder: false
+    vcenter_vm_folder: true
 
     # True to show the monitoring info (VM & VRouters)
     show_monitoring_info: true
@@ -109,7 +112,7 @@ features:
     show_sched_actions_instantiate: true
 
     # True to show boot order section to instantiate VM
-    show_boot_order: truem
+    show_boot_order: true
 tabs:
     dashboard-tab:
         # The following widgets can be used inside any of the '_per_row' settings
@@ -260,7 +263,7 @@ tabs:
         actions:
             Template.refresh: true
             Template.create_dialog: true
-            Template.import_dialog: false
+            Template.import_dialog: true
             Template.update_dialog: true
             Template.instantiate_vms: true
             Template.rename: true
@@ -286,7 +289,7 @@ tabs:
             context: true
             actions: true
             scheduling: true
-            hybrid: true
+            hybrid: false
             vmgroup: true
             other: true
             numa: true
@@ -298,11 +301,12 @@ tabs:
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
-            #- 5        # Labels
-            #- 6        # Search data
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
+            - 5        # Registration time
+            #- 6        # Labels
+            #- 7        # Search data
         actions:
             ServiceTemplate.refresh: true
             ServiceTemplate.create_dialog: true
@@ -353,7 +357,7 @@ tabs:
             input_output: true
             context: true
             scheduling: true
-            hybrid: true
+            hybrid: false
             other: true
     instances-top-tab:
         panel_tabs:
@@ -384,7 +388,7 @@ tabs:
             #- 10     # Hidden Template
             #- 11     # Labels
             #- 12     # Search data
-            - 13     # Clock leasesd
+            - 13     # Clock leases
         actions:
             VM.refresh: true
             VM.create_dialog: true
@@ -441,6 +445,9 @@ tabs:
             VM.rdp: true
             VM.save_rdp: true
             VM.save_virt_viewer: true
+            VM.attachsg: true
+            VM.detachsg: true
+            VM.instantiate_name: true
     oneflow-services-tab:
         panel_tabs:
             service_info_tab: true
@@ -524,6 +531,8 @@ tabs:
             VirtualRouter.delete: true
             VirtualRouter.attachnic: true
             VirtualRouter.detachnic: true
+            VirtualRouter.lockU: true
+            VirtualRouter.unlock: true
             VirtualRouter.edit_labels: true
             VirtualRouter.menu_labels: true
     infrastructure-top-tab:
@@ -629,7 +638,7 @@ tabs:
         actions:
             Datastore.refresh: true
             Datastore.create_dialog: true
-            Datastore.import_dialog: false
+            Datastore.import_dialog: true
             Datastore.addtocluster: true
             Datastore.rename: true
             Datastore.chown: true
@@ -796,19 +805,20 @@ tabs:
             - 2         # Name
             - 3         # Owner
             - 4         # Group
-            - 5         # Reservation
-            - 6         # Cluster
-            #- 7        # Bridge
-            - 8         # Leases
-            #- 9        # VLAN ID
-            #- 10       # Labels
-            #- 11       # Search data
+            - 5         # Status
+            - 6         # Reservation
+            - 7         # Cluster
+            #- 8         # Bridge
+            - 9         # Leases
+            #- 10        # VLAN ID
+            #- 11        # Labels
+            #- 12        # Search data
         actions:
             Network.refresh: true
             Network.create_dialog: true
-            Network.import_dialog: false
-            Network.update_dialog: true
             Network.instantiate_dialog: true
+            Network.import_dialog: true
+            Network.update_dialog: true
             Network.reserve_dialog: true
             Network.addtocluster: true
             Network.rename: true
@@ -915,8 +925,8 @@ tabs:
             Settings.change_view: true
             Settings.ssh_key: true
             Settings.login_token: true
+            Settings.two_factor_auth: true
             # Edit button in settings_quotas_tab
-            User.two_factor_auth: true
             User.quotas_dialog: false
     vmgroup-tab:
         panel_tabs:
