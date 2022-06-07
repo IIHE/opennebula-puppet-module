@@ -621,10 +621,10 @@ class one (
     $package_ensure = 'present'
   }
 
-  include one::prerequisites
-  include one::install
-  include one::config
-  include one::service
+  contain one::prerequisites
+  contain one::install
+  contain one::config
+  contain one::service
 
   Class['one::prerequisites']->
   Class['one::install']->
@@ -635,7 +635,7 @@ class one (
     if ( member(['kvm','xen','vmware','ec2', 'ganglia','dummy'], $im_mad) ) {
       if ( member(['kvm','xen','vmware','ec2', 'qemu', 'dummy'], $vm_mad) ) {
         if ( member(['802.1Q','ebtables','firewall','ovswitch','vmware','dummy'], $vn_mad) ) {
-          include one::oned
+          contain one::oned
         } else {
           fail("Network Type: ${vn_mad} is not supported.")
         }
@@ -647,15 +647,15 @@ class one (
     }
   }
   if ($node) {
-    include one::compute_node
+    contain one::compute_node
   }
   if ($sunstone) {
-    include one::oned::sunstone
+    contain one::oned::sunstone
   }
   if($oneflow) {
-    include one::oned::oneflow
+    contain one::oned::oneflow
   }
   if($onegate) {
-    include one::oned::onegate
+    contain one::oned::onegate
   }
 }
