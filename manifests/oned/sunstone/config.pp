@@ -17,18 +17,21 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::oned::sunstone::config (
-  $listen_ip               = $one::sunstone_listen_ip,
-  $enable_support          = $one::enable_support,
-  $enable_marketplace      = $one::enable_marketplace,
-  $tmpdir                  = $one::sunstone_tmpdir,
-  $sessions                = $one::sunstone_sessions,
-  $vnc_proxy_port          = $one::vnc_proxy_port,
-  $vnc_proxy_support_wss   = $one::vnc_proxy_support_wss,
-  $vnc_proxy_cert          = $one::vnc_proxy_cert,
-  $vnc_proxy_key           = $one::vnc_proxy_key,
-  $vnc_proxy_ipv6          = $one::vnc_proxy_ipv6,
-  $sunstone_logo_png       = $one::sunstone_logo_png,
-  $sunstone_logo_small_png = $one::sunstone_logo_small_png,
+  $listen_ip                 = $one::sunstone_listen_ip,
+  $enable_support            = $one::enable_support,
+  $enable_marketplace        = $one::enable_marketplace,
+  $tmpdir                    = $one::sunstone_tmpdir,
+  $sessions                  = $one::sunstone_sessions,
+  $vnc_proxy_port            = $one::vnc_proxy_port,
+  $vnc_proxy_support_wss     = $one::vnc_proxy_support_wss,
+  $vnc_proxy_cert            = $one::vnc_proxy_cert,
+  $vnc_proxy_key             = $one::vnc_proxy_key,
+  $vnc_proxy_ipv6            = $one::vnc_proxy_ipv6,
+  $sunstone_logo_png         = $one::sunstone_logo_png,
+  $sunstone_logo_small_png   = $one::sunstone_logo_small_png,
+  $fireedge                  = $one::sunstone_fireedge,
+  $fireedge_private_endpoint = $one::sunstone_fireedge_priv_endpoint,
+  $fireedge_public_endpoint  = $one::sunstone_fireedge_pub_endpoint,
 ) inherits one {
 
   $sunstone_views_root = $one::version_gte_5_8 ? {
@@ -40,12 +43,12 @@ class one::oned::sunstone::config (
     owner   => 'root',
     group   => 'oneadmin',
   }
-  file { '/usr/lib/one/sunstone':
-    ensure  => directory,
-    owner   => 'oneadmin',
-    mode    => '0755',
-    recurse => true,
-  } ->
+  # file { '/usr/lib/one/sunstone':
+  #   ensure  => directory,
+  #   owner   => 'oneadmin',
+  #   mode    => '0755',
+  #   recurse => true,
+  # } ->
   file { '/etc/one/sunstone-server.conf':
     ensure  => file,
     content => template("one/${::one::template_path}/sunstone-server.conf.erb"),

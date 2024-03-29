@@ -81,18 +81,27 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
     @property_hash[:ensure] = :present
   end
 
-  # Destroy a VM using onevm delete
+  # Destroy a VM using onetemplate delete
   def destroy
     onetemplate('delete', resource[:name])
     @property_hash.clear
   end
 
-  # Check if a VM exists by scanning the onevm list
+  # Check if a VM exists by scanning the onetemplate list
   def exists?
     @property_hash[:ensure] == :present
   end
 
-  # Return the full hash of all existing onevm resources
+  def self.get_nic(xml)
+    nic_hash = Hash.new
+    nic_hash['ip'] = xml.xpath('./IP').text
+    nic_hash['model'] = xml.xpath('./MODEL').text
+    nic_hash['network'] = xml.xpath('./NETWORK').text
+    nic_hash['network_uname'] = xml.xpath('./NETWORK_UNAME').text unless xml.xpath('./NETWORK_UNAME').nil?
+    nic_hash
+  end
+
+  # Return the full hash of all existing onetemplate resources
   def self.instances
       templates = Nokogiri::XML(onetemplate('list', '-x')).root.xpath('/VMTEMPLATE_POOL/VMTEMPLATE')
       templates.collect do |template|
@@ -102,11 +111,11 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
             :description => template.xpath('./TEMPLATE/DESCRIPTION').text,
             :context     => Hash[template.xpath('./TEMPLATE/CONTEXT/*').map { |e| [e.name.downcase, e.text.downcase] } ],
             :cpu         => (template.xpath('./TEMPLATE/CPU').text unless template.xpath('./TEMPLATE/CPU').nil?),
-            :disks       => template.xpath('./TEMPLATE/DISK').map { |disk| disk.xpath('./IMAGE').text },
+            :disks       => template.xpath('./TEMPLATE/DISK').map { |disk| {'image' => disk.xpath('./IMAGE').text} },
             :features    => Hash[template.xpath('./TEMPLATE/FEATURES/*').map { |e| [e.name.downcase, { e.text => e.text, 'true' => true, 'false' => false }[e.text.downcase]] } ],
             :graphics    => Hash[template.xpath('./TEMPLATE/GRAPHICS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
             :memory      => (template.xpath('./TEMPLATE/MEMORY').text unless template.xpath('./TEMPLATE/MEMORY').nil?),
-            :nics        => template.xpath('./TEMPLATE/NIC').map { |nic| nic.xpath('./NETWORK').text },
+            :nics        => template.xpath('./TEMPLATE/NIC').map { |nic| get_nic(nic) },
             :os          => Hash[template.xpath('./TEMPLATE/OS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
             :vcpu        => (template.xpath('./TEMPLATE/VCPU').text unless template.xpath('./TEMPLATE/VCPU').nil?)
         )
@@ -122,12 +131,40 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
   end
 
   def flush
-    file = Tempfile.new('onevnet')
-    file << @property_hash.map { |k, v|
-      unless resource[k].nil? or resource[k].to_s.empty? or [:name, :provider, :ensure].include?(k)
-        [ k.to_s.upcase, v ]
+    file = Tempfile.new('onetemplate')
+    tempfile1 = @property_hash.map { |k, v|
+      unless resource[k].nil? or resource[k].to_s.empty? or [:name, :provider, :ensure, :nics, :disks].include?(k)
+        case k
+          when :cpu
+            ['CPU', "\'#{v}\'"]
+          when :vcpu
+            ['VCPU', "\'#{v}\'"]
+          when :description
+            ['DESCRIPTION', "\'#{v}\'"]
+          when :memory
+            ['MEMORY', "\'#{v}\'"]
+          when :context
+            ['CONTEXT', "#{v.map{ |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
+          when :os
+            ['OS', "#{v.map{ |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
+          when :graphics
+            ['GRAPHICS', "#{v.map{ |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
+          else
+            [k.to_s.upcase, v]
+        end
       end
-    }.map{|a| "#{a[0]} = #{a[1]}" unless a.nil? }.join("\n")
+    }.map{|a| "#{a[0]}=#{a[1].gsub(/"/,'').gsub(/'/,'"')}" unless a.nil? }.join("\n")
+
+    tempfile2 = @property_hash[:nics].map { |e|
+      ['NIC', "#{e.map{ |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
+    }.map{|a| "#{a[0]}=#{a[1].gsub(/"/,'').gsub(/'/,'"')}" unless a.nil? }.join("\n")
+
+    tempfile3 = @property_hash[:disks].map { |e|
+      ['DISK', "#{e.map{ |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
+    }.map{|a| "#{a[0]}=#{a[1].gsub(/"/,'').gsub(/'/,'"')}" unless a.nil? }.join("\n")
+
+    tempfile = tempfile1 + "\n"  + tempfile2 + "\n" + tempfile3
+    file.write(tempfile)
     file.close
     self.debug(IO.read file.path)
     onetemplate('update', resource[:name], file.path, '--append') unless @property_hash.empty?

@@ -53,7 +53,7 @@ class one::params {
   $oned_ldap_mapping_default = hiera('one::oned::ldap_mapping_default','undef')
   $oned_ldap_mappings = hiera('one::oned::ldap_mappings',undef)
   # should we enable opennebula repos?
-  $one_repo_enable = hiera('one::enable_opennebula_repo', 'true' ) # lint:ignore:quoted_booleans
+  $one_repo_enable = hiera('one::enable_opennebula_repo', true)
   # Which version
   $one_version = hiera('one::one_version', '4.12' )
   # should VM_SUBMIT_ON_HOLD be enabled in oned.conf?
@@ -98,6 +98,8 @@ class one::params {
   $vnc_proxy_cert            = hiera('one::oned::vnc_proxy_cert', '')
   $vnc_proxy_key             = hiera('one::oned::vnc_proxy_key', '')
   $vnc_proxy_ipv6            = hiera('one::oned::vnc_proxy_ipv6', 'false') # lint:ignore:quoted_booleans
+  $sunstone_fireedge_priv_endpoint = hiera('one::sunstone_fireedge_priv_endpoint', 'http://localhost:2616')
+  $sunstone_fireedge_pub_endpoint  = hiera('one::sunstone_fireedge_pub_endpoint', 'http://localhost:2616')
 
   # generic params for nodes and oned
   $oneuid = '9869'
@@ -207,9 +209,9 @@ class one::params {
   validate_re($oneflow_core_auth, [ 'cipher','x509' ], 'Oneflow_core_auth value must be cipher or x509.')
 
   # OS specific params for nodes
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
-      if $::operatingsystemmajrelease == '7' {
+      if $facts['os']['release']['major'] >= '7' {
         $node_packages = [
           'device-mapper-libs',
           'opennebula-node-kvm',
@@ -223,18 +225,15 @@ class one::params {
           'ipset',
         ]
       }
-      if $one_version >= '6.0' {
+      if versioncmp($one_version, '6.0') >= 0 {
         $oned_packages   = ['opennebula', 'opennebula-rubygems', 'opennebula-tools']
       } else {
         $oned_packages   = ['opennebula', 'opennebula-server', 'opennebula-ruby']
       }
       $dbus_srv        = 'messagebus'
       $dbus_pkg        = 'dbus'
-      if $one_version >= '6.0' {
-        $oned_sunstone_packages = ['opennebula-sunstone', 'opennebula-fireedge', 'opennebula-guacd']
-      } else {
-        $oned_sunstone_packages = 'opennebula-sunstone'
-      }
+      $oned_sunstone_packages = ['opennebula-sunstone']
+
       $oned_sunstone_ldap_pkg = ['ruby-ldap','rubygem-net-ldap']
       # params for oneflow (optional, needs one::oneflow set to true)
       $oned_oneflow_packages = [
@@ -243,13 +242,13 @@ class one::params {
         'rubygem-polyglot',
       ]
       # params for onegate (optional, needs one::onegate set to true)
-      $oned_onegate_packages = ['opennebula-gate', 'rubygem-parse-cron']
-      $libvirtd_srv = 'libvirtd'
-      $libvirtd_cfg = '/etc/sysconfig/libvirtd'
-      $libvirtd_source = 'puppet:///modules/one/libvirtd.sysconfig'
-      $use_gems           = str2bool(hiera('one::oned::install::use_gems', 'true')) # lint:ignore:quoted_booleans
-      $rubygems           = ['builder', 'sinatra']
-      $rubygems_rpm       = ['rubygem-builder', 'rubygem-sinatra']
+      $oned_onegate_packages = ['opennebula-gate']
+      $libvirtd_srv    = 'libvirtd'
+      $libvirtd_cfg    = '/etc/sysconfig/libvirtd'
+      $libvirtd_source = 'one/libvirtd.sysconfig.erb'
+      $use_gems        = str2bool(hiera('one::oned::install::use_gems', 'true')) # lint:ignore:quoted_booleans
+      $rubygems        = ['builder', 'sinatra']
+      $rubygems_rpm    = ['rubygem-builder', 'rubygem-sinatra']
     }
     'Debian': {
       $use_gems        = true
@@ -268,11 +267,6 @@ class one::params {
       $dbus_srv        = 'dbus'
       $dbus_pkg        = 'dbus'
       $oned_sunstone_packages = 'opennebula-sunstone'
-      if $one_version >= '6.0' {
-        $oned_sunstone_packages = ['opennebula-sunstone', 'opennebula-fireedge', 'opennebula-guacd']
-      } else {
-        $oned_sunstone_packages = 'opennebula-sunstone'
-      }
       $oned_sunstone_ldap_pkg = ['ruby-ldap','ruby-net-ldap']
       $oned_oneflow_packages = [
         'opennebula-flow',
@@ -282,10 +276,10 @@ class one::params {
       $oned_onegate_packages = ['opennebula-gate']
       $libvirtd_srv = 'libvirt-bin'
       $libvirtd_cfg = '/etc/default/libvirt-bin'
-      $libvirtd_source = 'puppet:///modules/one/libvirt-bin.debian'
+      $libvirtd_source = 'one/libvirt-bin.debian.erb'
     }
     default: {
-      fail("Your OS - ${::osfamily} - is not yet supported.
+      fail("Your OS - ${facts['os']['family']} - is not yet supported.
         Please add required functionality to params.pp")
     }
   }

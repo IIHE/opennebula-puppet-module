@@ -23,13 +23,13 @@ class one::config (
     recurse => true,
   } ->
 
-  file { '/var/lib/one/.ssh/id_dsa':
+  file { '/var/lib/one/.ssh/id_rsa':
     ensure  => file,
     content => $ssh_priv_key,
     mode    => '0600',
   } ->
 
-  file { '/var/lib/one/.ssh/id_dsa.pub':
+  file { '/var/lib/one/.ssh/id_rsa.pub':
     ensure  => file,
     content => $ssh_pub_key,
     mode    => '0644',

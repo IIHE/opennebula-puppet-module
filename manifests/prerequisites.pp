@@ -22,11 +22,11 @@ class one::prerequisites(
   $one_repo_enable  = $one::one_repo_enable,
 ) {
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
-      if ( $one_repo_enable == 'true' ) { # lint:ignore:quoted_booleans
+      if ( $one_repo_enable ) {
         yumrepo { 'opennebula':
-          baseurl  => "http://downloads.opennebula.org/repo/${::one::one_version_short}/CentOS/${::operatingsystemmajrelease}/x86_64/",
+          baseurl  => "http://downloads.opennebula.org/repo/${::one::one_version_short}/CentOS/${facts['os']['release']['major']}/x86_64/",
           descr    => 'OpenNebula',
           enabled  => 1,
           gpgcheck => 0,
@@ -34,18 +34,18 @@ class one::prerequisites(
       }
     }
     'Debian' : {
-      if ($one_repo_enable == 'true') { # lint:ignore:quoted_booleans
+      if ( $one_repo_enable ) {
         include ::apt
-        case $::operatingsystem {
+        case $facts['os']['name'] {
           'Debian': {
-            $apt_location="${::one::one_version_short}/Debian/${::operatingsystemmajrelease}"
+            $apt_location="${::one::one_version_short}/Debian/${facts['os']['release']['major']}"
             $apt_pin='-10'
           }
           'Ubuntu': {
-            $apt_location="${::one::one_version_short}/Ubuntu/${::operatingsystemmajrelease}"
+            $apt_location="${::one::one_version_short}/Ubuntu/${facts['os']['release']['major']}"
             $apt_pin='500'
           }
-          default: { fail("Unrecognized operating system ${::operatingsystem}") }
+          default: { fail("Unrecognized operating system ${facts['os']['name']}") }
         }
 
         apt::key { 'one_repo_key':

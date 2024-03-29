@@ -19,8 +19,27 @@
 class one::oned::sunstone::install (
   $oned_sunstone_packages = $one::oned_sunstone_packages,
   $package_ensure         = $one::package_ensure,
+  $sunstone_fireedge      = $one::sunstone_fireedge,
+  $one_version            = $one::one_version,
 ) inherits one {
   package { $oned_sunstone_packages:
     ensure => $package_ensure,
+  }
+  if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge) {
+    case $facts['os']['name'] {
+      'CentOS': {
+        if ($facts['os']['release']['major'] == '7') {
+          package { 'centos-release-scl-rh':
+            ensure => $package_ensure,
+          }
+        }
+        package { ['opennebula-fireedge', 'opennebula-guacd']:
+          ensure => $package_ensure,
+        }
+      }
+      default: {
+        fail("Your OS - $facts['os']['name'] - is not yet supported.")
+      }
+    }
   }
 }

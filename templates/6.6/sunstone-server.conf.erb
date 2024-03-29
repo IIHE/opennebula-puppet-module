@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2021, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2022, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -42,7 +42,7 @@
 #
 # NOTE. memcache needs a separate memcached server to be configured. Refer
 # to memcached documentation to configure the server.
-::sessions: <%= @sessions %>
+:sessions: <%= @sessions %>
 
 # Memcache configuration
 :memcache_host: localhost
@@ -67,7 +67,12 @@
 # Log debug level
 #   0 = ERROR, 1 = WARNING, 2 = INFO, 3 = DEBUG
 #
-debug_level: <%= @debug_level %>
+# System
+#   - file: log to log file
+#   - syslog: log to syslog
+:log:
+  :level: <%= @debug_level %>
+  :system: 'file'
 
 ################################################################################
 # Proxy
@@ -128,14 +133,6 @@ debug_level: <%= @debug_level %>
 # :webauthn_algorithms: [ES256, PS256, RS256]
 
 ################################################################################
-# Check Upgrades
-################################################################################
-
-# To check for the latest release. Comment this value if you don't want to check
-# this.
-:remote_version: http://downloads.opennebula.org/latest
-
-################################################################################
 # UI Settings
 ################################################################################
 # :vnc_proxy_
@@ -178,10 +175,10 @@ debug_level: <%= @debug_level %>
 # Default views directory
 :mode: 'mixed'
 
-# Retrieve extended information from OpenNebula
+# Retrieve extended information from OpenNebula
 :get_extended_vm_info: false
 
-# Retrieve extended information about monitoring from OpenNebula
+# Retrieve extended information about monitoring from OpenNebula
 :get_extended_vm_monitoring: false
 
 # this is for custom paginate
@@ -202,6 +199,9 @@ debug_level: <%= @debug_level %>
       time: "-86400"
       color: "#ef2808"
 
+# This disable the information sending via URL to Guacamole console
+:disable_guacamole_info_header: no
+
 # This change the thresholds of dashboard resource usage
 :threshold_min: 0
 :threshold_low: 33
@@ -219,22 +219,6 @@ debug_level: <%= @debug_level %>
 ################################################################################
 
 #:token_remote_support:
-
-################################################################################
-# Marketplace
-################################################################################
-
-# Marketplace username and password
-# If no credentials are provided, an anonymous client will be used
-#
-#:marketplace_username:
-#:marketplace_password:
-
-# Marketplace endpoint
-# The url should not include the /appliance path since it will be automatically
-# included
-#
-:marketplace_url: http://marketplace.opennebula.io/
 
 ################################################################################
 # OneFlow

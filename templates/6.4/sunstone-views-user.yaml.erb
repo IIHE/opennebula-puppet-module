@@ -32,15 +32,15 @@ enabled_tabs:
     - vnets-templates-tab
     - vnets-topology-tab
     - secgroups-tab
-    - infrastructure-top-tab
-    - clusters-tab
-    - hosts-tab
-    - zones-tab
-    - system-top-tab
-    - users-tab
-    - groups-tab
-    - vdcs-tab
-    - acls-tab
+    #- infrastructure-top-tab
+    #- clusters-tab
+    #- hosts-tab
+    #- zones-tab
+    #- system-top-tab
+    #- users-tab
+    #- groups-tab
+    #- vdcs-tab
+    #- acls-tab
     - settings-tab
     - vmgroup-tab
 features:
@@ -54,14 +54,17 @@ features:
     # True to hide the CPU setting in the VM creation dialog
     instantiate_hide_cpu: false
 
-    # False to not scale the CPU. Number to scale from VCPU
+    # False to not scale the CPU.
+    # An integer value would be used as a multiplier as follows:
+    #     CPU = instantiate_cpu_factor * VCPU
+    # Set it to 1 to tie CPU and vCPU.
     instantiate_cpu_factor: false
 
     # True to show the option to make an instance persistent
     instantiate_persistent: true
 
     # True to show the datastore datatable to instantiate VM
-    show_ds_instantiate: true
+    show_ds_instantiate: false
 
     # True to show the vmgroup datatable to instantiate VM
     show_vmgroup_instantiate: true
@@ -70,7 +73,7 @@ features:
     show_vnet_instantiate: true
 
     # True to show the host datatable to instantiate VM
-    show_host_instantiate: true
+    show_host_instantiate: false
 
     # True to show context section to instantiate Network
     show_context_instantiate_vnet: true
@@ -88,12 +91,6 @@ features:
     # True to show the attributes info (VM & VRouters)
     show_attributes_info: true
 
-    # True to show the user datatable to instantiate VM
-    show_as_uid_instantiate: true
-
-    # True to show the group datatable to instantiate VM
-    show_as_gid_instantiate: true
-
     # If it is set to true, the host capacity will be checked. This will only affect oneadmin requests,
     # regular users resize requests will always be enforced
     resize_enforce: false
@@ -105,11 +102,11 @@ features:
     # True to show the network configuration to instantiate Service template
     show_vnet_instantiate_flow: true
 
-    # True to show schedule actions to instantiate a VM
+    # True to show schedule actions section to instantiate VM
     show_sched_actions_instantiate: true
 
     # True to show boot order section to instantiate VM
-    show_boot_order: truem
+    show_boot_order: true
 tabs:
     dashboard-tab:
         # The following widgets can be used inside any of the '_per_row' settings
@@ -129,13 +126,11 @@ tabs:
             Dashboard.refresh: false
             Sunstone.toggle_top: false
         widgets_one_per_row:
-            - hosts
+            - vms
         widgets_three_per_row:
         widgets_two_per_row:
-            - vms
-            - users
-            - storage
             - network
+            - storage
         widgets_one_footer:
     system-top-tab:
         panel_tabs:
@@ -217,7 +212,7 @@ tabs:
             - 5         # Hosts
             - 6         # VNets
             - 7         # Datastores
-            #- 8        # Labels
+            #- 8         # Labels
         actions:
             Vdc.refresh: true
             Vdc.create_dialog: true
@@ -236,7 +231,7 @@ tabs:
             - 4         # Resource ID / Owned by
             - 5         # Allowed operations
             - 6         # Zone
-            #- 7        # ACL String
+            #- 7         # ACL String
         actions:
             Acl.refresh: true
             Acl.create_dialog: true
@@ -251,12 +246,12 @@ tabs:
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
             - 5         # Registration time
-            #- 6        # Labels
-            #- 7        # Search data
+            #- 6         # Labels
+            #- 7         # Search data
         actions:
             Template.refresh: true
             Template.create_dialog: true
@@ -264,8 +259,8 @@ tabs:
             Template.update_dialog: true
             Template.instantiate_vms: true
             Template.rename: true
-            Template.chown: true
-            Template.chgrp: true
+            Template.chown: false
+            Template.chgrp: false
             Template.chmod: true
             Template.clone_dialog: true
             Template.delete_dialog: true
@@ -285,8 +280,8 @@ tabs:
             input_output: true
             context: true
             actions: true
-            scheduling: true
-            hybrid: true
+            scheduling: false
+            hybrid: false
             vmgroup: true
             other: true
             numa: true
@@ -298,18 +293,19 @@ tabs:
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
-            #- 5        # Labels
-            #- 6        # Search data
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
+            - 5        # Registration time
+            #- 6        # Labels
+            #- 7        # Search data
         actions:
             ServiceTemplate.refresh: true
             ServiceTemplate.create_dialog: true
             ServiceTemplate.update_dialog: true
             ServiceTemplate.instantiate: true
-            ServiceTemplate.chown: true
-            ServiceTemplate.chgrp: true
+            ServiceTemplate.chown: false
+            ServiceTemplate.chgrp: false
             ServiceTemplate.chmod: true
             ServiceTemplate.rename: true
             ServiceTemplate.clone_dialog: true
@@ -323,20 +319,20 @@ tabs:
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
             - 5         # Registration time
-            #- 6        # Labels
-            #- 7        # Search data
+            #- 6         # Labels
+            #- 7         # Search data
         actions:
             VirtualRouterTemplate.refresh: true
             VirtualRouterTemplate.create_dialog: true
             VirtualRouterTemplate.update_dialog: true
             VirtualRouterTemplate.instantiate_dialog: true
             VirtualRouterTemplate.rename: true
-            VirtualRouterTemplate.chown: true
-            VirtualRouterTemplate.chgrp: true
+            VirtualRouterTemplate.chown: false
+            VirtualRouterTemplate.chgrp: false
             VirtualRouterTemplate.chmod: true
             VirtualRouterTemplate.clone_dialog: true
             VirtualRouterTemplate.delete_dialog: true
@@ -353,7 +349,7 @@ tabs:
             input_output: true
             context: true
             scheduling: true
-            hybrid: true
+            hybrid: false
             other: true
     instances-top-tab:
         panel_tabs:
@@ -365,36 +361,36 @@ tabs:
             vm_storage_tab: true
             vm_network_tab: true
             vm_snapshot_tab: true
-            vm_placement_tab: true
+            vm_placement_tab: false
             vm_actions_tab: true
             vm_conf_tab: true
-            vm_template_tab: true
-            vm_log_tab: true
+            vm_template_tab: false
+            vm_log_tab: false
         table_columns:
             - 0       # Checkbox
             - 1       # ID
-            - 2       # Name
-            - 3       # Owner
-            - 4       # Group
+            - 2       # Owner
+            - 3       # Group
+            - 4       # Name
             - 5       # Status
             - 6       # Host
             - 7       # IPs
-            #- 8     # Start Time
+            #- 8      # Start Time
             - 9      # VNC
-            #- 10     # Hidden Template
-            #- 11     # Labels
-            #- 12     # Search data
-            - 13     # Clock leasesd
+            #- 10      # Hidden Template
+            #- 11      # Labels
+            #- 12      # Search data
+            #- 13     # Clock leases
         actions:
             VM.refresh: true
             VM.create_dialog: true
             VM.rename: true
-            VM.chown: true
-            VM.chgrp: true
+            VM.chown: false
+            VM.chgrp: false
             VM.chmod: true
-            VM.deploy: true
-            VM.migrate: true
-            VM.migrate_live: true
+            VM.deploy: false
+            VM.migrate: false
+            VM.migrate_live: false
             VM.migrate_poff: false
             VM.migrate_poff_hard: false
             VM.hold: true
@@ -402,7 +398,7 @@ tabs:
             VM.suspend: true
             VM.resume: true
             VM.stop: true
-            VM.recover: true
+            VM.recover: false
             VM.reboot: true
             VM.reboot_hard: true
             VM.poweroff: true
@@ -412,10 +408,10 @@ tabs:
             VM.terminate: true
             VM.terminate_hard: true
             VM.resize: true
-            VM.disk_resize: true
             VM.attachdisk: true
             VM.detachdisk: true
             VM.disk_saveas: true
+            VM.disk_resize: false
             VM.attachnic: true
             VM.detachnic: true
             VM.snapshot_create: true
@@ -425,8 +421,8 @@ tabs:
             VM.disk_snapshot_revert: true
             VM.disk_snapshot_rename: true
             VM.disk_snapshot_delete: true
-            VM.resched: true
-            VM.unresched: true
+            VM.resched: false
+            VM.unresched: false
             VM.save_as_template: true
             VM.updateconf: true
             VM.lockU: true
@@ -441,6 +437,9 @@ tabs:
             VM.rdp: true
             VM.save_rdp: true
             VM.save_virt_viewer: true
+            VM.attachsg: true
+            VM.detachsg: true
+            VM.instantiate_name: true
     oneflow-services-tab:
         panel_tabs:
             service_info_tab: true
@@ -476,15 +475,15 @@ tabs:
                 RoleVM.undeploy_hard: true
                 RoleVM.terminate: true
                 RoleVM.terminate_hard: true
-                RoleVM.resched: true
-                RoleVM.unresched: true
-                RoleVM.recover: true
+                RoleVM.resched: false
+                RoleVM.unresched: false
+                RoleVM.recover: false
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
             - 5         # State
             - 6         # Registration time
             #- 7        # Labels
@@ -493,8 +492,8 @@ tabs:
         actions:
             Service.refresh: true
             Service.create_dialog: true
-            Service.chown: true
-            Service.chgrp: true
+            Service.chown: false
+            Service.chgrp: false
             Service.chmod: true
             Service.rename: true
             Service.shutdown: false
@@ -524,6 +523,8 @@ tabs:
             VirtualRouter.delete: true
             VirtualRouter.attachnic: true
             VirtualRouter.detachnic: true
+            VirtualRouter.lockU: true
+            VirtualRouter.unlock: true
             VirtualRouter.edit_labels: true
             VirtualRouter.menu_labels: true
     infrastructure-top-tab:
@@ -542,7 +543,7 @@ tabs:
             - 3         # Hosts
             - 4         # VNets
             - 5         # Datastores
-            #- 6        # Labels
+            #- 6         # Labels
         actions:
             Cluster.refresh: true
             Cluster.create_dialog: true
@@ -595,7 +596,7 @@ tabs:
             - 1         # ID
             - 2         # Name
             - 3         # Endpoint
-            #- 4        # Labels
+            #- 4         # Labels
         actions:
             Zone.refresh: true
             Zone.create_dialog: true
@@ -608,36 +609,36 @@ tabs:
         actions:
     datastores-tab:
         panel_tabs:
-            datastore_info_tab: true
+            datastore_info_tab: false
             datastore_image_tab: true
-            datastore_clusters_tab: true
+            datastore_clusters_tab: false
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
             - 5         # Capacity
             - 6         # Cluster
-            #- 7        # Basepath
-            #- 8        # TM
-            #- 9        # DS
-            - 10        # Type
-            - 11        # Status
-            #- 12       # Labels
-            #- 13       # Search data
+            #- 7         # Basepath
+            #- 8         # TM
+            #- 9         # DS
+            #- 10        # Type
+            #- 11        # Status
+            #- 12        # Labels
+            #- 13        # Search data
         actions:
             Datastore.refresh: true
-            Datastore.create_dialog: true
+            Datastore.create_dialog: false
             Datastore.import_dialog: false
-            Datastore.addtocluster: true
+            Datastore.addtocluster: false
             Datastore.rename: true
-            Datastore.chown: true
-            Datastore.chgrp: true
+            Datastore.chown: false
+            Datastore.chgrp: false
             Datastore.chmod: true
-            Datastore.delete: true
-            Datastore.enable: true
-            Datastore.disable: true
+            Datastore.delete: false
+            Datastore.enable: false
+            Datastore.disable: false
             Datastore.edit_labels: true
             Datastore.menu_labels: true
     images-tab:
@@ -651,27 +652,27 @@ tabs:
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
             - 5         # Datastore
-            #- 6        # Size
-            - 7         # Type
-            #- 8        # Registration time
+            #- 6         # Size
+            - 7        # Type
+            #- 8         # Registration time
             #- 9        # Persistent
             - 10        # Status
             - 11        # #VMs
             #- 12       # Target
             #- 13       # Labels
-            #- 14       # Search data
+            #- 14        # Search data
         actions:
             Image.refresh: true
             Image.create_dialog: true
-            Image.import_dialog: true
+            Image.import_dialog: false
             Image.upload_marketplace_dialog: true
             Image.rename: true
-            Image.chown: true
-            Image.chgrp: true
+            Image.chown: false
+            Image.chgrp: false
             Image.chmod: true
             Image.enable: true
             Image.disable: true
@@ -692,25 +693,25 @@ tabs:
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
             - 5         # Datastore
-            #- 6        # Size
-            - 7         # Type
-            #- 8        # Registration time
+            #- 6         # Size
+            - 7        # Type
+            #- 8         # Registration time
             #- 9        # Persistent
             - 10        # Status
-            #- 11       # #VMs
+            #- 11        # #VMs
             #- 12       # Target
             #- 13       # Labels
-            #- 14       # Search data
+            #- 14        # Search data
         actions:
             File.refresh: true
             File.create_dialog: true
             File.rename: true
-            File.chown: true
-            File.chgrp: true
+            File.chown: false
+            File.chgrp: false
             File.chmod: true
             File.enable: true
             File.disable: true
@@ -724,15 +725,15 @@ tabs:
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
             - 5         # Capacity
             - 6         # Apps
             - 7         # Driver
             - 8         # Zone
             #- 9        # Labels
-            #- 10       # Search data
+            #- 10        # Search data
         actions:
             MarketPlace.refresh: true
             MarketPlace.create_dialog: true
@@ -753,18 +754,18 @@ tabs:
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
-            #- 5        # Version
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
+            #- 5         # Version
             - 6         # Size
             - 7         # State
-            - 8        # Type
+            - 8         # Type
             - 9         # Registration
             - 10        # Marketplace
-            - 11        # Zone
-            #- 12       # Labels
-            #- 13       # Search data
+            - 11         # Zone
+            #- 12        # Labels
+            #- 13        # Search data
         actions:
             MarketPlaceApp.refresh: true
             MarketPlaceApp.create_dialog: true
@@ -789,36 +790,37 @@ tabs:
             vnet_leases_tab: true
             vnet_sg_list_tab: true
             vnet_vr_list_tab: true
-            vnet_clusters_tab: true
+            vnet_clusters_tab: false
         table_columns:
             - 0         # Checkbox
             - 1         # ID
             - 2         # Name
             - 3         # Owner
             - 4         # Group
-            - 5         # Reservation
-            - 6         # Cluster
-            #- 7        # Bridge
-            - 8         # Leases
-            #- 9        # VLAN ID
-            #- 10       # Labels
-            #- 11       # Search data
+            - 5         # Status
+            - 6         # Reservation
+            - 7         # Cluster
+            #- 8         # Bridge
+            - 9         # Leases
+            #- 10        # VLAN ID
+            #- 11        # Labels
+            #- 12        # Search data
         actions:
             Network.refresh: true
-            Network.create_dialog: true
+            Network.create_dialog: false
             Network.import_dialog: false
             Network.update_dialog: true
             Network.instantiate_dialog: true
             Network.reserve_dialog: true
-            Network.addtocluster: true
+            Network.addtocluster: false
             Network.rename: true
-            Network.chown: true
-            Network.chgrp: true
+            Network.chown: false
+            Network.chgrp: false
             Network.chmod: true
             Network.delete: true
             Network.hold_lease: true
             Network.release_lease: true
-            Network.add_ar: true
+            Network.add_ar: false
             Network.remove_ar: true
             Network.update_ar: true
             Network.lockU: true
@@ -845,7 +847,7 @@ tabs:
             #- 11       # Search data
         actions:
             VNTemplate.refresh: true
-            VNTemplate.create_dialog: true
+            VNTemplate.create_dialog: false
             VNTemplate.instantiate_vnets: true
             VNTemplate.update_dialog: true
             VNTemplate.rename: true
@@ -877,10 +879,10 @@ tabs:
         table_columns:
             - 0         # Checkbox
             - 1         # ID
-            - 2         # Name
-            - 3         # Owner
-            - 4         # Group
-            #- 5        # Labels
+            - 2         # Owner
+            - 3         # Group
+            - 4         # Name
+            #- 5         # Labels
             #- 6        # Search data
         actions:
             SecurityGroup.refresh: true
@@ -915,8 +917,8 @@ tabs:
             Settings.change_view: true
             Settings.ssh_key: true
             Settings.login_token: true
+            Settings.two_factor_auth: true
             # Edit button in settings_quotas_tab
-            User.two_factor_auth: true
             User.quotas_dialog: false
     vmgroup-tab:
         panel_tabs:
@@ -926,10 +928,10 @@ tabs:
             - 0         # Checkbox
             - 1         # ID
             - 2         # Name
-            - 3         # Owner
-            - 4         # Group
+            - 3         # Group
+            - 4         # Owner
             - 5         # Vms
-            #- 6        # Labels
+            #- 6         # Labels
             #- 7        # Search data
         actions:
            VMGroup.create_dialog: true

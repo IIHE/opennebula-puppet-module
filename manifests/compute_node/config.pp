@@ -40,9 +40,18 @@ class one::compute_node::config (
   validate_string ($debian_mirror_url)
   validate_hash   ($preseed_data)
 
-  $_polkit_file_path = $::osfamily ? {
+  $_polkit_file_path = $facts['os']['family'] ? {
     'RedHat' => '/etc/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla',
     'Debian' => '/var/lib/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla',
+  }
+
+  #For RedHat: As of libvirtd 5.6.0, the libvirtd daemon uses systemd socket activation.
+  #For this reason, with CentOS 8, you must not use the --listen parameter.
+  #Source: https://bugzilla.redhat.com/show_bug.cgi?id=1750340
+  if ( $facts['os']['family'] == 'RedHat' and $facts['os']['name'] == 'CentOS' ) {
+    $systemd_socket_activation = true
+  } else {
+    $systemd_socket_activation = false
   }
 
   file { '/etc/libvirt/libvirtd.conf':
@@ -54,11 +63,11 @@ class one::compute_node::config (
   } ->
 
   file { $libvirtd_cfg:
-    ensure => file,
-    source => $libvirtd_source,
-    owner  => 'root',
-    group  => 'root',
-    notify => Service[$libvirtd_srv],
+    ensure  => file,
+    content => template($libvirtd_source),
+    owner   => 'root',
+    group   => 'root',
+    notify  => Service[$libvirtd_srv],
   } ->
 
   file { '/etc/udev/rules.d/80-kvm.rules':
@@ -140,7 +149,7 @@ class one::compute_node::config (
     }
   }
 
-  if ($::osfamily == 'Debian') or ($::osfamily == 'RedHat' and versioncmp($::operatingsystemmajrelease, '7') < 0) {
+  if ($facts['os']['family'] == 'Debian') or ($facts['os']['family  '] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') < 0) {
     file { '/sbin/brctl':
       ensure => link,
       target => '/usr/sbin/brctl',

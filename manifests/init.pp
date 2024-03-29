@@ -76,6 +76,10 @@
 #   defines whether novnc should be started for sunstone web interface
 #   fully optional and only used if $sunstone is set to true
 #
+# $sunstone_fireedge - default false
+#   defines whether fireedge will be used
+#   fully optional and only used if $sunstone is set to true
+#
 # $ldap true|false - default false
 #   defines whether sunstone authentication to ldap should be enabled
 #   ldap is fully optional
@@ -195,6 +199,12 @@
 #   use custom small logo in upper left corner of sunstone admin
 #   used as the 'source' for image file resource
 #   e.g. puppet:///modules/mymodule/my-custom-small-logo.png
+#
+# $sunstone_fireedge_priv_endpoint - default http://localhost:2616
+#   url of the private fireedge endpoint for sunstone
+#
+# $sunstone_fireedge_pub_endpoint -default http://localhost:2616
+#   url of the public fireedge endpoint for sunstone
 #
 # ===== OpenNebula host monitoring configuration
 # $monitoring_interval - default 60
@@ -359,6 +369,7 @@ class one (
   $sunstone           = false,
   $sunstone_passenger = false,
   $sunstone_novnc     = false,
+  $sunstone_fireedge  = false,
   $ldap               = false,
   $oneflow            = false,
   $onegate            = false,
@@ -366,125 +377,132 @@ class one (
   $ha_setup           = false,
   $puppetdb           = false,
   $debug_level        = '0',
-  $oned_log_system                = $one::params::oned_log_system,
-  $oned_port                      = $one::params::oned_port,
-  $oned_db                        = $one::params::oned_db,
-  $oned_db_user                   = $one::params::oned_db_user,
-  $oned_db_password               = $one::params::oned_db_password,
-  $oned_db_host                   = $one::params::oned_db_host,
-  $oned_vm_submit_on_hold         = $one::params::oned_vm_submit_on_hold,
-  $oned_default_auth              = $one::params::oned_default_auth,
-  $oned_ldap_host                 = $one::params::oned_ldap_host,
-  $oned_ldap_port                 = $one::params::oned_ldap_port,
-  $oned_ldap_base                 = $one::params::oned_ldap_base,
-  $oned_ldap_user                 = $one::params::oned_ldap_user,
-  $oned_ldap_pass                 = $one::params::oned_ldap_pass,
-  $oned_ldap_group                = $one::params::oned_ldap_group,
-  $oned_ldap_user_field           = $one::params::oned_ldap_user_field,
-  $oned_ldap_group_field          = $one::params::oned_ldap_group_field,
-  $oned_ldap_user_group_field     = $one::params::oned_ldap_user_group_field,
-  $oned_ldap_mapping_generate     = $one::params::oned_ldap_mapping_generate,
-  $oned_ldap_mapping_timeout      = $one::params::oned_ldap_mapping_timeout,
-  $oned_ldap_mapping_filename     = $one::params::oned_ldap_mapping_filename,
-  $oned_ldap_mappings             = $one::params::oned_ldap_mappings,
-  $oned_ldap_mapping_key          = $one::params::oned_ldap_mapping_key,
-  $oned_ldap_mapping_default      = $one::params::oned_ldap_mapping_default,
-  $one_repo_enable                = $one::params::one_repo_enable,
-  $ssh_priv_key_param             = $one::params::ssh_priv_key_param,
-  $ssh_pub_key                    = $one::params::ssh_pub_key,
-  $xmlrpc_maxconn                 = $one::params::xmlrpc_maxconn,
-  $xmlrpc_maxconn_backlog         = $one::params::xmlrpc_maxconn_backlog,
-  $xmlrpc_keepalive_timeout       = $one::params::xmlrpc_keepalive_timeout,
-  $xmlrpc_keepalive_max_conn      = $one::params::xmlrpc_keepalive_max_conn,
-  $xmlrpc_timeout                 = $one::params::xmlrpc_timeout,
-  $sunstone_listen_ip             = $one::params::sunstone_listen_ip,
-  $sunstone_logo_png              = $one::params::sunstone_logo_png,
-  $sunstone_logo_small_png        = $one::params::sunstone_logo_small_png,
-  $enable_support                 = $one::params::enable_support,
-  $enable_marketplace             = $one::params::enable_marketplace,
-  $sunstone_tmpdir                = $one::params::sunstone_tmpdir,
-  $vnc_proxy_port                 = $one::params::vnc_proxy_port,
-  $vnc_proxy_support_wss          = $one::params::vnc_proxy_support_wss,
-  $vnc_proxy_cert                 = $one::params::vnc_proxy_cert,
-  $vnc_proxy_key                  = $one::params::vnc_proxy_key,
-  $vnc_proxy_ipv6                 = $one::params::vnc_proxy_ipv6,
-  $oneuid                         = $one::params::oneuid,
-  $onegid                         = $one::params::onegid,
-  $monitoring_interval            = $one::params::monitoring_interval,
-  $monitoring_interval_host       = $one::params::monitoring_interval_host,
-  $monitoring_interval_vm         = $one::params::monitoring_interval_vm,
-  $monitoring_interval_datastore  = $one::params::monitoring_interval_datastore,
-  $monitoring_interval_market     = $one::params::monitoring_interval_market,
-  $monitoring_threads             = $one::params::monitoring_threads,
-  $information_collector_interval = $one::params::information_collector_interval,
-  $http_proxy                     = $one::params::http_proxy,
-  $hook_scripts_path              = $one::params::hook_scripts_path,
-  $hook_scripts_pkgs              = $one::params::hook_scripts_pkgs,
-  $hook_scripts                   = $one::params::hook_scripts,
-  $inherit_datastore_attrs        = $one::params::inherit_datastore_attrs,
-  $oned_onegate_ip                = $one::params::oned_onegate_ip,
-  $oned_onegate_endpoint          = $one::params::oned_onegate_endpoint,
-  $kickstart_network              = $one::params::kickstart_network,
-  $kickstart_partition            = $one::params::kickstart_partition,
-  $kickstart_rootpw               = $one::params::kickstart_rootpw,
-  $kickstart_data                 = $one::params::kickstart_data,
-  $kickstart_tmpl                 = $one::params::kickstart_tmpl,
-  $preseed_data                   = $one::params::preseed_data,
-  $preseed_debian_mirror_url      = $one::params::preseed_debian_mirror_url,
-  $preseed_ohd_deb_repo           = $one::params::preseed_ohd_deb_repo,
-  $preseed_tmpl                   = $one::params::preseed_tmpl,
-  $backup_script_path             = $one::params::backup_script_path,
-  $backup_dir                     = $one::params::backup_dir,
-  $backup_opts                    = $one::params::backup_opts,
-  $backup_db                      = $one::params::backup_db,
-  $backup_db_user                 = $one::params::backup_db_user,
-  $backup_db_password             = $one::params::backup_db_password,
-  $backup_db_host                 = $one::params::backup_db_host,
-  $backup_intervall               = $one::params::backup_intervall,
-  $backup_keep                    = $one::params::backup_keep,
-  $node_packages                  = $one::params::node_packages,
-  $oned_packages                  = $one::params::oned_packages,
-  $dbus_srv                       = $one::params::dbus_srv,
-  $dbus_pkg                       = $one::params::dbus_pkg,
-  $oned_sunstone_packages         = $one::params::oned_sunstone_packages,
-  $oned_sunstone_ldap_pkg         = $one::params::oned_sunstone_ldap_pkg,
-  $oned_oneflow_packages          = $one::params::oned_oneflow_packages,
-  $oned_onegate_packages          = $one::params::oned_onegate_packages,
-  $package_ensure_latest          = $one::params::package_ensure_latest,
-  $libvirtd_srv                   = $one::params::libvirtd_srv,
-  $libvirtd_cfg                   = $one::params::libvirtd_cfg,
-  $libvirtd_source                = $one::params::libvirtd_source,
-  $manage_sudoer_config           = true,
-  $oneadmin_sudoers_file          = $one::params::oneadmin_sudoers_file,
-  $imaginator_sudoers_file        = $one::params::imaginator_sudoers_file,
-  $vlan_ids_start                 = $one::params::vlan_ids_start,
-  $vlan_ids_reserved              = $one::params::vlan_ids_reserved,
-  $vxlan_ids_start                = $one::params::vxlan_ids_start,
-  $kvm_driver_emulator            = $one::params::kvm_driver_emulator,
-  $kvm_driver_nic_attrs           = $one::params::kvm_driver_nic_attrs,
-  $rubygems                       = $one::params::rubygems,
-  $sched_interval                 = $one::params::sched_interval,
-  $sched_max_vm                   = $one::params::sched_max_vm,
-  $sched_max_dispatch             = $one::params::sched_max_dispatch,
-  $sched_max_host                 = $one::params::sched_max_host,
-  $sched_live_rescheds            = $one::params::sched_live_rescheds,
-  $sched_default_policy           = $one::params::sched_default_policy,
-  $sched_default_rank             = $one::params::sched_default_rank,
-  $sched_default_ds_policy        = $one::params::sched_default_ds_policy,
-  $sched_default_ds_rank          = $one::params::sched_default_ds_rank,
-  $sched_log_system               = $one::params::sched_log_system,
-  $sched_log_debug_level          = $one::params::sched_log_debug_level,
-  $datastore_capacity_check       = $one::params::datastore_capacity_check,
-  $default_image_type             = $one::params::default_image_type,
-  $default_device_prefix          = $one::params::default_device_prefix,
-  $default_cdrom_device_prefix    = $one::params::default_cdrom_device_prefix,
-  $one_version                    = $one::params::one_version,
+  $oned_log_system                 = $one::params::oned_log_system,
+  $oned_port                       = $one::params::oned_port,
+  $oned_db                         = $one::params::oned_db,
+  $oned_db_user                    = $one::params::oned_db_user,
+  $oned_db_password                = $one::params::oned_db_password,
+  $oned_db_host                    = $one::params::oned_db_host,
+  $oned_vm_submit_on_hold          = $one::params::oned_vm_submit_on_hold,
+  $oned_default_auth               = $one::params::oned_default_auth,
+  $oned_ldap_host                  = $one::params::oned_ldap_host,
+  $oned_ldap_port                  = $one::params::oned_ldap_port,
+  $oned_ldap_base                  = $one::params::oned_ldap_base,
+  $oned_ldap_user                  = $one::params::oned_ldap_user,
+  $oned_ldap_pass                  = $one::params::oned_ldap_pass,
+  $oned_ldap_group                 = $one::params::oned_ldap_group,
+  $oned_ldap_user_field            = $one::params::oned_ldap_user_field,
+  $oned_ldap_group_field           = $one::params::oned_ldap_group_field,
+  $oned_ldap_user_group_field      = $one::params::oned_ldap_user_group_field,
+  $oned_ldap_mapping_generate      = $one::params::oned_ldap_mapping_generate,
+  $oned_ldap_mapping_timeout       = $one::params::oned_ldap_mapping_timeout,
+  $oned_ldap_mapping_filename      = $one::params::oned_ldap_mapping_filename,
+  $oned_ldap_mappings              = $one::params::oned_ldap_mappings,
+  $oned_ldap_mapping_key           = $one::params::oned_ldap_mapping_key,
+  $oned_ldap_mapping_default       = $one::params::oned_ldap_mapping_default,
+  $one_repo_enable                 = $one::params::one_repo_enable,
+  $ssh_priv_key_param              = $one::params::ssh_priv_key_param,
+  $ssh_pub_key                     = $one::params::ssh_pub_key,
+  $xmlrpc_maxconn                  = $one::params::xmlrpc_maxconn,
+  $xmlrpc_maxconn_backlog          = $one::params::xmlrpc_maxconn_backlog,
+  $xmlrpc_keepalive_timeout        = $one::params::xmlrpc_keepalive_timeout,
+  $xmlrpc_keepalive_max_conn       = $one::params::xmlrpc_keepalive_max_conn,
+  $xmlrpc_timeout                  = $one::params::xmlrpc_timeout,
+  $sunstone_listen_ip              = $one::params::sunstone_listen_ip,
+  $sunstone_logo_png               = $one::params::sunstone_logo_png,
+  $sunstone_logo_small_png         = $one::params::sunstone_logo_small_png,
+  $enable_support                  = $one::params::enable_support,
+  $enable_marketplace              = $one::params::enable_marketplace,
+  $sunstone_tmpdir                 = $one::params::sunstone_tmpdir,
+  $sunstone_fireedge_priv_endpoint = $one::params::sunstone_fireedge_priv_endpoint,
+  $sunstone_fireedge_pub_endpoint  = $one::params::sunstone_fireedge_pub_endpoint,
+  $vnc_proxy_port                  = $one::params::vnc_proxy_port,
+  $vnc_proxy_support_wss           = $one::params::vnc_proxy_support_wss,
+  $vnc_proxy_cert                  = $one::params::vnc_proxy_cert,
+  $vnc_proxy_key                   = $one::params::vnc_proxy_key,
+  $vnc_proxy_ipv6                  = $one::params::vnc_proxy_ipv6,
+  $oneuid                          = $one::params::oneuid,
+  $onegid                          = $one::params::onegid,
+  $monitoring_interval             = $one::params::monitoring_interval,
+  $monitoring_interval_host        = $one::params::monitoring_interval_host,
+  $monitoring_interval_vm          = $one::params::monitoring_interval_vm,
+  $monitoring_interval_datastore   = $one::params::monitoring_interval_datastore,
+  $monitoring_interval_market      = $one::params::monitoring_interval_market,
+  $monitoring_threads              = $one::params::monitoring_threads,
+  $information_collector_interval  = $one::params::information_collector_interval,
+  $http_proxy                      = $one::params::http_proxy,
+  $hook_scripts_path               = $one::params::hook_scripts_path,
+  $hook_scripts_pkgs               = $one::params::hook_scripts_pkgs,
+  $hook_scripts                    = $one::params::hook_scripts,
+  $inherit_datastore_attrs         = $one::params::inherit_datastore_attrs,
+  $oned_onegate_ip                 = $one::params::oned_onegate_ip,
+  $oned_onegate_endpoint           = $one::params::oned_onegate_endpoint,
+  $kickstart_network               = $one::params::kickstart_network,
+  $kickstart_partition             = $one::params::kickstart_partition,
+  $kickstart_rootpw                = $one::params::kickstart_rootpw,
+  $kickstart_data                  = $one::params::kickstart_data,
+  $kickstart_tmpl                  = $one::params::kickstart_tmpl,
+  $preseed_data                    = $one::params::preseed_data,
+  $preseed_debian_mirror_url       = $one::params::preseed_debian_mirror_url,
+  $preseed_ohd_deb_repo            = $one::params::preseed_ohd_deb_repo,
+  $preseed_tmpl                    = $one::params::preseed_tmpl,
+  $backup_script_path              = $one::params::backup_script_path,
+  $backup_dir                      = $one::params::backup_dir,
+  $backup_opts                     = $one::params::backup_opts,
+  $backup_db                       = $one::params::backup_db,
+  $backup_db_user                  = $one::params::backup_db_user,
+  $backup_db_password              = $one::params::backup_db_password,
+  $backup_db_host                  = $one::params::backup_db_host,
+  $backup_intervall                = $one::params::backup_intervall,
+  $backup_keep                     = $one::params::backup_keep,
+  $node_packages                   = $one::params::node_packages,
+  $oned_packages                   = $one::params::oned_packages,
+  $dbus_srv                        = $one::params::dbus_srv,
+  $dbus_pkg                        = $one::params::dbus_pkg,
+  $oned_sunstone_packages          = $one::params::oned_sunstone_packages,
+  $oned_sunstone_ldap_pkg          = $one::params::oned_sunstone_ldap_pkg,
+  $oned_oneflow_packages           = $one::params::oned_oneflow_packages,
+  $oned_onegate_packages           = $one::params::oned_onegate_packages,
+  $package_ensure_latest           = $one::params::package_ensure_latest,
+  $libvirtd_srv                    = $one::params::libvirtd_srv,
+  $libvirtd_cfg                    = $one::params::libvirtd_cfg,
+  $libvirtd_source                 = $one::params::libvirtd_source,
+  $manage_sudoer_config            = true,
+  $oneadmin_sudoers_file           = $one::params::oneadmin_sudoers_file,
+  $imaginator_sudoers_file         = $one::params::imaginator_sudoers_file,
+  $vlan_ids_start                  = $one::params::vlan_ids_start,
+  $vlan_ids_reserved               = $one::params::vlan_ids_reserved,
+  $vxlan_ids_start                 = $one::params::vxlan_ids_start,
+  $kvm_driver_emulator             = $one::params::kvm_driver_emulator,
+  $kvm_driver_nic_attrs            = $one::params::kvm_driver_nic_attrs,
+  $rubygems                        = $one::params::rubygems,
+  $sched_interval                  = $one::params::sched_interval,
+  $sched_max_vm                    = $one::params::sched_max_vm,
+  $sched_max_dispatch              = $one::params::sched_max_dispatch,
+  $sched_max_host                  = $one::params::sched_max_host,
+  $sched_live_rescheds             = $one::params::sched_live_rescheds,
+  $sched_default_policy            = $one::params::sched_default_policy,
+  $sched_default_rank              = $one::params::sched_default_rank,
+  $sched_default_ds_policy         = $one::params::sched_default_ds_policy,
+  $sched_default_ds_rank           = $one::params::sched_default_ds_rank,
+  $sched_log_system                = $one::params::sched_log_system,
+  $sched_log_debug_level           = $one::params::sched_log_debug_level,
+  $datastore_capacity_check        = $one::params::datastore_capacity_check,
+  $default_image_type              = $one::params::default_image_type,
+  $default_device_prefix           = $one::params::default_device_prefix,
+  $default_cdrom_device_prefix     = $one::params::default_cdrom_device_prefix,
+  $one_version                     = $one::params::one_version,
 ) inherits one::params {
 
   # Data Validation
 
   validate_absolute_path($oneadmin_sudoers_file)
   validate_absolute_path($imaginator_sudoers_file)
+
+  # fireedge is only available with ONE >=6
+  if ($sunstone_fireedge and versioncmp($one_version, '6.0') < 0) {
+    fail('Fireedge is only available as of OpenNebula 6')
+  }
 
   # the priv key is mandatory on the head.
   if ($ssh_pub_key == undef) {
@@ -569,6 +587,8 @@ class one (
     '5.8'  => '5.8',
     '5.12' => '5.12',
     '6.2'  => '6.2',
+    '6.4'  => '6.4',
+    '6.6'  => '6.6',
   }
 
   if member(keys($templated_versions_mapping), $one_version_short) {
@@ -602,10 +622,10 @@ class one (
     $package_ensure = 'present'
   }
 
-  include one::prerequisites
-  include one::install
-  include one::config
-  include one::service
+  contain one::prerequisites
+  contain one::install
+  contain one::config
+  contain one::service
 
   Class['one::prerequisites']->
   Class['one::install']->
@@ -616,7 +636,7 @@ class one (
     if ( member(['kvm','xen','vmware','ec2', 'ganglia','dummy'], $im_mad) ) {
       if ( member(['kvm','xen','vmware','ec2', 'qemu', 'dummy'], $vm_mad) ) {
         if ( member(['802.1Q','ebtables','firewall','ovswitch','vmware','dummy'], $vn_mad) ) {
-          include one::oned
+          contain one::oned
         } else {
           fail("Network Type: ${vn_mad} is not supported.")
         }
@@ -628,15 +648,15 @@ class one (
     }
   }
   if ($node) {
-    include one::compute_node
+    contain one::compute_node
   }
   if ($sunstone) {
-    include one::oned::sunstone
+    contain one::oned::sunstone
   }
   if($oneflow) {
-    include one::oned::oneflow
+    contain one::oned::oneflow
   }
   if($onegate) {
-    include one::oned::onegate
+    contain one::oned::onegate
   }
 }

@@ -24,7 +24,7 @@ class one::compute_node::service(
     hasstatus => true,
     enable    => true,
   }
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
       service { 'ksmtuned':
         ensure    => stopped,

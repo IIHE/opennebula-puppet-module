@@ -6,7 +6,20 @@
 
 # Listen for TCP/IP connections
 # NB. must setup TLS/SSL keys prior to using this
+<% if @systemd_socket_activation %>
 #LIBVIRTD_ARGS="--listen"
+<% else %>
+LIBVIRTD_ARGS="--listen"
+<% end %>
+
+<% if @systemd_socket_activation %>
+# Default behaviour is for libvirtd.service to start on boot
+# so that VM autostart can be performed. We then want it to
+# shutdown again if nothing was started and rely on systemd
+# socket activation to start it again when some client app
+# connects.
+LIBVIRTD_ARGS="--timeout 120"
+<% end %>
 
 # Override Kerberos service keytab for SASL/GSSAPI
 #KRB5_KTNAME=/etc/libvirt/krb5.tab
