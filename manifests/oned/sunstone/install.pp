@@ -28,7 +28,7 @@ class one::oned::sunstone::install (
   if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge) {
     case $facts['os']['name'] {
       'CentOS': {
-        if ($::operatingsystemmajrelease == '7') {
+        if ($facts['os']['release']['major'] == '7') {
           package { 'centos-release-scl-rh':
             ensure => $package_ensure,
           }

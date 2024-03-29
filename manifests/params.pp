@@ -209,9 +209,9 @@ class one::params {
   validate_re($oneflow_core_auth, [ 'cipher','x509' ], 'Oneflow_core_auth value must be cipher or x509.')
 
   # OS specific params for nodes
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
-      if $::operatingsystemmajrelease >= '7' {
+      if $facts['os']['release']['major'] >= '7' {
         $node_packages = [
           'device-mapper-libs',
           'opennebula-node-kvm',
@@ -279,7 +279,7 @@ class one::params {
       $libvirtd_source = 'one/libvirt-bin.debian.erb'
     }
     default: {
-      fail("Your OS - ${::osfamily} - is not yet supported.
+      fail("Your OS - ${facts['os']['family']} - is not yet supported.
         Please add required functionality to params.pp")
     }
   }
