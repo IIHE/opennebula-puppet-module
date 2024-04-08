@@ -1,13 +1,18 @@
+---
 fixtures:
+    forge_modules:
+      stdlib:
+        repo: "puppetlabs/stdlib"
+        ref: "4.22.0"
+      apt:
+        repo: "puppetlabs/apt"
+        ref: "1.8.0"
+      inifile:
+        repo: "puppetlabs/inifile"
+        ref: "2.1.0"
     repositories:
-        stdlib:
-          repo: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-          ref: "4.22.0"
-        apt:
-          repo: "https://github.com/puppetlabs/puppetlabs-apt.git"
-          ref: "1.8.0"
-        inifile:
-          repo: "https://github.com/puppetlabs/puppetlabs-inifile"
-          ref: "2.1.0"
+      facts: 'https://github.com/puppetlabs/puppetlabs-facts.git'
+      puppet_agent: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
+      provision: 'https://github.com/puppetlabs/provision.git'
     symlinks:
         one: "#{source_dir}"

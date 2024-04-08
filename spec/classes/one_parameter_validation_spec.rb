@@ -5,9 +5,9 @@ require 'spec_helper'
 hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
 describe 'one', :type => :class do
-  OS_FACTS.each do |f|
-    context "On #{f[:operatingsystem]} #{f[:operatingsystemmajrelease]}" do
-      let(:facts) { f }
+  on_supported_os.each do |os, os_facts|
+    context "On #{os}" do
+      let(:facts) { os_facts }
       %w<xmlrpc_maxconn xmlrpc_maxconn_backlog xmlrpc_keepalive_timeout xmlrpc_keepalive_max_conn xmlrpc_timeout>.each do |param|
         context "given a non-string value for #{param}" do
           let(:params) {
