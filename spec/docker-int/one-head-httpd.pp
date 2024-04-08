@@ -1,3 +1,4 @@
+# head with httpd for docker container
 class httpd {
   class { 'apache':
     default_vhost => false,
@@ -9,20 +10,16 @@ class httpd {
   apache::vhost { 'one':
     docroot     => '/usr/lib/one/sunstone/public',
     port        => '80',
-    directories => [{
-      path    => '/usr/lib/one/sunstone/public',
-      options => ['-MultiViews']
-    }],
+    directories => [{ path => '/usr/lib/one/sunstone/public', options => ['-MultiViews'] }],
   }
 }
 
-
 class { 'one':
-  oned                => true,
-  node                => false,
-  sunstone            => true,
-  sunstone_passenger  => true,
-  one_version         => $one_version,
+  oned               => true,
+  node               => false,
+  sunstone           => true,
+  sunstone_passenger => true,
+  one_version        => $one_version,
 } ->
 
 class { 'httpd': }

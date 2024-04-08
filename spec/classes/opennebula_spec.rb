@@ -4,15 +4,15 @@ hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
 describe 'one', :type => :class do
   let(:hiera_config) { hiera_config }
-  OS_FACTS.each do |f|
+  on_supported_os.each do |os, os_facts|
      context 'with default params as implicit hiera lookup' do
-       let (:facts) { f }
+       let (:facts) { os_facts }
        it { should contain_class('one') }
        it { should_not contain_file('/etc/one/oned.conf').with_content(/^DB = \[ backend = \"sqlite\"/) }
        it { should_not contain_class('one::oned') }
      end
-     context "On #{f[:operatingsystem]} #{f[:operatingsystemmajrelease]}" do
-      let(:facts) { f }
+     context "On #{os}" do
+      let(:facts) { os_facts }
       context 'with hiera config' do
         let(:params) { {:oned => true} }
         hiera = Hiera.new(:config => hiera_config)
@@ -30,15 +30,15 @@ describe 'one', :type => :class do
           it { should contain_file('/usr/share/one').with_ensure('directory') }
           it { should contain_file("#{onehome}/.ssh").with_ensure('directory') }
           it { should contain_file("#{onehome}/.ssh/config").with_ensure('file') }
-          if (f[:osfamily] == 'Debian') or (f[:osfamily] == 'RedHat' and f[:operatingsystemmajrelease].to_i < 7)
+          if (os_facts[:osfamily] == 'Debian') or (os_facts[:osfamily] == 'RedHat' and os_facts[:operatingsystemmajrelease].to_i < 7)
             it { should contain_file('/sbin/brctl').with_ensure('link') }
           end
           it { should contain_file('/etc/libvirt/qemu.conf').with_ensure('file') }
           it { should contain_file('/etc/sudoers.d/20_imaginator').with_ensure('file') }
           it { should contain_file('/etc/udev/rules.d/80-kvm.rules').with_ensure('file') }
-          if f[:osfamily] == 'Redhat'
+          if os_facts[:osfamily] == 'Redhat'
             it { should contain_service('messagebus').with_ensure('running') }
-          elsif f[:osfamily] == 'Debian'
+          elsif os_facts[:osfamily] == 'Debian'
             it { should contain_service('dbus').with_ensure('running') }
           end
           context 'as compute_node' do
@@ -55,34 +55,34 @@ describe 'one', :type => :class do
             it { should contain_one__compute_node__add_kickstart('foo') }
             it { should contain_one__compute_node__add_kickstart('rnr') }
             it { should contain_one__compute_node__add_preseed('does') }
-            if f[:osfamily] == 'RedHat'
+            if os_facts[:osfamily] == 'RedHat'
               it { should contain_package('opennebula-node-kvm') }
-            elsif f[:osfamily] == 'Debian'
+            elsif os_facts[:osfamily] == 'Debian'
               it { should contain_package('opennebula-node') }
             end
 
-            if f[:osfamily] == 'RedHat' and f[:operatingsystemmajrelease].to_i < 7
+            if os_facts[:osfamily] == 'RedHat' and os_facts[:operatingsystemmajrelease].to_i < 7
               it { should contain_package('python-virtinst') }
-            elsif f[:osfamily] == 'Debian'
+            elsif os_facts[:osfamily] == 'Debian'
               it { should contain_package('virtinst') }
             end
             it { should contain_group('oneadmin') }
             it { should contain_user('oneadmin') }
             it { should contain_file('/etc/libvirt/libvirtd.conf').with_ensure('file') }
-            if f[:osfamily] == 'RedHat'
+            if os_facts[:osfamily] == 'RedHat'
               it { should contain_file('/etc/sysconfig/libvirtd').with_ensure('file') }
-            elsif f[:osfamily] == 'Debian'
+            elsif os_facts[:osfamily] == 'Debian'
               it { should contain_file('/etc/default/libvirt-bin').with_ensure('file') }
             end
             it { should contain_file("#{onehome}/.ssh/authorized_keys").with_ensure('file').with_content(/#{sshpubkey}/m) }
             it { should contain_file('/etc/sudoers.d/10_oneadmin').with_ensure('file') }
 
-            if f[:osfamily] == 'RedHat'
+            if os_facts[:osfamily] == 'RedHat'
               it { should contain_service('libvirtd').with_ensure('running') }
-            elsif f[:osfamily] == 'Debian'
+            elsif os_facts[:osfamily] == 'Debian'
               it { should contain_service('libvirt-bin').with_ensure('running') }
             end
-            if f[:osfamily] == 'RedHat'
+            if os_facts[:osfamily] == 'RedHat'
               it { should contain_service('ksm').with_ensure('running') }
               it { should contain_service('ksmtuned').with_ensure('stopped') }
             end
@@ -125,10 +125,10 @@ describe 'one', :type => :class do
             it { should contain_class('one::oned::config') }
             it { should contain_class('one::oned::service') }
             it { should contain_package('opennebula') }
-            if f[:osfamily] == 'RedHat'
+            if os_facts[:osfamily] == 'RedHat'
               it { should contain_package('opennebula-server') }
               it { should contain_package('opennebula-ruby') }
-            elsif f[:osfamily] == 'Debian'
+            elsif os_facts[:osfamily] == 'Debian'
               it { should contain_package('opennebula-tools') }
               it { should contain_package('ruby-opennebula') }
             end
@@ -229,10 +229,10 @@ describe 'one', :type => :class do
               it { should contain_class('one::oned::oneflow::config') }
               it { should contain_class('one::oned::oneflow::service') }
               it { should contain_package('opennebula-flow') }
-              if f[:osfamily] == 'RedHat'
+              if os_facts[:osfamily] == 'RedHat'
                 it { should contain_package('rubygem-treetop') }
                 it { should contain_package('rubygem-polyglot') }
-              elsif f[:osfamily] == 'Debian'
+              elsif os_facts[:osfamily] == 'Debian'
                 it { should contain_package('ruby-treetop') }
                 it { should contain_package('ruby-polyglot') }
               end
@@ -280,9 +280,9 @@ describe 'one', :type => :class do
               it { should contain_class('one::oned::onegate::config') }
               it { should contain_class('one::oned::onegate::service') }
               it { should contain_package('opennebula-gate') }
-              if f[:osfamily] == 'RedHat'
+              if os_facts[:osfamily] == 'RedHat'
                 it { should contain_package('rubygem-parse-cron') }
-              elsif f[:osfamily] == 'Debian'
+              elsif os_facts[:osfamily] == 'Debian'
                 #it { should contain_package('parse-cron') }
               end
               it { should contain_service('opennebula-gate').with_ensure('running') }
@@ -329,9 +329,9 @@ describe 'one', :type => :class do
                 ldap_config = "#{configdir}/auth/ldap_auth.conf"
                 it { should contain_class('one::oned::sunstone::ldap') }
                 it { should contain_package('ruby-ldap') }
-                if f[:osfamily] == 'RedHat'
+                if os_facts[:osfamily] == 'RedHat'
                   it { should contain_package('rubygem-net-ldap') }
-                elsif f[:osfamily] == 'Debian'
+                elsif os_facts[:osfamily] == 'Debian'
                   it { should contain_package('ruby-net-ldap') }
                 end
                 it { should contain_file(ldap_config).with_content(/secure_password/) }

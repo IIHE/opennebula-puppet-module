@@ -4,9 +4,11 @@ hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
 describe 'one', :type => :class do
   let(:hiera_config) { hiera_config }
-  OS_FACTS.each do |f|
-    context "On #{f[:operatingsystem]} #{f[:operatingsystemmajrelease]}" do
-      let(:facts) { f }
+  require 'spec_helper'
+
+  on_supported_os.each do |os, os_facts|
+    context "On #{os}" do
+      let(:facts) { os_facts }
       hiera = Hiera.new(:config => hiera_config)
       configdir = '/etc/one'
       oned_config = "#{configdir}/oned.conf"

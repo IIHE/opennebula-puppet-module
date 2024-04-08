@@ -3,9 +3,9 @@ require 'spec_helper'
 hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
 describe 'one::oned::sunstone::service', :type => :class do
-  OS_FACTS.each do |f|
-    context "On #{f[:operatingsystem]} #{f[:operatingsystemmajrelease]}" do
-      let(:facts) { f }
+  on_supported_os.each do |os, os_facts|
+    context "On #{os}" do
+      let(:facts) { os_facts }
       let (:hiera_config) { hiera_config }
       context 'general' do
         it { should contain_class('one::oned::sunstone::service') }

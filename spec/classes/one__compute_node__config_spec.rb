@@ -3,9 +3,9 @@ require 'spec_helper'
 hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
 describe 'one::compute_node::config', :type => :class do
-  OS_FACTS.each do |f|
-    context "On #{f[:operatingsystem]} #{f[:operatingsystemmajrelease]}" do
-      let(:facts) { f }
+  on_supported_os.each do |os, os_facts|
+    context "On #{os}" do
+      let(:facts) { os_facts }
       let(:params) { {
           :debian_mirror_url => 'http://ftp.de.debian.org/debian',
           :preseed_data => {'does' => 'not_matter'},
@@ -20,11 +20,11 @@ describe 'one::compute_node::config', :type => :class do
       it { should contain_file('/etc/udev/rules.d/80-kvm.rules') }
       it { should contain_file('/etc/test-sudoers.d/10_oneadmin') }
       it { should contain_file('/etc/test-sudoers.d/20_imaginator') }
-      if f[:osfamily] == 'Debian'
+      if os_facts[:osfamily] == 'Debian'
         it { should contain_file('polkit-opennebula') \
             .with_path('/var/lib/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla')
         }
-      elsif f[:osfamily] == 'RedHat'
+      elsif os_facts[:osfamily] == 'RedHat'
         it { should contain_file('polkit-opennebula') \
             .with_path('/etc/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla')
         }
