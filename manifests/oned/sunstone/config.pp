@@ -78,14 +78,14 @@ class one::oned::sunstone::config (
     }
   }
 
-  if $sunstone_logo_png or $sunstone_logo_small_png {
+  if $sunstone_logo_png != '' or $sunstone_logo_small_png != '' {
     file { '/usr/lib/one/sunstone/public/images':
       ensure => directory,
       mode   => '0755',
     }
   }
 
-  if $sunstone_logo_png {
+  if $sunstone_logo_png != '' {
     file { '/usr/lib/one/sunstone/public/images/custom_logo.png':
       ensure  => file,
       mode    => '0644',
@@ -94,7 +94,7 @@ class one::oned::sunstone::config (
     }
   }
 
-  if $sunstone_logo_small_png {
+  if $sunstone_logo_small_png != '' {
     file { '/usr/lib/one/sunstone/public/images/custom_logo_small.png':
       ensure  => file,
       mode    => '0644',
