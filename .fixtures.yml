@@ -3,13 +3,13 @@ fixtures:
     forge_modules:
       stdlib:
         repo: "puppetlabs/stdlib"
-        ref: "4.22.0"
+        ref: "8.0.0"
       apt:
         repo: "puppetlabs/apt"
-        ref: "1.8.0"
+        ref: "9.0.0"
       inifile:
         repo: "puppetlabs/inifile"
-        ref: "2.1.0"
+        ref: "5.4.1"
     repositories:
       facts: 'https://github.com/puppetlabs/puppetlabs-facts.git'
       puppet_agent: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'

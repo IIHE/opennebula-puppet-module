@@ -23,7 +23,7 @@ The one (short for OpenNebula) module allows to install and manage your OpenNebu
 
 **Centos**
 
-We support Puppet 3.1.1-3.8.7 on CentOS 6-7 with OpenNebula 4.12.1-5.8.5.
+We support Puppet >= 7 on CentOS 7-8 with OpenNebula 5.0-6.6.
 You need to add the EPEL repository because the module needs some packages from there.
 
 Note, there is a required package on the oned controller node that is not managed by this module, the gem nokogiri (or the yum package rubygem-nokori).  This can be installed elsewhere in that node's puppet catalog like this:
@@ -36,9 +36,9 @@ Note, there is a required package on the oned controller node that is not manage
 ### Puppet Module Dependencies
 The ONe-Module needs the following other modules:
 
-- [puppetlabs/stdlib  > 2.3.0](https://github.com/puppetlabs/puppetlabs-stdlib)
-- [puppetlabs/apt     < 2.0.0](https://github.com/puppetlabs/puppetlabs-apt)
-- [puppetlabs/inifile > 1.4.0](https://github.com/puppetlabs/puppetlabs-inifile)
+- [puppetlabs/stdlib  > 7.1.0](https://github.com/puppetlabs/puppetlabs-stdlib)
+- [puppetlabs/apt     > 8.5.0](https://github.com/puppetlabs/puppetlabs-apt)
+- [puppetlabs/inifile > 5.4.0](https://github.com/puppetlabs/puppetlabs-inifile)
 
 **How to install**:
 
