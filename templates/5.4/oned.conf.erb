@@ -57,14 +57,14 @@
 #*******************************************************************************
 
 LOG = [
-  system      = "<%= scope.lookupvar('one::oned_log_system') %>",
+  system      = "<%= scope['one::oned_log_system'] %>",
   debug_level = <%= @debug_level %>
 ]
 
 #MANAGER_TIMER = 30
 
-MONITORING_INTERVAL = <%= scope.lookupvar('one::monitoring_interval') %>
-MONITORING_THREADS  = <%= scope.lookupvar('one::monitoring_threads') %>
+MONITORING_INTERVAL = <%= scope['one::monitoring_interval'] %>
+MONITORING_THREADS  = <%= scope['one::monitoring_threads'] %>
 
 #HOST_PER_INTERVAL               = 15
 #HOST_MONITORING_EXPIRATION_TIME = 43200
@@ -75,9 +75,9 @@ MONITORING_THREADS  = <%= scope.lookupvar('one::monitoring_threads') %>
 
 SCRIPTS_REMOTE_DIR=/var/tmp/one
 
-PORT = <%= scope.lookupvar('one::oned_port') %>
+PORT = <%= scope['one::oned_port'] %>
 
-LISTEN_ADDRESS = "<%= scope.lookupvar('one::oned_listen_address') %>"
+LISTEN_ADDRESS = "<%= scope['one::oned_listen_address'] %>"
 
 <% if @backend == 'sqlite' -%>
 DB = [ BACKEND = "sqlite" ]
@@ -86,11 +86,11 @@ DB = [ BACKEND = "sqlite" ]
 <% if @backend == 'mysql' -%>
 # Sample configuration for MySQL
 DB = [ BACKEND = "mysql",
-    SERVER  = "<%= scope.lookupvar('one::oned_db_host') %>",
+    SERVER  = "<%= scope['one::oned_db_host'] %>",
     PORT    = 3306,
-    USER    = "<%= scope.lookupvar('one::oned_db_user') %>",
-    PASSWD  = "<%= scope.lookupvar('one::oned_db_password') %>",
-    DB_NAME = "<%= scope.lookupvar('one::oned_db') %>" ]
+    USER    = "<%= scope['one::oned_db_user'] %>",
+    PASSWD  = "<%= scope['one::oned_db_password'] %>",
+    DB_NAME = "<%= scope['one::oned_db'] %>" ]
 <% end -%>
 
 
@@ -99,7 +99,7 @@ VNC_PORTS = [
 #    RESERVED = "6800, 6801, 6810:6820, 9869"
 ]
 
-VM_SUBMIT_ON_HOLD = "<%= scope.lookupvar('one::oned::config::oned_vm_submit_on_hold') %>"
+VM_SUBMIT_ON_HOLD = "<%= scope['one::oned::config::oned_vm_submit_on_hold'] %>"
 
 #*******************************************************************************
 # Federation & HA configuration attributes
@@ -231,11 +231,11 @@ DEFAULT_COST = [
 #     %% -- %
 #*******************************************************************************
 
-MAX_CONN           = <%= scope.lookupvar('one::xmlrpc_maxconn') %>
-MAX_CONN_BACKLOG   = <%= scope.lookupvar('one::xmlrpc_maxconn_backlog') %>
-KEEPALIVE_TIMEOUT  = <%= scope.lookupvar('one::xmlrpc_keepalive_timeout') %>
-KEEPALIVE_MAX_CONN = <%= scope.lookupvar('one::xmlrpc_keepalive_max_conn') %>
-TIMEOUT            = <%= scope.lookupvar('one::xmlrpc_timeout') %>
+MAX_CONN           = <%= scope['one::xmlrpc_maxconn'] %>
+MAX_CONN_BACKLOG   = <%= scope['one::xmlrpc_maxconn_backlog'] %>
+KEEPALIVE_TIMEOUT  = <%= scope['one::xmlrpc_keepalive_timeout'] %>
+KEEPALIVE_MAX_CONN = <%= scope['one::xmlrpc_keepalive_max_conn'] %>
+TIMEOUT            = <%= scope['one::xmlrpc_timeout'] %>
 #RPC_LOG            = NO
 #MESSAGE_SIZE       = 1073741824
 #LOG_CALL_FORMAT    = "Req:%i UID:%u %m invoked %l"
@@ -271,12 +271,12 @@ NETWORK_SIZE = 254
 MAC_PREFIX   = "02:00"
 
 VLAN_IDS = [
-    START    = "<%= scope.lookupvar('one::vlan_ids_start') %>",
-    RESERVED = "<%= scope.lookupvar('one::vlan_ids_reserved') %>"
+    START    = "<%= scope['one::vlan_ids_start'] %>",
+    RESERVED = "<%= scope['one::vlan_ids_reserved'] %>"
 ]
 
 VXLAN_IDS = [
-    START = "<%= scope.lookupvar('one::vxlan_ids_start') %>"
+    START = "<%= scope['one::vxlan_ids_start'] %>"
 ]
 
 #PCI_PASSTHROUGH_BUS = "0x01"
@@ -317,12 +317,12 @@ VXLAN_IDS = [
 
 #DATASTORE_LOCATION  = /var/lib/one/datastores
 
-DATASTORE_CAPACITY_CHECK = "<%= scope.lookupvar('one::datastore_capacity_check') %>"
+DATASTORE_CAPACITY_CHECK = "<%= scope['one::datastore_capacity_check'] %>"
 
-DEFAULT_DEVICE_PREFIX       = "<%= scope.lookupvar('one::default_device_prefix') %>"
-DEFAULT_CDROM_DEVICE_PREFIX = "<%= scope.lookupvar('one::default_cdrom_device_prefix') %>"
+DEFAULT_DEVICE_PREFIX       = "<%= scope['one::default_device_prefix'] %>"
+DEFAULT_CDROM_DEVICE_PREFIX = "<%= scope['one::default_cdrom_device_prefix'] %>"
 
-DEFAULT_IMAGE_TYPE           = "<%= scope.lookupvar('one::default_image_type') %>"
+DEFAULT_IMAGE_TYPE           = "<%= scope['one::default_image_type'] %>"
 #DEFAULT_IMAGE_PERSISTENT     = ""
 #DEFAULT_IMAGE_PERSISTENT_NEW = ""
 
@@ -360,7 +360,7 @@ DEFAULT_IMAGE_TYPE           = "<%= scope.lookupvar('one::default_image_type') %
 IM_MAD = [
       NAME       = "collectd",
       EXECUTABLE = "collectd",
-      ARGUMENTS  = "-p 4124 -f 5 -t 50 -i <%= scope.lookupvar('one::information_collector_interval') %>" ]
+      ARGUMENTS  = "-p 4124 -f 5 -t 50 -i <%= scope['one::information_collector_interval'] %>" ]
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -895,9 +895,9 @@ AUTH_MAD = [
     EXECUTABLE = "one_auth_mad",
     AUTHN = "ssh,x509,ldap,server_cipher,server_x509"
 ]
-<% if scope.lookupvar('one::oned_default_auth') != 'undef' -%>
-DEFAULT_AUTH = "<%= scope.lookupvar('one::oned_default_auth') %>"
-<% elsif scope.lookupvar('one::ldap') -%>
+<% if scope['one::oned_default_auth'] != '' -%>
+DEFAULT_AUTH = "<%= scope['one::oned_default_auth'] %>"
+<% elsif scope['one::ldap'] -%>
 DEFAULT_AUTH = "ldap"
 <% else %>
 #DEFAULT_AUTH = "default"
@@ -916,8 +916,8 @@ DEFAULT_UMASK = 177
 #   MUST be consistent with the values in onegate-server.conf
 #*******************************************************************************
 
-<% if scope.lookupvar('one::resulting_oned_onegate_endpoint') -%>
-ONEGATE_ENDPOINT = "<%= scope.lookupvar('one::resulting_oned_onegate_endpoint') %>"
+<% if scope['one::resulting_oned_onegate_endpoint'] -%>
+ONEGATE_ENDPOINT = "<%= scope['one::resulting_oned_onegate_endpoint'] %>"
 <% else -%>
 #ONEGATE_ENDPOINT = "http://frontend:5030"
 <% end -%>

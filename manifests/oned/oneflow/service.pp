@@ -17,7 +17,6 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::oned::oneflow::service {
-
   if ($one::ha_setup) {
     $oneflow_enable = false
     $oneflow_ensure = undef
@@ -25,8 +24,7 @@ class one::oned::oneflow::service {
     $oneflow_enable = true
     $oneflow_ensure = running
   }
-
-  service {'opennebula-flow':
+  service { 'opennebula-flow':
     ensure  => $oneflow_ensure,
     enable  => $oneflow_enable,
     require => Service['opennebula'],

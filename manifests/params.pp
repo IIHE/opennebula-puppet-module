@@ -21,100 +21,100 @@
 #
 class one::params {
   # OpenNebula parameters
-  $oned_log_system  = hiera('one::oned::oned_log_system', 'file')
-  $oned_port        = hiera('one::oned::port', '2633')
-  $oned_listen_address = hiera('one::oned_listen_address', '0.0.0.0')
-  $oned_db          = hiera('one::oned::db', 'oned')
-  $oned_db_user     = hiera('one::oned::db_user', 'oned')
-  $oned_db_password = hiera('one::oned::db_password', 'oned')
-  $oned_db_host     = hiera('one::oned::db_host', 'localhost')
+  $oned_log_system     = lookup('one::oned::oned_log_system', undef, undef, 'file')
+  $oned_port           = lookup('one::oned::port', undef, undef, '2633')
+  $oned_listen_address = lookup('one::oned_listen_address', undef, undef, '0.0.0.0')
+  $oned_db             = lookup('one::oned::db', undef, undef, 'oned')
+  $oned_db_user        = lookup('one::oned::db_user', undef, undef, 'oned')
+  $oned_db_password    = lookup('one::oned::db_password', undef, undef, 'oned')
+  $oned_db_host        = lookup('one::oned::db_host', undef, undef, 'localhost')
   # default auth parameter - if needed for override
-  $oned_default_auth = hiera('one::oned_default_auth','undef')
+  $oned_default_auth = lookup('one::oned_default_auth', undef, undef, '')
   # ldap stuff (optional needs one::oned::ldap in hiera set to true)
-  $oned_ldap_host = hiera('one::oned::ldap_host','ldap')
-  $oned_ldap_port = hiera('one::oned::ldap_port','636')
-  $oned_ldap_base = hiera('one::oned::ldap_base','dc=example,dc=com')
+  $oned_ldap_host = lookup('one::oned::ldap_host', undef, undef, 'ldap')
+  $oned_ldap_port = lookup('one::oned::ldap_port', undef, undef, '636')
+  $oned_ldap_base = lookup('one::oned::ldap_base', undef, undef, 'dc=example,dc=com')
   # $oned_ldap_user: can be empty if anonymous query is possible
-  $oned_ldap_user = hiera('one::oned::ldap_user', 'cn=ldap_query,ou=user,dc=example,dc=com')
-  $oned_ldap_pass = hiera('one::oned::ldap_pass','default_password')
+  $oned_ldap_user = lookup('one::oned::ldap_user', undef, undef, 'cn=ldap_query,ou=user,dc=example,dc=com')
+  $oned_ldap_pass = lookup('one::oned::ldap_pass', undef, undef, 'default_password')
   # $oned_ldap_group: can be empty, can be set to a group to restrict access to sunstone
-  $oned_ldap_group = hiera( 'one::oned::ldap_group', 'undef')
+  $oned_ldap_group = lookup( 'one::oned::ldap_group', undef, undef, '')
   # $oned_ldap_user_field: defaults to uid, can be set to the field, that holds the username in ldap
-  $oned_ldap_user_field = hiera('one::oned::ldap_user_field','undef')
+  $oned_ldap_user_field = lookup('one::oned::ldap_user_field', undef, undef, '')
   # $oned_ldap_group_field: default to member, can be set to the filed that holds the groupname
-  $oned_ldap_group_field = hiera('one::oned::ldap_group_field', 'undef')
+  $oned_ldap_group_field = lookup('one::oned::ldap_group_field', undef, undef, '')
   # $oned_ldap_user_group_field: default to dn, can be set to the user field that is in the group group_field
-  $oned_ldap_user_group_field = hiera('one::oned::ldap_user_group_field','undef')
+  $oned_ldap_user_group_field = lookup('one::oned::ldap_user_group_field', undef, undef, '')
   # ldap mapping options
-  $oned_ldap_mapping_generate = hiera('one::oned::ldap_mapping_generate','undef')
-  $oned_ldap_mapping_timeout = hiera('one::oned::ldap_mapping_timeout','undef')
-  $oned_ldap_mapping_filename = hiera('one::oned::ldap_mapping_filename',"${::hostname}.yaml")
-  $oned_ldap_mapping_key = hiera('one::oned::ldap_mapping_key','undef')
-  $oned_ldap_mapping_default = hiera('one::oned::ldap_mapping_default','undef')
-  $oned_ldap_mappings = hiera('one::oned::ldap_mappings',undef)
+  $oned_ldap_mapping_generate = lookup('one::oned::ldap_mapping_generate', undef, undef, '')
+  $oned_ldap_mapping_timeout  = lookup('one::oned::ldap_mapping_timeout', undef, undef, 300)
+  $oned_ldap_mapping_filename = lookup('one::oned::ldap_mapping_filename', undef, undef, "${facts['networking']['hostname']}.yaml")
+  $oned_ldap_mapping_key      = lookup('one::oned::ldap_mapping_key', undef, undef, '')
+  $oned_ldap_mapping_default  = lookup('one::oned::ldap_mapping_default', undef, undef, '')
+  $oned_ldap_mappings         = lookup('one::oned::ldap_mappings', undef, undef, {})
   # should we enable opennebula repos?
-  $one_repo_enable = hiera('one::enable_opennebula_repo', true)
+  $one_repo_enable = lookup('one::enable_opennebula_repo', undef, undef, true)
   # Which version
-  $one_version = hiera('one::one_version', '4.12' )
+  $one_version = lookup('one::one_version', undef, undef, '4.12')
   # should VM_SUBMIT_ON_HOLD be enabled in oned.conf?
-  $oned_vm_submit_on_hold    = hiera('one::oned::vm_submit_on_hold', 'NO')
+  $oned_vm_submit_on_hold = lookup('one::oned::vm_submit_on_hold', undef, undef, 'NO')
 
   # SSH Key
-  $ssh_priv_key_param        = hiera('one::head::ssh_priv_key',undef)
-  $ssh_pub_key               = hiera('one::head::ssh_pub_key',undef)
+  $ssh_priv_key_param        = lookup('one::head::ssh_priv_key', undef, undef, '')
+  $ssh_pub_key               = lookup('one::head::ssh_pub_key', undef, undef, '')
 
   # OpenNebula XMLRPC tuning parameters
-  $xmlrpc_maxconn            = hiera('one::oned::xmlrpc_maxconn', '15')
-  $xmlrpc_maxconn_backlog    = hiera('one::oned::xmlrpc_maxconn_backlog', '15')
-  $xmlrpc_keepalive_timeout  = hiera('one::oned::xmlrpc_keepalive_timeout', '15')
-  $xmlrpc_keepalive_max_conn = hiera('one::oned::xmlrpc_keepalive_max_conn', '30')
-  $xmlrpc_timeout            = hiera('one::oned::xmlrpc_timeout', '15')
+  $xmlrpc_maxconn            = lookup('one::oned::xmlrpc_maxconn', undef, undef, 15)
+  $xmlrpc_maxconn_backlog    = lookup('one::oned::xmlrpc_maxconn_backlog', undef, undef, 15)
+  $xmlrpc_keepalive_timeout  = lookup('one::oned::xmlrpc_keepalive_timeout', undef, undef, 15)
+  $xmlrpc_keepalive_max_conn = lookup('one::oned::xmlrpc_keepalive_max_conn', undef, undef, 30)
+  $xmlrpc_timeout            = lookup('one::oned::xmlrpc_timeout', undef, undef, 15)
 
   # OpenNebula INHERIT attrs
   # (NOTE: setting default to undef causes value to show up as "" in ERB
   # template for ruby 1.9.x)
-  $inherit_datastore_attrs   = hiera('one::oned::inherit_datastore_attrs', [])
+  $inherit_datastore_attrs   = lookup('one::oned::inherit_datastore_attrs', undef, undef, [])
 
   # VLAN_IDS and VXLAN_IDS for OpenNebula Physical Networks
   # see oned.conf for more information
-  $vlan_ids_start            = hiera('one::vlan_ids_start', '2')
-  $vlan_ids_reserved         = hiera('one::vlan_ids_reserved', '0, 1, 4095')
-  $vxlan_ids_start           = hiera('one::vxlan_ids_start', '2')
+  $vlan_ids_start            = lookup('one::vlan_ids_start', undef, undef, '2')
+  $vlan_ids_reserved         = lookup('one::vlan_ids_reserved', undef, undef, '0, 1, 4095')
+  $vxlan_ids_start           = lookup('one::vxlan_ids_start', undef, undef, '2')
 
   # OpenNebula KVM driver parameters
-  $kvm_driver_emulator       = hiera ('one::oned::kvm_driver_emulator', 'undef')
-  $kvm_driver_nic_attrs      = hiera ('one::oned::kvm_driver_nic_attrs', 'undef')
+  $kvm_driver_emulator       = lookup ('one::oned::kvm_driver_emulator', undef, undef, '' )
+  $kvm_driver_nic_attrs      = lookup ('one::oned::kvm_driver_nic_attrs', undef, undef, '')
 
   # Sunstone configuration parameters
-  $sunstone_listen_ip        = hiera('one::oned::sunstone_listen_ip', '127.0.0.1')
-  $sunstone_logo_png         = hiera('one::oned::sunstone_logo_png', 'undef')
-  $sunstone_logo_small_png   = hiera('one::oned::sunstone_logo_small_png', 'undef')
-  $enable_support            = hiera('one::oned::enable_support', 'yes')
-  $enable_marketplace        = hiera('one::oned::enable_marketplace', 'yes')
-  $sunstone_tmpdir           = hiera('one::oned::sunstone_tmpdir', '/var/tmp')
-  $sunstone_sessions         = hiera('one::oned::sunstone_sessions', 'memory')
-  $vnc_proxy_port            = hiera('one::oned::vnc_proxy_port', '29876')
-  $vnc_proxy_support_wss     = hiera('one::oned::vnc_proxy_support_wss', 'no')
-  $vnc_proxy_cert            = hiera('one::oned::vnc_proxy_cert', '')
-  $vnc_proxy_key             = hiera('one::oned::vnc_proxy_key', '')
-  $vnc_proxy_ipv6            = hiera('one::oned::vnc_proxy_ipv6', 'false') # lint:ignore:quoted_booleans
-  $sunstone_fireedge_priv_endpoint = hiera('one::sunstone_fireedge_priv_endpoint', 'http://localhost:2616')
-  $sunstone_fireedge_pub_endpoint  = hiera('one::sunstone_fireedge_pub_endpoint', 'http://localhost:2616')
+  $sunstone_listen_ip        = lookup('one::oned::sunstone_listen_ip', undef, undef, '127.0.0.1')
+  $sunstone_logo_png         = lookup('one::oned::sunstone_logo_png', undef, undef, '')
+  $sunstone_logo_small_png   = lookup('one::oned::sunstone_logo_small_png', undef, undef, '')
+  $enable_support            = lookup('one::oned::enable_support', undef, undef, 'yes')
+  $enable_marketplace        = lookup('one::oned::enable_marketplace', undef, undef, 'yes')
+  $sunstone_tmpdir           = lookup('one::oned::sunstone_tmpdir', undef, undef, '/var/tmp')
+  $sunstone_sessions         = lookup('one::oned::sunstone_sessions', undef, undef, 'memory')
+  $vnc_proxy_port            = lookup('one::oned::vnc_proxy_port', undef, undef, '29876')
+  $vnc_proxy_support_wss     = lookup('one::oned::vnc_proxy_support_wss', undef, undef, 'no')
+  $vnc_proxy_cert            = lookup('one::oned::vnc_proxy_cert', undef, undef, '')
+  $vnc_proxy_key             = lookup('one::oned::vnc_proxy_key', undef, undef, '')
+  $vnc_proxy_ipv6            = lookup('one::oned::vnc_proxy_ipv6', undef, undef, 'false') # lint:ignore:quoted_booleans
+  $sunstone_fireedge_priv_endpoint = lookup('one::sunstone_fireedge_priv_endpoint', undef, undef, 'http://localhost:2616')
+  $sunstone_fireedge_pub_endpoint  = lookup('one::sunstone_fireedge_pub_endpoint', undef, undef, 'http://localhost:2616')
 
   # generic params for nodes and oned
   $oneuid = '9869'
   $onegid = '9869'
 
   # OpenNebula monitoring parameters
-  $monitoring_interval = hiera('one::oned::monitoring_interval', '60')
-  $monitoring_interval_host = hiera('one::oned::monitoring_interval_host', '180')
-  $monitoring_interval_vm = hiera('one::oned::monitoring_interval_vm', '180')
-  $monitoring_interval_datastore = hiera('one::oned::monitoring_interval_datastore', '300')
-  $monitoring_interval_market = hiera('one::oned::monitoring_interval_market', '600')
-  $monitoring_threads  = hiera('one::oned::monitoring_threads', '50')
-  $information_collector_interval = hiera('one::oned::information_collector_interval', '20')
+  $monitoring_interval            = lookup('one::oned::monitoring_interval', undef, undef, 60)
+  $monitoring_interval_host       = lookup('one::oned::monitoring_interval_host', undef, undef, 180)
+  $monitoring_interval_vm         = lookup('one::oned::monitoring_interval_vm', undef, undef, 180)
+  $monitoring_interval_datastore  = lookup('one::oned::monitoring_interval_datastore', undef, undef, 300)
+  $monitoring_interval_market     = lookup('one::oned::monitoring_interval_market', undef, undef, 600)
+  $monitoring_threads             = lookup('one::oned::monitoring_threads', undef, undef, 50)
+  $information_collector_interval = lookup('one::oned::information_collector_interval', undef, undef, 20)
 
-  $http_proxy = hiera('one::oned::http_proxy', '')
+  $http_proxy = lookup('one::oned::http_proxy', undef, undef, '')
 
   # package ensure, default true
   $package_ensure_latest = true
@@ -126,87 +126,81 @@ class one::params {
   # Allows it to be overwritten by custom puppet profile
   # Should be the path to the folder which should be the source for the hookscripts on the puppetmaster
   # Default is a folder with an empty sample_hook.py
-  $hook_scripts_path = hiera('one::head::hook_script_path', 'puppet:///modules/one/hookscripts')
+  $hook_scripts_path = lookup('one::head::hook_script_path', undef, undef, 'puppet:///modules/one/hookscripts')
 
   # Alternative 2: Define package(s) which install the hook scripts.
   # This should be the preferred way.
-  $hook_scripts_pkgs = hiera('one::head::hook_script_pkgs', undef)
+  $hook_scripts_pkgs = lookup('one::head::hook_script_pkgs', undef, undef, [])
 
   # Configuration for VM_HOOK and HOST_HOOK in oned.conf.
   # Activate and configure the hook scripts delivered via $hook_scripts_path or $hook_scripts_pkgs.
-  $hook_scripts = hiera('one::head::hook_scripts', undef)
+  $hook_scripts      = lookup('one::head::hook_scripts', undef, undef, {})
+  $vm_hook_scripts   = lookup('one::head::vm_hook_scripts', undef, undef, {})
+  $host_hook_scripts = lookup('one::head::host_hook_scripts', undef, undef, {})
 
   # Todo: Use Serviceip from HA-Setup if ha enabled.
-  $oned_onegate_ip = hiera('one::oned::onegate::ip', undef)
+  $oned_onegate_ip = lookup('one::oned::onegate::ip', undef, undef, '')
   # Specify full endpoint if needed (such as if using https proxy)
-  $oned_onegate_endpoint = hiera('one::oned::onegate::endpoint', undef)
+  $oned_onegate_endpoint = lookup('one::oned::onegate::endpoint', undef, undef, '')
 
   # E-POST imaginator parameters
-  $kickstart_network         = hiera ('one::node::kickstart::network', undef)
-  $kickstart_partition       = hiera ('one::node::kickstart::partition', undef)
-  $kickstart_rootpw          = hiera ('one::node::kickstart::rootpw', undef)
-  $kickstart_data            = hiera ('one::node::kickstart::data', undef)
-  $kickstart_tmpl            = hiera ('one::node::kickstart::kickstart_tmpl', 'one/kickstart.ks.erb')
+  $kickstart_network         = lookup ('one::node::kickstart::network', undef, undef, '')
+  $kickstart_partition       = lookup ('one::node::kickstart::partition', undef, undef, '')
+  $kickstart_rootpw          = lookup ('one::node::kickstart::rootpw', undef, undef, '')
+  $kickstart_data            = lookup ('one::node::kickstart::data', undef, undef, {})
+  $kickstart_tmpl            = lookup ('one::node::kickstart::kickstart_tmpl', undef, undef, 'one/kickstart.ks.erb')
 
-  $preseed_data              = hiera ('one::node::preseed::data', {})
-  $preseed_debian_mirror_url = hiera ('one::node::preseed::debian_mirror_url', 'http://ftp.debian.org/debian')
-  $preseed_ohd_deb_repo      = hiera ('one::node::preseed::ohd_deb_repo', undef)
-  $preseed_tmpl              = hiera ('one::node::preseed::preseed_tmpl', 'one/preseed.cfg.erb')
+  $preseed_data              = lookup ('one::node::preseed::data', undef, undef, {})
+  $preseed_debian_mirror_url = lookup ('one::node::preseed::debian_mirror_url', undef, undef, 'http://ftp.debian.org/debian')
+  $preseed_ohd_deb_repo      = lookup ('one::node::preseed::ohd_deb_repo', undef, undef, '')
+  $preseed_tmpl              = lookup ('one::node::preseed::preseed_tmpl', undef, undef, 'one/preseed.cfg.erb')
 
   # OpenNebula DB backup parameters
-  $backup_script_path        = hiera ('one::oned::backup::script_path', '/var/lib/one/bin/one_db_backup.sh')
-  $backup_dir                = hiera ('one::oned::backup::dir', '/srv/backup')
-  $backup_opts               = hiera ('one::oned::backup::opts', '-C -q -e')
-  $backup_db                 = hiera ('one::oned::backup::db', 'oned')
-  $backup_db_user            = hiera ('one::oned::backup::db_user', 'onebackup')
-  $backup_db_password        = hiera ('one::oned::backup::db_password', 'onebackup')
-  $backup_db_host            = hiera ('one::oned::backup::db_host', 'localhost')
-  $backup_intervall          = hiera ('one::oned::backup::intervall', '*/10')
-  $backup_keep               = hiera ('one::oned::backup::keep', '-mtime +15')
+  $backup_script_path        = lookup ('one::oned::backup::script_path', undef, undef, '/var/lib/one/bin/one_db_backup.sh')
+  $backup_dir                = lookup ('one::oned::backup::dir', undef, undef, '/srv/backup')
+  $backup_opts               = lookup ('one::oned::backup::opts', undef, undef, '-C -q -e')
+  $backup_db                 = lookup ('one::oned::backup::db', undef, undef, 'oned')
+  $backup_db_user            = lookup ('one::oned::backup::db_user', undef, undef, 'onebackup')
+  $backup_db_password        = lookup ('one::oned::backup::db_password', undef, undef, 'onebackup')
+  $backup_db_host            = lookup ('one::oned::backup::db_host', undef, undef, 'localhost')
+  $backup_intervall          = lookup ('one::oned::backup::intervall', undef, undef, '*/10')
+  $backup_keep               = lookup ('one::oned::backup::keep', undef, undef, '-mtime +15')
 
   # OpenNebula Scheduler parameters
-  $sched_interval            = hiera ('one::oned::sched::sched_interval', 30)
-  $sched_max_vm              = hiera ('one::oned::sched::max_vm', 5000)
-  $sched_max_dispatch        = hiera ('one::oned::sched::max_dispatch', 30)
-  $sched_max_host            = hiera ('one::oned::sched::max_host', 1)
-  $sched_live_rescheds       = hiera ('one::oned::sched::live_rescheds', 0)
-  $sched_default_policy      = hiera ('one::oned::sched::default_policy', 1)
-  $sched_default_rank        = hiera ('one::oned::sched::default_rank', '- (RUNNING_VMS * 50  + FREE_CPU)')
-  $sched_default_ds_policy   = hiera ('one::oned::sched::default_ds_policy', 1)
-  $sched_default_ds_rank     = hiera ('one::oned::sched::default_ds_rank', '')
-  $sched_log_system          = hiera ('one::oned::sched::log_system', 'file')
-  $sched_log_debug_level     = hiera ('one::oned::sched::log_debug_level', 3)
+  $sched_interval            = lookup ('one::oned::sched::sched_interval', undef, undef, 30)
+  $sched_max_vm              = lookup ('one::oned::sched::max_vm', undef, undef, 5000)
+  $sched_max_dispatch        = lookup ('one::oned::sched::max_dispatch', undef, undef, 30)
+  $sched_max_host            = lookup ('one::oned::sched::max_host', undef, undef, 1)
+  $sched_live_rescheds       = lookup ('one::oned::sched::live_rescheds', undef, undef, 0)
+  $sched_default_policy      = lookup ('one::oned::sched::default_policy', undef, undef, 1)
+  $sched_default_rank        = lookup ('one::oned::sched::default_rank', undef, undef, '- (RUNNING_VMS * 50  + FREE_CPU)')
+  $sched_default_ds_policy   = lookup ('one::oned::sched::default_ds_policy', undef, undef, 1)
+  $sched_default_ds_rank     = lookup ('one::oned::sched::default_ds_rank', undef, undef, '')
+  $sched_log_system          = lookup ('one::oned::sched::log_system', undef, undef, 'file')
+  $sched_log_debug_level     = lookup ('one::oned::sched::log_debug_level', undef, undef, 3)
 
   # OpenNebula Oneflow parameters
-  $oneflow_one_xmlrpc       = hiera ('one::oned::oneflow_one_xmlrpc','http://localhost:2633/RPC2')
-  $oneflow_lcm_interval     = hiera ('one::oned::oneflow_lcm_interval', 30)
-  $oneflow_host             = hiera ('one::oned::oneflow_host', '127.0.0.1')
-  $oneflow_port             = hiera ('one::oned::oneflow_port', 2474)
-  $oneflow_default_cooldown = hiera ('one::oned::oneflow_default_cooldown', 300)
-  $oneflow_shutdown_action  = hiera ('one::oned::oneflow_shutdown_action', 'terminate')
-  $oneflow_action_number    = hiera ('one::oned::oneflow_action_number', 1)
-  $oneflow_action_period    = hiera ('one::oned::oneflow_action_period', 60)
-  $oneflow_vm_name_template = hiera ('one::oned::oneflow_vm_name_template', '$ROLE_NAME_$VM_NUMBER_(service_$SERVICE_ID)')
-  $oneflow_core_auth        = hiera ('one::oned::oneflow_core_auth', 'cipher')
-  $oneflow_debug_level      = hiera ('one::oned::oneflow_debug_level', 2)
+  $oneflow_one_xmlrpc       = lookup ('one::oned::oneflow_one_xmlrpc', undef, undef, 'http://localhost:2633/RPC2')
+  $oneflow_lcm_interval     = lookup ('one::oned::oneflow_lcm_interval', undef, undef, 30)
+  $oneflow_host             = lookup ('one::oned::oneflow_host', undef, undef, '127.0.0.1')
+  $oneflow_port             = lookup ('one::oned::oneflow_port', undef, undef, 2474)
+  $oneflow_default_cooldown = lookup ('one::oned::oneflow_default_cooldown', undef, undef, 300)
+  $oneflow_shutdown_action  = lookup ('one::oned::oneflow_shutdown_action', undef, undef, 'terminate')
+  $oneflow_action_number    = lookup ('one::oned::oneflow_action_number', undef, undef, 1)
+  $oneflow_action_period    = lookup ('one::oned::oneflow_action_period', undef, undef, 60)
+  $oneflow_vm_name_template = lookup ('one::oned::oneflow_vm_name_template', undef, undef, '$ROLE_NAME_$VM_NUMBER_(service_$SERVICE_ID)')
+  $oneflow_core_auth        = lookup ('one::oned::oneflow_core_auth', undef, undef, 'cipher')
+  $oneflow_debug_level      = lookup ('one::oned::oneflow_debug_level', undef, undef, 2)
 
   # OpenNebula Datastore parameters
-  $datastore_capacity_check    = hiera ('one::oned::datastore_capacity_check', 'yes')
-  $default_image_type          = hiera ('one::oned::default_image_type', 'OS')
-  $default_device_prefix       = hiera ('one::oned::default_device_prefix', 'hd')
-  $default_cdrom_device_prefix = hiera ('one::oned::default_cdrom_device_prefix', 'hd')
+  $datastore_capacity_check    = lookup ('one::oned::datastore_capacity_check', undef, undef, 'yes')
+  $default_image_type          = lookup ('one::oned::default_image_type', undef, undef, 'OS')
+  $default_device_prefix       = lookup ('one::oned::default_device_prefix', undef, undef, 'hd')
+  $default_cdrom_device_prefix = lookup ('one::oned::default_cdrom_device_prefix', undef, undef, 'hd')
 
   # Where to place the sudo rule files
   $oneadmin_sudoers_file   = '/etc/sudoers.d/10_oneadmin'
   $imaginator_sudoers_file = '/etc/sudoers.d/20_imaginator'
-
-  # oneflow config validations
-  validate_integer([$oneflow_lcm_interval, $oneflow_port, $oneflow_default_cooldown, $oneflow_action_number, $oneflow_action_period])
-  validate_string($oneflow_one_xmlrpc, $oneflow_vm_name_template)
-  validate_re($oneflow_host, '\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b', 'This needs to be in ipv4 format ###.###.###.###')
-  validate_integer($oneflow_debug_level, 4, 1)
-  validate_re($oneflow_shutdown_action, [ 'terminate', 'terminate-hard' ], 'oneflow_shutdown_action must be either terminate or terminate-hard.')
-  validate_re($oneflow_core_auth, [ 'cipher','x509' ], 'Oneflow_core_auth value must be cipher or x509.')
 
   # OS specific params for nodes
   case $facts['os']['family'] {
@@ -225,7 +219,7 @@ class one::params {
           'ipset',
         ]
       }
-      if versioncmp($one_version, '6.0') >= 0 {
+      if ( versioncmp($one_version, '6.0') >= 0 ) {
         $oned_packages   = ['opennebula', 'opennebula-rubygems', 'opennebula-tools']
       } else {
         $oned_packages   = ['opennebula', 'opennebula-server', 'opennebula-ruby']
@@ -246,7 +240,7 @@ class one::params {
       $libvirtd_srv    = 'libvirtd'
       $libvirtd_cfg    = '/etc/sysconfig/libvirtd'
       $libvirtd_source = 'one/libvirtd.sysconfig.erb'
-      $use_gems        = str2bool(hiera('one::oned::install::use_gems', 'true')) # lint:ignore:quoted_booleans
+      $use_gems        = str2bool(lookup('one::oned::install::use_gems', undef, undef, 'true')) # lint:ignore:quoted_booleans
       $rubygems        = ['builder', 'sinatra']
       $rubygems_rpm    = ['rubygem-builder', 'rubygem-sinatra']
     }
@@ -259,7 +253,7 @@ class one::params {
       ]
       $rubygems       = ['parse-cron', 'builder', 'sinatra']
       $oned_packages   = ['opennebula', 'opennebula-tools', 'ruby-opennebula']
-      if $one_version >= '6.0' {
+      if ( versioncmp($one_version, '6.0') >= 0 ) {
         $oned_packages   = ['opennebula', 'opennebula-rubygems', 'opennebula-tools']
       } else {
         $oned_packages   = ['opennebula', 'opennebula-tools', 'ruby-opennebula']
@@ -279,8 +273,7 @@ class one::params {
       $libvirtd_source = 'one/libvirt-bin.debian.erb'
     }
     default: {
-      fail("Your OS - ${facts['os']['family']} - is not yet supported.
-        Please add required functionality to params.pp")
+      fail("Your OS - ${facts['os']['family']} - is not yet supported. Please add required functionality to params.pp")
     }
   }
 }

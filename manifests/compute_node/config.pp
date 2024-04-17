@@ -20,26 +20,22 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::compute_node::config (
-  $networkconfig           = $one::kickstart_network,
-  $partitions              = $one::kickstart_partition,
-  $rootpw                  = $one::kickstart_rootpw,
-  $data                    = $one::kickstart_data,
-  $kickstart_tmpl          = $one::kickstart_tmpl,
-  $preseed_data            = $one::preseed_data,
-  $ohd_deb_repo            = $one::preseed_ohd_deb_repo,
-  $debian_mirror_url       = $one::preseed_debian_mirror_url,
-  $preseed_tmpl            = $one::preseed_tmpl,
-  $libvirtd_cfg            = $one::libvirtd_cfg,
-  $libvirtd_source         = $one::libvirtd_source,
-  $libvirtd_srv            = $one::libvirtd_srv,
-  $manage_sudoer_config    = $one::manage_sudoer_config,
-  $oneadmin_sudoers_file   = $one::oneadmin_sudoers_file,
-  $imaginator_sudoers_file = $one::imaginator_sudoers_file
-){
-
-  validate_string ($debian_mirror_url)
-  validate_hash   ($preseed_data)
-
+  String $networkconfig           = $one::kickstart_network,
+  String $partitions              = $one::kickstart_partition,
+  String $rootpw                  = $one::kickstart_rootpw,
+  Hash $data                      = $one::kickstart_data,
+  String $kickstart_tmpl          = $one::kickstart_tmpl,
+  Hash $preseed_data              = $one::preseed_data,
+  String $ohd_deb_repo            = $one::preseed_ohd_deb_repo,
+  String $debian_mirror_url       = $one::preseed_debian_mirror_url,
+  String $preseed_tmpl            = $one::preseed_tmpl,
+  String $libvirtd_cfg            = $one::libvirtd_cfg,
+  String $libvirtd_source         = $one::libvirtd_source,
+  String $libvirtd_srv            = $one::libvirtd_srv,
+  Boolean $manage_sudoer_config   = $one::manage_sudoer_config,
+  String $oneadmin_sudoers_file   = $one::oneadmin_sudoers_file,
+  String $imaginator_sudoers_file = $one::imaginator_sudoers_file
+) {
   $_polkit_file_path = $facts['os']['family'] ? {
     'RedHat' => '/etc/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla',
     'Debian' => '/var/lib/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla',
@@ -149,7 +145,8 @@ class one::compute_node::config (
     }
   }
 
-  if ($facts['os']['family'] == 'Debian') or ($facts['os']['family  '] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') < 0) {
+  if ( $facts['os']['family'] == 'Debian')
+  or ($facts['os']['family  '] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') < 0) {
     file { '/sbin/brctl':
       ensure => link,
       target => '/usr/sbin/brctl',

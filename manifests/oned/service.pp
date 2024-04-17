@@ -17,8 +17,8 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::oned::service (
-  $ha_setup = $one::ha_setup,
-){
+  Boolean $ha_setup = $one::ha_setup,
+) {
   if ($ha_setup) {
     $oned_enable = false
     $oned_ensure = undef
@@ -26,7 +26,7 @@ class one::oned::service (
     $oned_enable = true
     $oned_ensure = running
   }
-  service {'opennebula':
+  service { 'opennebula':
     ensure    => $oned_ensure,
     hasstatus => true,
     enable    => $oned_enable,

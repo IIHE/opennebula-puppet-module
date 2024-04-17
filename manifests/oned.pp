@@ -30,10 +30,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::oned (
-  $backend  = $one::backend,
-  $ldap     = $one::ldap,
-  $puppetdb = $one::puppetdb,
-  $oneid    = $one::oneid,
+  String $backend   = $one::backend,
+  Boolean $ldap     = $one::ldap,
+  Boolean $puppetdb = $one::puppetdb,
+  String $oneid     = $one::oneid,
 ) {
   include one::prerequisites
   include one::install
@@ -62,7 +62,7 @@ class one::oned (
   }
   # lint:endignore
 
-  if ($puppetdb == true) {
+  if $puppetdb {
     # Realize all the known nodes
     Onehost <<| tag == $oneid |>> {
       require => Class[one::oned::service],

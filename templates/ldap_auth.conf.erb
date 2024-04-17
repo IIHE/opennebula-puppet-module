@@ -18,78 +18,78 @@ server 1:
     # Ldap user able to query, if not set connects as anonymous. For
     # Active Directory append the domain name. Example:
     # Administrator@my.domain.com
-    :user: '<%= scope.lookupvar('one::oned_ldap_user') %>'
-    :password: '<%= scope.lookupvar('one::oned_ldap_pass') %>'
+    :user: '<%= scope['one::oned_ldap_user'] %>'
+    :password: '<%= scope['one::oned_ldap_pass'] %>'
 
     # Ldap authentication method
     :auth_method: :simple
 
     # Ldap server
-    :host: <%= scope.lookupvar('one::oned_ldap_host') %>
-    :port: <%= scope.lookupvar('one::oned_ldap_port') %>
+    :host: <%= scope['one::oned_ldap_host'] %>
+    :port: <%= scope['one::oned_ldap_port'] %>
 
-<% if scope.lookupvar('one::oned_ldap_port') == "636" %>
+<% if scope['one::oned_ldap_port'] == "636" %>
     # Uncomment this line for tsl conections
     :encryption: :simple_tls
 <% end %>
 
     # base hierarchy where to search for users and groups
-    :base: '<%= scope.lookupvar('one::oned_ldap_base') %>'
+    :base: '<%= scope['one::oned_ldap_base'] %>'
 
     # group the users need to belong to. If not set any user will do
     #:group: 'cn=cloud,ou=groups,dc=domain'
-<% if scope.lookupvar('one::oned_ldap_group') != 'undef' -%>
-    :group: '<%= scope.lookupvar('one::oned_ldap_group') %>'
+<% if scope['one::oned_ldap_group'] != '' -%>
+    :group: '<%= scope['one::oned_ldap_group'] %>'
 <% end -%>
 
     # field that holds the user name, if not set 'cn' will be used
     # :user_field: 'cn'
-<% if scope.lookupvar('one::oned_ldap_user_field') != 'undef' -%>
-    :user_field: '<%= scope.lookupvar('one::oned_ldap_user_field') %>'
+<% unless scope['one::oned_ldap_user_field'].nil? -%>
+    :user_field: '<%= scope['one::oned_ldap_user_field'] %>'
 <% end -%>
 
     # for Active Directory use this user_field instead
     #:user_field: 'sAMAccountName'
 
     # field name for group membership, by default it is 'member'
-<% if scope.lookupvar('one::oned_ldap_group_field') != 'undef' -%>
-    :group_field: '<%= scope.lookupvar('one::oned_ldap_group_field') %>'
+<% unless scope['one::oned_ldap_group_field'].nil? -%>
+    :group_field: '<%= scope['one::oned_ldap_group_field'] %>'
 <% end -%>
 
     # user field that that is in in the group group_field, if not set 'dn' will be used
     #:user_group_field: 'dn'
-<% if scope.lookupvar('one::oned_ldap_user_group_field') != 'undef' -%>
-    :user_group_field: '<%= scope.lookupvar('one::oned_ldap_user_group_field') %>'
+<% unless scope['one::oned_ldap_user_group_field'].nil? -%>
+    :user_group_field: '<%= scope['one::oned_ldap_user_group_field'] %>'
 <% end -%>
 
     # Generate mapping file from group template info
     #:mapping_generate: true
-<% if scope.lookupvar('one::oned_ldap_mapping_generate') != 'undef' -%>
-    :mapping_generate: <%= scope.lookupvar('one::oned_ldap_mapping_generate') %>
+<% unless scope['one::oned_ldap_mapping_generate'].nil? -%>
+    :mapping_generate: <%= scope['one::oned_ldap_mapping_generate'] %>
 <% end -%>
 
     # Seconds a mapping file remain untouched until the next regeneration
     #:mapping_timeout: 300
-<% if scope.lookupvar('one::oned_ldap_mapping_timeout') != 'undef' -%>
-    :mapping_timeout: <%= scope.lookupvar('one::oned_ldap_mapping_timeout') %>
+<% unless scope['one::oned_ldap_mapping_timeout'].nil? -%>
+    :mapping_timeout: <%= scope['one::oned_ldap_mapping_timeout'] %>
 <% end -%>
 
     # Name of the mapping file in OpenNebula var diretory
     #:mapping_filename: server1.yaml
-<% if scope.lookupvar('one::oned_ldap_mapping_filename') != 'undef' -%>
-    :mapping_filename: <%= scope.lookupvar('one::oned_ldap_mapping_filename') %>
+<% unless scope['one::oned_ldap_mapping_filename'].nil? -%>
+    :mapping_filename: <%= scope['one::oned_ldap_mapping_filename'] %>
 <% end -%>
 
     # Key from the OpenNebula template to map to an AD group
     #:mapping_key: GROUP_DN
-<% if scope.lookupvar('one::oned_ldap_mapping_key') != 'undef' -%>
-    :mapping_key: <%= scope.lookupvar('one::oned_ldap_mapping_key') %>
+<% unless scope['one::oned_ldap_mapping_key'].nil? -%>
+    :mapping_key: <%= scope['one::oned_ldap_mapping_key'] %>
 <% end -%>
 
     # Default group ID used for users in an AD group not mapped
     #:mapping_default: 1
-<% if scope.lookupvar('one::oned_ldap_mapping_default') != 'undef' -%>
-    :mapping_default: <%= scope.lookupvar('one::oned_ldap_mapping_default') %>
+<% unless scope['one::oned_ldap_mapping_default'].nil? -%>
+    :mapping_default: <%= scope['one::oned_ldap_mapping_default'] %>
 <% end -%>
 
 

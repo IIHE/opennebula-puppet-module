@@ -18,10 +18,9 @@
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
-class one::prerequisites(
-  $one_repo_enable  = $one::one_repo_enable,
+class one::prerequisites (
+  Boolean $one_repo_enable  = $one::one_repo_enable,
 ) {
-
   case $facts['os']['family'] {
     'RedHat': {
       if ( $one_repo_enable ) {
@@ -35,15 +34,15 @@ class one::prerequisites(
     }
     'Debian' : {
       if ( $one_repo_enable ) {
-        include ::apt
+        include apt
         case $facts['os']['name'] {
           'Debian': {
-            $apt_location="${::one::one_version_short}/Debian/${facts['os']['release']['major']}"
-            $apt_pin='-10'
+            $apt_location = "${one::one_version_short}/Debian/${facts['os']['release']['major']}"
+            $apt_pin = '-10'
           }
           'Ubuntu': {
-            $apt_location="${::one::one_version_short}/Ubuntu/${facts['os']['release']['major']}"
-            $apt_pin='500'
+            $apt_location = "${one::one_version_short}/Ubuntu/${facts['os']['release']['major']}"
+            $apt_pin = '500'
           }
           default: { fail("Unrecognized operating system ${facts['os']['name']}") }
         }

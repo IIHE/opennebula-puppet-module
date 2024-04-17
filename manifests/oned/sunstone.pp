@@ -17,7 +17,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::oned::sunstone (
-  $ldap = $one::oned::ldap
+  Boolean $ldap = $one::oned::ldap
 ) {
   include one::prerequisites
   include one::oned::sunstone::install

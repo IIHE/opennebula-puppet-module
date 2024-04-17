@@ -15,9 +15,9 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::oned::sunstone::service (
-  $sunstone_passenger = $one::sunstone_passenger,
-  $sunstone_novnc     = $one::sunstone_novnc,
-  $sunstone_fireedge  = $one::sunstone_fireedge,
+  Boolean $sunstone_passenger = $one::sunstone_passenger,
+  Boolean $sunstone_novnc     = $one::sunstone_novnc,
+  Boolean $sunstone_fireedge  = $one::sunstone_fireedge,
 ) {
   if $sunstone_passenger {
     $srv_ensure = stopped

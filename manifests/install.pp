@@ -3,9 +3,9 @@
 # packages needed by both (compute node and head)
 #
 class one::install (
-  $http_proxy = $one::http_proxy,
-  $dbus_pkg   = $one::dbus_pkg,
-  $package_ensure = $one::package_ensure,
+  String $http_proxy     = $one::http_proxy,
+  String $dbus_pkg       = $one::dbus_pkg,
+  String $package_ensure = $one::package_ensure,
 ) inherits one {
   File['/etc/gemrc'] -> Package <| provider == 'gem' |>
 

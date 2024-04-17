@@ -16,7 +16,7 @@
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
-class one::oned::onegate  {
+class one::oned::onegate {
   include one::prerequisites
   include one::oned::onegate::install
   include one::oned::onegate::config

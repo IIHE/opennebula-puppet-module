@@ -16,7 +16,7 @@
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
-class one::oned::oneflow  {
+class one::oned::oneflow {
   include one::prerequisites
   include one::oned::oneflow::install
   include one::oned::oneflow::config

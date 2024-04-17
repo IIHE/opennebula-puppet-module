@@ -16,16 +16,14 @@
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
-class one::oned::install(
-  $use_gems           = $one::use_gems,
-  $rubygems           = $one::rubygems,
-  $rubygems_rpm       = $one::rubygems_rpm,
-  $oned_packages      = $one::oned_packages,
-  $hook_scripts_pkgs  = $one::hook_scripts_pkgs,
-  $package_ensure     = $one::package_ensure,
+class one::oned::install (
+  Boolean $use_gems        = $one::use_gems,
+  Array $rubygems          = $one::rubygems,
+  Array $rubygems_rpm      = $one::rubygems_rpm,
+  Array $oned_packages     = $one::oned_packages,
+  Array $hook_scripts_pkgs = $one::hook_scripts_pkgs,
+  String $package_ensure   = $one::package_ensure,
 ) inherits one {
-
-  validate_bool($use_gems)
   Package {
     require  => Class['one::prerequisites'],
   }
