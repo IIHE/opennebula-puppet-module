@@ -1,10 +1,10 @@
-<% if scope.lookupvar('one::sunstone_logo_small_png') != 'undef' -%>
+<% if scope['one::sunstone_logo_small_png'] != '' -%>
 small_logo: images/custom_logo_small.png
 <% else -%>
 small_logo: images/opennebula-sunstone-v4.14-small.png
 <% end -%>
 provision_logo: images/one_small_logo.png
-<% if scope.lookupvar('one::version_gte_4_14') -%>
+<% if scope['one::version_gte_4_14'] -%>
 enabled_tabs:
     - dashboard-tab
     - system-tab
@@ -199,7 +199,7 @@ tabs:
         actions:
             VM.refresh: true
             VM.create_dialog: true
-            <%- if not scope.lookupvar('one::version_gte_4_14') -%>
+            <%- if not scope['one::version_gte_4_14'] -%>
             VM.import_dialog: false
             <%- end -%>
             VM.rename: true
@@ -215,7 +215,7 @@ tabs:
             VM.resume: true
             VM.stop: true
             VM.recover: true
-            <%- if not scope.lookupvar('one::version_gte_4_14') -%>
+            <%- if not scope['one::version_gte_4_14'] -%>
             VM.boot: true
             <%- end -%>
             VM.reboot: true
@@ -231,7 +231,7 @@ tabs:
             VM.resize: true
             VM.attachdisk: true
             VM.detachdisk: true
-            <%- if not scope.lookupvar('one::version_gte_4_14') -%>
+            <%- if not scope['one::version_gte_4_14'] -%>
             VM.saveas: true
             <%- end -%>
             VM.disk_saveas: true
@@ -505,7 +505,7 @@ tabs:
                 Role.suspend: true
                 Role.resume: true
                 Role.stop: true
-                <%- if not scope.lookupvar('one::version_gte_4_14') -%>
+                <%- if not scope['one::version_gte_4_14'] -%>
                 Role.boot: true
                 <%- end -%>
                 Role.reboot: true
@@ -521,7 +521,7 @@ tabs:
                 RoleVM.suspend: true
                 RoleVM.resume: true
                 RoleVM.stop: true
-                <%- if not scope.lookupvar('one::version_gte_4_14') -%>
+                <%- if not scope['one::version_gte_4_14'] -%>
                 RoleVM.boot: true
                 <%- end -%>
                 RoleVM.reboot: true

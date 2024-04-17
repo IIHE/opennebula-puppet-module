@@ -53,15 +53,15 @@
 #*******************************************************************************
 
 LOG = [
-  SYSTEM      = "<%= scope.lookupvar('one::oned_log_system') %>",
+  SYSTEM      = "<%= scope['one::oned_log_system'] %>",
   DEBUG_LEVEL = <%= @debug_level %>,
   USE_VMS_LOCATION = "NO"
 ]
 
 #MANAGER_TIMER = 15
 
-MONITORING_INTERVAL_DATASTORE = <%= scope.lookupvar('one::monitoring_interval_datastore') %>
-MONITORING_INTERVAL_MARKET    = <%= scope.lookupvar('one::monitoring_interval_market') %>
+MONITORING_INTERVAL_DATASTORE = <%= scope['one::monitoring_interval_datastore'] %>
+MONITORING_INTERVAL_MARKET    = <%= scope['one::monitoring_interval_market'] %>
 MONITORING_INTERVAL_DB_UPDATE = 0
 
 #DS_MONITOR_VM_DISK = 10
@@ -75,11 +75,11 @@ DB = [ BACKEND = "sqlite" ]
 <% if @backend == 'mysql' -%>
 # Sample configuration for MySQL
 DB = [ BACKEND = "mysql",
-    SERVER  = "<%= scope.lookupvar('one::oned_db_host') %>",
+    SERVER  = "<%= scope['one::oned_db_host'] %>",
     PORT    = 3306,
-    USER    = "<%= scope.lookupvar('one::oned_db_user') %>",
-    PASSWD  = "<%= scope.lookupvar('one::oned_db_password') %>",
-    DB_NAME = "<%= scope.lookupvar('one::oned_db') %>",
+    USER    = "<%= scope['one::oned_db_user'] %>",
+    PASSWD  = "<%= scope['one::oned_db_password'] %>",
+    DB_NAME = "<%= scope['one::oned_db'] %>",
     CONNECTIONS = 50,
     COMPARE_BINARY = "no" ]
 <% end -%>
@@ -102,9 +102,9 @@ VNC_PORTS = [
 #  frontend during drivers operations. If this variable is not set, OpenNebula
 #  will auto detect it. It can be in FQDN format, hostname or an IP
 
-PORT = <%= scope.lookupvar('one::oned_port') %>
+PORT = <%= scope['one::oned_port'] %>
 
-LISTEN_ADDRESS = "<%= scope.lookupvar('one::oned_listen_address') %>"
+LISTEN_ADDRESS = "<%= scope['one::oned_listen_address'] %>"
 
 # HOSTNAME = "one-hostname"
 
@@ -118,7 +118,7 @@ LISTEN_ADDRESS = "<%= scope.lookupvar('one::oned_listen_address') %>"
 #*******************************************************************************
 #
 #API_LIST_ORDER = "DESC"
-VM_SUBMIT_ON_HOLD = "<%= scope.lookupvar('one::oned::config::oned_vm_submit_on_hold') %>"
+VM_SUBMIT_ON_HOLD = "<%= scope['one::oned::config::oned_vm_submit_on_hold'] %>"
 
 #*******************************************************************************
 # Federation & HA configuration attributes
@@ -261,11 +261,11 @@ SHOWBACK_ONLY_RUNNING = "no"
 #     %% -- %
 #*******************************************************************************
 
-MAX_CONN           = <%= scope.lookupvar('one::xmlrpc_maxconn') %>
-MAX_CONN_BACKLOG   = <%= scope.lookupvar('one::xmlrpc_maxconn_backlog') %>
-KEEPALIVE_TIMEOUT  = <%= scope.lookupvar('one::xmlrpc_keepalive_timeout') %>
-KEEPALIVE_MAX_CONN = <%= scope.lookupvar('one::xmlrpc_keepalive_max_conn') %>
-TIMEOUT            = <%= scope.lookupvar('one::xmlrpc_timeout') %>
+MAX_CONN           = <%= scope['one::xmlrpc_maxconn'] %>
+MAX_CONN_BACKLOG   = <%= scope['one::xmlrpc_maxconn_backlog'] %>
+KEEPALIVE_TIMEOUT  = <%= scope['one::xmlrpc_keepalive_timeout'] %>
+KEEPALIVE_MAX_CONN = <%= scope['one::xmlrpc_keepalive_max_conn'] %>
+TIMEOUT            = <%= scope['one::xmlrpc_timeout'] %>
 #RPC_LOG            = NO
 #MESSAGE_SIZE       = 1073741824
 #LOG_CALL_FORMAT    = "Req:%i UID:%u IP:%A %m invoked %l20"
@@ -301,12 +301,12 @@ NETWORK_SIZE = 254
 MAC_PREFIX   = "02:00"
 
 VLAN_IDS = [
-    START    = "<%= scope.lookupvar('one::vlan_ids_start') %>",
-    RESERVED = "<%= scope.lookupvar('one::vlan_ids_reserved') %>"
+    START    = "<%= scope['one::vlan_ids_start'] %>",
+    RESERVED = "<%= scope['one::vlan_ids_reserved'] %>"
 ]
 
 VXLAN_IDS = [
-    START = "<%= scope.lookupvar('one::vxlan_ids_start') %>"
+    START = "<%= scope['one::vxlan_ids_start'] %>"
 ]
 
 #PCI_PASSTHROUGH_BUS = "0x01"
@@ -350,12 +350,12 @@ VXLAN_IDS = [
 
 #DATASTORE_LOCATION  = /var/lib/one/datastores
 
-DATASTORE_CAPACITY_CHECK = "<%= scope.lookupvar('one::datastore_capacity_check') %>"
+DATASTORE_CAPACITY_CHECK = "<%= scope['one::datastore_capacity_check'] %>"
 
-DEFAULT_DEVICE_PREFIX       = "<%= scope.lookupvar('one::default_device_prefix') %>"
-DEFAULT_CDROM_DEVICE_PREFIX = "<%= scope.lookupvar('one::default_cdrom_device_prefix') %>"
+DEFAULT_DEVICE_PREFIX       = "<%= scope['one::default_device_prefix'] %>"
+DEFAULT_CDROM_DEVICE_PREFIX = "<%= scope['one::default_cdrom_device_prefix'] %>"
 
-DEFAULT_IMAGE_TYPE           = "<%= scope.lookupvar('one::default_image_type') %>"
+DEFAULT_IMAGE_TYPE           = "<%= scope['one::default_image_type'] %>"
 #DEFAULT_IMAGE_PERSISTENT     = ""
 #DEFAULT_IMAGE_PERSISTENT_NEW = ""
 
@@ -771,9 +771,9 @@ AUTH_MAD = [
     AUTHN = "ssh,x509,ldap,server_cipher,server_x509"
 ]
 
-#<% if scope.lookupvar('one::oned_default_auth') != 'undef' -%>
-DEFAULT_AUTH = "<%= scope.lookupvar('one::oned_default_auth') %>"
-<% elsif scope.lookupvar('one::ldap') -%>
+#<% if scope['one::oned_default_auth'] != '' -%>
+DEFAULT_AUTH = "<%= scope['one::oned_default_auth'] %>"
+<% elsif scope['one::ldap'] -%>
 DEFAULT_AUTH = "ldap"
 <% else %>
 #DEFAULT_AUTH = "default"
@@ -792,8 +792,8 @@ DEFAULT_UMASK = 177
 #   MUST be consistent with the values in onegate-server.conf
 #*******************************************************************************
 
-<% if scope.lookupvar('one::resulting_oned_onegate_endpoint') -%>
-ONEGATE_ENDPOINT = "<%= scope.lookupvar('one::resulting_oned_onegate_endpoint') %>"
+<% if scope['one::resulting_oned_onegate_endpoint'] -%>
+ONEGATE_ENDPOINT = "<%= scope['one::resulting_oned_onegate_endpoint'] %>"
 <% else -%>
 #ONEGATE_ENDPOINT = "http://frontend:5030"
 <% end -%>

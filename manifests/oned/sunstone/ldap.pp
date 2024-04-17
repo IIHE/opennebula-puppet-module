@@ -17,10 +17,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::oned::sunstone::ldap (
-  $oned_sunstone_ldap_pkg = $one::oned_sunstone_ldap_pkg,
-  $oned_ldap_mappings = $one::oned_ldap_mappings,
-  $oned_ldap_mapping_filename = $one::oned_ldap_mapping_filename,
-  $package_ensure             = $one::package_ensure,
+  Array[String] $oned_sunstone_ldap_pkg = $one::oned_sunstone_ldap_pkg,
+  Hash $oned_ldap_mappings              = $one::oned_ldap_mappings,
+  String $oned_ldap_mapping_filename    = $one::oned_ldap_mapping_filename,
+  String $package_ensure                = $one::package_ensure,
 ) inherits one {
   package { $oned_sunstone_ldap_pkg:
     ensure => $package_ensure,

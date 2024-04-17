@@ -25,15 +25,15 @@
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
-class one::compute_node(
-  $puppetdb          = $one::puppetdb,
-  $oneid             = $one::oneid,
-  $im_mad            = $one::im_mad,
-  $vm_mad            = $one::vm_mad,
-  $vn_mad            = $one::vn_mad,
-  $libvirt_with_ceph = false,
-  $libvirt_rbd_secret_uuid = undef,
-  $libvirt_rbd_secret_key  = undef,
+class one::compute_node (
+  Boolean $puppetdb               = $one::puppetdb,
+  String $oneid                   = $one::oneid,
+  String $im_mad                  = $one::im_mad,
+  String $vm_mad                  = $one::vm_mad,
+  String $vn_mad                  = $one::vn_mad,
+  Boolean $libvirt_with_ceph      = false,
+  String $libvirt_rbd_secret_uuid = undef,
+  String $libvirt_rbd_secret_key  = undef,
 ) {
   include one::prerequisites
   include one::install

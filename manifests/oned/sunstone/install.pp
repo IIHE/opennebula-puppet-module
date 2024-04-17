@@ -17,10 +17,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::oned::sunstone::install (
-  $oned_sunstone_packages = $one::oned_sunstone_packages,
-  $package_ensure         = $one::package_ensure,
-  $sunstone_fireedge      = $one::sunstone_fireedge,
-  $one_version            = $one::one_version,
+  Array $oned_sunstone_packages = $one::oned_sunstone_packages,
+  String $package_ensure        = $one::package_ensure,
+  Boolean $sunstone_fireedge    = $one::sunstone_fireedge,
+  String $one_version           = $one::one_version,
 ) inherits one {
   package { $oned_sunstone_packages:
     ensure => $package_ensure,
@@ -38,7 +38,7 @@ class one::oned::sunstone::install (
         }
       }
       default: {
-        fail("Your OS - $facts['os']['name'] - is not yet supported.")
+        fail("Your OS - ${facts['os']['name']} - is not yet supported.")
       }
     }
   }

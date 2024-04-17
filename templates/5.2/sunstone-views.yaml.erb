@@ -1,14 +1,14 @@
 ---
-<% if scope.lookupvar('one::sunstone_logo_png') != 'undef' -%>
+<% if scope['one::sunstone_logo_png'] != '' -%>
 logo: images/custom_logo.png
 <% else -%>
-<% if scope.lookupvar('one::version_gte_5_0') -%>
+<% if scope['one::version_gte_5_0'] -%>
 logo: images/opennebula-5.0.png
 <% else -%>
 logo: images/opennebula-sunstone-v4.0.png
 <% end -%>
 <% end -%>
-<% if not scope.lookupvar('one::version_gte_4_14') -%>
+<% if not scope['one::version_gte_4_14'] -%>
 available_tabs:
     - dashboard-tab
     - system-tab
@@ -50,7 +50,7 @@ groups:
         - cloud_vcenter
 default:
     - cloud
-<% if scope.lookupvar('one::version_gte_5_0') -%>
+<% if scope['one::version_gte_5_0'] -%>
 default_groupadmin:
     - groupadmin
     - cloud

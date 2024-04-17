@@ -1,13 +1,9 @@
 # Class one::config
 #
 class one::config (
-  $ssh_pub_key  = $one::ssh_pub_key,
-  $ssh_priv_key = $one::ssh_priv_key_param,
-){
-
-  validate_string($ssh_pub_key)
-  validate_string($ssh_priv_key)
-
+  String $ssh_pub_key  = $one::ssh_pub_key,
+  String $ssh_priv_key = $one::ssh_priv_key_param,
+) {
   File {
     owner => 'oneadmin',
     group => 'oneadmin',
