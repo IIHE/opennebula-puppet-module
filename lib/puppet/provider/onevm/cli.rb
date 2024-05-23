@@ -48,29 +48,29 @@ Puppet::Type.type(:onevm).provide(:cli) do
 
   # Return the full hash of all existing onevm resources
   def self.instances
-    vms = Nokogiri::XML(onevm('list','-x', '--extended')).root.xpath('/VM_POOL/VM')
+    vms = Nokogiri::XML(onevm('list', '-x', '--extended')).root.xpath('/VM_POOL/VM')
     vms.collect do |vm|
-        template_id = vm.xpath('./TEMPLATE/TEMPLATE_ID').text
-        template_name = Nokogiri::XML(onetemplate('show',template_id,'-x')).root.xpath('/VMTEMPLATE/NAME').text
-        new(
-            name:         vm.xpath('./NAME').text,
-            ensure:       :present,
-            template:     template_name,
-            description:  vm.xpath('./TEMPLATE/DESCRIPTION').text
-        )
+      template_id = vm.xpath('./TEMPLATE/TEMPLATE_ID').text
+      template_name = Nokogiri::XML(onetemplate('show', template_id, '-x')).root.xpath('/VMTEMPLATE/NAME').text
+      new(
+        name:         vm.xpath('./NAME').text,
+        ensure:       :present,
+        template:     template_name,
+        description:  vm.xpath('./TEMPLATE/DESCRIPTION').text
+      )
     end
   end
 
   def self.prefetch(resources)
     vms = instances
     resources.keys.each do |name|
-      provider = vms.find{ |vm| vm.name == name }
+      provider = vms.find { |vm| vm.name == name }
       resources[name].provider = provider unless provider.nil?
     end
   end
 
   # setters
   def template=(value)
-      raise 'Can not modify a VM template'
+    raise 'Can not modify a VM template'
   end
 end

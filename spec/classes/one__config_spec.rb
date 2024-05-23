@@ -7,12 +7,11 @@ describe 'one::config', type: :class do
     context "On #{os}" do
       let(:facts) { os_facts }
       context 'general' do
-        let(:params) { {
-        } }
+        let(:params) { {} }
         it { should contain_file('/var/lib/one') \
-                    .with_ensure('directory') \
-                    .with_owner('oneadmin') \
-                    .with_group('oneadmin')
+          .with_ensure('directory') \
+          .with_owner('oneadmin') \
+          .with_group('oneadmin')
         }
       end
     end

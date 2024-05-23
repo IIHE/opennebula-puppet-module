@@ -7,7 +7,7 @@ describe 'one::compute_node::install', type: :class do
     context "On #{os}" do
       let(:facts) { os_facts }
       let(:params) { {
-          node_packages: 'bogus_package'
+        node_packages: 'bogus_package'
       } }
       it { should contain_class('one::compute_node::install') }
       it { should contain_package('bogus_package').with_ensure('latest') }

@@ -19,7 +19,7 @@ Puppet::Type.newtype(:oneimage) do
   newparam(:name, namevar: true) do
     desc 'Name of image.'
     validate do |value|
-        fail("Invalid name: #{value}") unless value =~ /^([A-Za-z]).*/
+      fail("Invalid name: #{value}") unless value =~ /^([A-Za-z]).*/
     end
   end
 

@@ -20,7 +20,7 @@ describe res_type do
   #    res_type.new({:name => 'test'})
   #  }
   before :each do
-      @template = res_type.new(name: 'test')
+    @template = res_type.new(name: 'test')
   end
 
   it 'should have :name be its namevar' do
@@ -28,33 +28,33 @@ describe res_type do
   end
 
   it 'should have property :memory' do
-      @template[:memory] = '4096'
-      @template[:memory].should == '4096'
+    @template[:memory] = '4096'
+    @template[:memory].should == '4096'
   end
 
   it 'should have property :cpu' do
-      @template[:cpu] = '0.5'
-      @template[:cpu].should == '0.5'
+    @template[:cpu] = '0.5'
+    @template[:cpu].should == '0.5'
   end
 
   it 'should have property :vcpu' do
-      @template[:vcpu] = '8'
-      @template[:vcpu].should == '8'
+    @template[:vcpu] = '8'
+    @template[:vcpu].should == '8'
   end
 
   it 'should have property :disks' do
-      @template[:disks] = ['base', 'storage']
-      @template[:disks].should == [{'image'=>'base'}, {'image'=>'storage'}]
+    @template[:disks] = ['base', 'storage']
+    @template[:disks].should == [{ 'image'=>'base' }, { 'image'=>'storage' }]
   end
 
   it 'should have property :nics' do
-      @template[:nics] = ['core', 'backup']
-      @template[:nics].should == [{'network'=>'core'}, {'network'=>'backup'}]
+    @template[:nics] = ['core', 'backup']
+    @template[:nics].should == [{ 'network'=>'core' }, { 'network'=>'backup' }]
   end
 
   it 'should have property :context' do
-      @template[:context] = 'foo'
-      @template[:context].should == 'foo'
+    @template[:context] = 'foo'
+    @template[:context].should == 'foo'
   end
 
   parameter_tests = {

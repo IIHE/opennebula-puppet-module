@@ -17,7 +17,7 @@ describe res_type do
     val
   }
   before :each do
-      @cluster = res_type.new(name: 'test', hosts: ['node1','node2'])
+    @cluster = res_type.new(name: 'test', hosts: ['node1', 'node2'])
   end
 
   it 'should have :name be its namevar' do
@@ -37,17 +37,17 @@ describe res_type do
   end
 
   it 'should have property :hosts' do
-    @cluster[:hosts].should == ['node1','node2']
+    @cluster[:hosts].should == ['node1', 'node2']
   end
 
   it 'should have property :vnets' do
     @cluster[:vnets] = ['vnet1', 'vnet2']
-    @cluster[:vnets].should == ['vnet1','vnet2']
+    @cluster[:vnets].should == ['vnet1', 'vnet2']
   end
 
   it 'should have property :datastores' do
-    @cluster[:datastores] = ['ds1','ds2']
-    @cluster[:datastores].should == ['ds1','ds2']
+    @cluster[:datastores] = ['ds1', 'ds2']
+    @cluster[:datastores].should == ['ds1', 'ds2']
   end
 
   parameter_tests = {
@@ -60,21 +60,21 @@ describe res_type do
   it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 
   it 'should fail when passing host without being declared as onehost' do
-      skip('needs tests to verify onehost resource declaration')
+    skip('needs tests to verify onehost resource declaration')
   end
   it 'should fail when passing vnet without being declared as onevnet' do
-      skip('needs tests to verify onevnet resource declaration')
+    skip('needs tests to verify onevnet resource declaration')
   end
   it 'should fail when passing datastore without being declared as onedatastore' do
-      skip('needs tests to verify onedatastore resource declaration')
+    skip('needs tests to verify onedatastore resource declaration')
   end
   it 'should autorequire host' do
-      skip('needs host autorequire to be built in')
+    skip('needs host autorequire to be built in')
   end
   it 'should autorequire vnet' do
-      skip('needs vnet autorequire to be built in ')
+    skip('needs vnet autorequire to be built in ')
   end
   it 'should autorequire datastore' do
-      skip('needs datastore autorequire to be built in')
+    skip('needs datastore autorequire to be built in')
   end
 end

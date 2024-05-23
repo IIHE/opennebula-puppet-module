@@ -19,7 +19,7 @@ Puppet::Type.newtype(:onevm) do
   newparam(:name, namevar: true) do
     desc 'Name of VM.'
     validate do |value|
-        fail("Invalid name: #{value}") unless value =~ /^([A-Za-z]).*/
+      fail("Invalid name: #{value}") unless value =~ /^([A-Za-z]).*/
     end
   end
 
@@ -30,7 +30,7 @@ Puppet::Type.newtype(:onevm) do
   newproperty(:description) do
     desc 'Description to use for VM'
     validate do |value|
-        fail("Invalid name: #{value}") unless value =~ /^([A-Za-z]).*/
+      fail("Invalid name: #{value}") unless value =~ /^([A-Za-z]).*/
     end
   end
 

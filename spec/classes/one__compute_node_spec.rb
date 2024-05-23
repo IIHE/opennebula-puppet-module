@@ -19,13 +19,13 @@ describe 'one::compute_node', type: :class do
       end
       context 'with puppetdb enabled' do
         let(:params) { {
-            puppetdb: true,
+          puppetdb: true,
         } }
         # cannot test exported resource
       end
       context 'with puppetdb disabled' do
         let(:params) { {
-            puppetdb: false,
+          puppetdb: false,
         } }
         # cannot test exported resource
       end

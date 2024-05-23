@@ -17,7 +17,7 @@ describe res_type do
     val
   }
   before :each do
-      @host = res_type.new(name: 'test')
+    @host = res_type.new(name: 'test')
   end
 
   it 'should have :name be its namevar' do
@@ -25,18 +25,18 @@ describe res_type do
   end
 
   it 'should have property :im_mad' do
-      @host[:im_mad] = 'kvm'
-      @host[:im_mad].should == :kvm
+    @host[:im_mad] = 'kvm'
+    @host[:im_mad].should == :kvm
   end
 
   it 'should have property :im_mad with kvm_pull' do
-      @host[:im_mad] = 'kvm_pull'
-      @host[:im_mad].should == :kvm_pull
+    @host[:im_mad] = 'kvm_pull'
+    @host[:im_mad].should == :kvm_pull
   end
 
   it 'should have property :vm_mad' do
-      @host[:vm_mad] = 'kvm'
-      @host[:vm_mad].should == :kvm
+    @host[:vm_mad] = 'kvm'
+    @host[:vm_mad].should == :kvm
   end
 
   parameter_tests = {

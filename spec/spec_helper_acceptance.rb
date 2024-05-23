@@ -46,8 +46,8 @@ RSpec.configure do |c|
       on host, "echo -e 'one::enable_opennebula_repo: true' > /etc/puppet/hiera.yaml"
 
       # Install dependencies
-      on host, puppet('module','install','puppetlabs-stdlib'), { acceptable_exit_codes: [0,1] }
-      on host, puppet('module','install','puppetlabs-apt'), { acceptable_exit_codes: [0,1] }
+      on host, puppet('module', 'install', 'puppetlabs-stdlib'), { acceptable_exit_codes: [0, 1] }
+      on host, puppet('module', 'install', 'puppetlabs-apt'), { acceptable_exit_codes: [0, 1] }
     end
   end
 end

@@ -33,9 +33,9 @@ describe res_type do
   parameters = []
 
   parameters.each do |params|
-      it "should have a #{params} parameter" do
-          expect(described_class.attrtype(params)).to eq :param
-      end
+    it "should have a #{params} parameter" do
+      expect(described_class.attrtype(params)).to eq :param
+    end
   end
 
   properties = [:dnsservers, :gateway, :model, :bridge, :vlanid, :context, :phydev, :netmask, :network_address]
@@ -51,43 +51,43 @@ describe res_type do
   end
 
   it 'should have property :dnsservers' do
-      @vnet[:dnsservers] = ['8.8.8.8','4.4.4.4']
-      @vnet[:dnsservers].should == ['8.8.8.8','4.4.4.4']
+    @vnet[:dnsservers] = ['8.8.8.8', '4.4.4.4']
+    @vnet[:dnsservers].should == ['8.8.8.8', '4.4.4.4']
   end
 
   it 'should have property :gateway' do
-      @vnet[:gateway] = '10.0.2.1'
-      @vnet[:gateway].should == '10.0.2.1'
+    @vnet[:gateway] = '10.0.2.1'
+    @vnet[:gateway].should == '10.0.2.1'
   end
 
   it 'should have property :model' do
-      @vnet[:model] = 'vlan'
-      @vnet[:model].should == :vlan
+    @vnet[:model] = 'vlan'
+    @vnet[:model].should == :vlan
   end
 
   it 'should have property :bridge' do
-      @vnet[:bridge] = 'br0'
-      @vnet[:bridge].should == 'br0'
+    @vnet[:bridge] = 'br0'
+    @vnet[:bridge].should == 'br0'
   end
 
   it 'should have property :context' do
-      @vnet[:context] = 'foo'
-      @vnet[:context].should == 'foo'
+    @vnet[:context] = 'foo'
+    @vnet[:context].should == 'foo'
   end
 
   it 'should have property :phydev' do
-      @vnet[:phydev] = 'eth0'
-      @vnet[:phydev].should == 'eth0'
+    @vnet[:phydev] = 'eth0'
+    @vnet[:phydev].should == 'eth0'
   end
 
   it 'should have property :netmask' do
-      @vnet[:netmask] = '255.255.0.0'
-      @vnet[:netmask].should == '255.255.0.0'
+    @vnet[:netmask] = '255.255.0.0'
+    @vnet[:netmask].should == '255.255.0.0'
   end
 
   it 'should have property network_address' do
-      @vnet[:network_address] = '10.0.2.0'
-      @vnet[:network_address].should == '10.0.2.0'
+    @vnet[:network_address] = '10.0.2.0'
+    @vnet[:network_address].should == '10.0.2.0'
   end
 
   parameter_tests = {
@@ -100,16 +100,16 @@ describe res_type do
   it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 
   it 'should fail when passing wrong argument to model' do
-      expect {
-          @vnet[:model] = 'foo'
-      }.to raise_error(Puppet::Error)
+    expect {
+      @vnet[:model] = 'foo'
+    }.to raise_error(Puppet::Error)
   end
 
   it 'should fail when passing ipv4 and not providing DNS server' do
-      # expect {
-      #     @vnet4[:dnsservers] = :undef
-      # }.to raise_error(Puppet::Error)
-      skip('needs parameter validation')
+    # expect {
+    #     @vnet4[:dnsservers] = :undef
+    # }.to raise_error(Puppet::Error)
+    skip('needs parameter validation')
   end
 
 end

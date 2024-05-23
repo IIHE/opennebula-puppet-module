@@ -12,26 +12,26 @@ describe 'one::oned::sunstone::config', type: :class do
       context 'general' do
         it { should contain_class('one::oned::sunstone::config') }
         it { should contain_file('/usr/lib/one/sunstone') \
-        .with_ensure('directory') \
-        .with_owner('oneadmin') \
-        .with_group('oneadmin') \
-        .with_recurse('true')
+          .with_ensure('directory') \
+          .with_owner('oneadmin') \
+          .with_group('oneadmin') \
+          .with_recurse('true')
         }
       end
       context 'with sunstone listen ip set' do
-        let (:params) { {listen_ip: '1.2.3.4'} }
+        let (:params) { { listen_ip: '1.2.3.4' } }
         it { should contain_file('/etc/one/sunstone-server.conf') \
-        .with_content(/:host: 1.2.3.4/m)
+          .with_content(/:host: 1.2.3.4/m)
         }
       end
       context 'with sunstone listen not ip set' do
         it { should contain_file('/etc/one/sunstone-server.conf') \
-        .with_group('oneadmin') \
-        .with_content(/:host: /m)
+          .with_group('oneadmin') \
+          .with_content(/:host: /m)
         }
       end
       context 'with support enabled' do
-        let (:params) { {enable_support: 'yes'} }
+        let (:params) { { enable_support: 'yes' } }
 
         expected_routes = ':routes:
     - oneflow
@@ -39,12 +39,12 @@ describe 'one::oned::sunstone::config', type: :class do
     - support'
 
         it { should contain_file('/etc/one/sunstone-server.conf') \
-        .with_group('oneadmin') \
-        .with_content(/#{expected_routes}/m)
+          .with_group('oneadmin') \
+          .with_content(/#{expected_routes}/m)
         }
       end
       context 'with support disabled' do
-        let (:params) { {enable_support: 'no'} }
+        let (:params) { { enable_support: 'no' } }
 
         unexpected_routes ='
     - vcenter

@@ -12,27 +12,27 @@ describe 'one::oned::config' do
       context 'general' do
         it { should contain_class('one::oned::config') }
         it { should contain_file('/etc/one/oned.conf') \
-                    .with_ensure('file')\
-                    .with_owner('root') \
-                    .with_mode('0640')
+          .with_ensure('file')\
+          .with_owner('root') \
+          .with_mode('0640')
         }
         it { should contain_file('/etc/one/sched.conf') \
-                    .with_ensure('file')\
-                    .with_owner('root') \
-                    .with_mode('0640')
+          .with_ensure('file')\
+          .with_owner('root') \
+          .with_mode('0640')
         }
         it { should contain_file('/usr/share/one/hooks') \
-                    .with_ensure('directory') \
-                    .with_mode('0750')
+          .with_ensure('directory') \
+          .with_mode('0750')
         }
         it { should contain_file('/usr/share/one').with_ensure('directory') }
       end
 
       context 'with mysql backend' do
         let (:params) { {
-            backend: 'mysql',
-            backup_script_path: '/var/lib/one/bin/one_db_backup.sh',
-            backup_dir: '/srv/backup'
+          backend: 'mysql',
+          backup_script_path: '/var/lib/one/bin/one_db_backup.sh',
+          backup_dir: '/srv/backup'
         } }
         it { should contain_file('/srv/backup') }
         it { should contain_file('/var/lib/one/bin/one_db_backup.sh') }
@@ -45,7 +45,7 @@ describe 'one::oned::config' do
 
       context 'with kvm driver emulator settings' do
         let(:params) { {
-            kvm_driver_emulator: '/usr/bin/foobar/kvm-bogus'
+          kvm_driver_emulator: '/usr/bin/foobar/kvm-bogus'
         } }
         it { should contain_ini_setting('set_kvm_driver_emulator').with_value('/usr/bin/foobar/kvm-bogus') }
       end
@@ -56,7 +56,7 @@ describe 'one::oned::config' do
 
       context 'with kvm driver nic settings' do
         let(:params) { {
-            kvm_driver_nic_attrs: '[ filter="clean-traffic", model="bogus" ]'
+          kvm_driver_nic_attrs: '[ filter="clean-traffic", model="bogus" ]'
         } }
         it { should contain_ini_setting('set_kvm_driver_nic').with_value('[ filter="clean-traffic", model="bogus" ]') }
       end

@@ -55,19 +55,19 @@ Puppet::Type.newtype(:onevnet) do
   end
 
   newproperty(:netmask) do
-      desc 'Netmask for the network'
+    desc 'Netmask for the network'
   end
 
   newproperty(:network_address) do
-      desc 'Network address for the network'
+    desc 'Network address for the network'
   end
 
   newproperty(:gateway) do
-      desc 'Gateway for network'
+    desc 'Gateway for network'
   end
 
   newproperty(:mtu) do
-      desc 'MTU for network'
+    desc 'MTU for network'
   end
 
   newproperty(:context) do

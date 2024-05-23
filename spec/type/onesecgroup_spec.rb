@@ -54,8 +54,8 @@ describe res_type do
   end
 
   it 'should have property :rules' do
-    @secgroup[:rules] = [{'protocol' => 'ALL', 'rule_type' => 'OUTBOUND'}, {'protocol' => 'ALL', 'rule_type' => 'INBOUND'}]
-    @secgroup[:rules].should == [{'protocol' => 'ALL', 'rule_type' => 'OUTBOUND'}, {'protocol' => 'ALL', 'rule_type' => 'INBOUND'}]
+    @secgroup[:rules] = [{ 'protocol' => 'ALL', 'rule_type' => 'OUTBOUND' }, { 'protocol' => 'ALL', 'rule_type' => 'INBOUND' }]
+    @secgroup[:rules].should == [{ 'protocol' => 'ALL', 'rule_type' => 'OUTBOUND' }, { 'protocol' => 'ALL', 'rule_type' => 'INBOUND' }]
   end
 
   parameter_tests = {

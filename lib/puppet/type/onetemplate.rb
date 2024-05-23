@@ -218,7 +218,7 @@ Puppet::Type.newtype(:onetemplate) do
     desc 'An array of hash for Disks Section'
     defaultto []
     validate do |value|
-      if value.is_a?( Hash)
+      if value.is_a?(Hash)
         # TODO: validate for either persistent or volatile disk and each key
         valid_keys = [
           # Persistent and Clone Disks

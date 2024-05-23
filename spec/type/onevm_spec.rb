@@ -20,7 +20,7 @@ describe res_type do
   #    res_type.new({:name => 'test'})
   #  }
   before :each do
-      @vm = res_type.new(name: 'test')
+    @vm = res_type.new(name: 'test')
   end
 
   it 'should have :name be its namevar' do
@@ -28,8 +28,8 @@ describe res_type do
   end
 
   it 'should have property :template' do
-      @vm[:template] = 'abc'
-      @vm[:template].should == 'abc'
+    @vm[:template] = 'abc'
+    @vm[:template].should == 'abc'
   end
 
   parameter_tests = {

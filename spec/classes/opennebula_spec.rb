@@ -5,16 +5,16 @@ hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 describe 'one', type: :class do
   let(:hiera_config) { hiera_config }
   on_supported_os.each do |os, os_facts|
-     context 'with default params as implicit hiera lookup' do
-       let (:facts) { os_facts }
-       it { should contain_class('one') }
-       it { should_not contain_file('/etc/one/oned.conf').with_content(/^DB = \[ backend = \"sqlite\"/) }
-       it { should_not contain_class('one::oned') }
-     end
-     context "On #{os}" do
+    context 'with default params as implicit hiera lookup' do
+      let (:facts) { os_facts }
+      it { should contain_class('one') }
+      it { should_not contain_file('/etc/one/oned.conf').with_content(/^DB = \[ backend = \"sqlite\"/) }
+      it { should_not contain_class('one::oned') }
+    end
+    context "On #{os}" do
       let(:facts) { os_facts }
       context 'with hiera config' do
-        let(:params) { {oned: true} }
+        let(:params) { { oned: true } }
         hiera = Hiera.new(config: hiera_config)
         configdir = '/etc/one'
         onehome = '/var/lib/one'
@@ -43,8 +43,8 @@ describe 'one', type: :class do
           end
           context 'as compute_node' do
             let(:params) { {
-                oned: false,
-                node: true,
+              oned: false,
+              node: true,
             } }
             networkconfig = hiera.lookup('one::node::kickstart::network', nil, nil)
             sshpubkey = hiera.lookup('one::head::ssh_pub_key', nil, nil)
@@ -105,18 +105,20 @@ describe 'one', type: :class do
                 it { should contain_file("#{onehome}/etc/kickstart.d/rnr.ks").with_content(/repo --name="one" --baseurl=http:/) }
               end
               context 'with preseed for Debian' do
-                it { should contain_file("#{onehome}/etc/preseed.d/does.cfg").with({
-                                                                                       'content' => /ftp.us.debian.org/,
-                                                                                       'owner' => 'oneadmin',
-                                                                                       'group' => 'oneadmin',
-                                                                                   }) }
+                it { should contain_file("#{onehome}/etc/preseed.d/does.cfg").with(
+                    {
+                      'content' => /ftp.us.debian.org/,
+                      'owner' => 'oneadmin',
+                      'group' => 'oneadmin',
+                    }
+                )}
               end
             end
           end
           context 'as oned' do
             let(:params) { {
-                oned: true,
-                node: false,
+              oned: true,
+              node: false,
             } }
             sshprivkey = hiera.lookup('one::head::ssh_priv_key', nil, nil)
             sshpubkey = hiera.lookup('one::head::ssh_pub_key', nil, nil)
@@ -138,15 +140,15 @@ describe 'one', type: :class do
             it { should contain_file(oned_config).with_content(/^LOG = \[\n\s+system\s+=\s+"file"/m) }
             context 'with syslog logging' do
               let(:params) { {
-                  oned: true,
-                  oned_log_system: 'syslog'
+                oned: true,
+                oned_log_system: 'syslog'
               } }
               it { should contain_file(oned_config).with_content(/^LOG = \[\n\s+system\s+=\s+"syslog"/m) }
             end
             context 'with invalid logging subsystem' do
               let(:params) { {
-                  oned: true,
-                  oned_log_system: 'invalid'
+                oned: true,
+                oned_log_system: 'invalid'
               } }
               it do
                 is_expected.to compile.and_raise_error(/"invalid" is not a valid logging subsystem. Valid values are \["file", "syslog"\]/)
@@ -157,23 +159,25 @@ describe 'one', type: :class do
             end
             context 'with mysql backend' do
               let(:params) { {
-                  oned: true,
-                  backend: 'mysql'
+                oned: true,
+                backend: 'mysql'
               } }
               it { should contain_file(oned_config).with_content(/^DB = \[ backend = \"mysql\"/) }
               it { should contain_file(hiera.lookup('one::oned::backup::script_path', nil, nil)).with_content(/mysqldump/m) }
-              it { should contain_cron('one_db_backup').with({
-                                                                 'command' => hiera.lookup('one::oned::backup::script_path', nil, nil),
-                                                                 'user' => hiera.lookup('one::oned::backup::db_user', nil, nil),
-                                                                 'target' => hiera.lookup('one::oned::backup::db_user', nil, nil),
-                                                                 'minute' => hiera.lookup('one::oned::backup::intervall', nil, nil),
-                                                             }) }
+              it { should contain_cron('one_db_backup').with(
+                {
+                  'command' => hiera.lookup('one::oned::backup::script_path', nil, nil),
+                  'user' => hiera.lookup('one::oned::backup::db_user', nil, nil),
+                  'target' => hiera.lookup('one::oned::backup::db_user', nil, nil),
+                  'minute' => hiera.lookup('one::oned::backup::intervall', nil, nil),
+                }
+              )}
               it { should contain_file(hiera.lookup('one::oned::backup::dir', nil, nil)).with_ensure('directory') }
             end
             context 'with wrong backend' do
               let(:params) { {
-                  oned: true,
-                  backend: 'foobar'
+                oned: true,
+                backend: 'foobar'
               } }
               it { expect { should contain_class('one::oned') }.to raise_error(Puppet::Error) }
             end
@@ -222,7 +226,7 @@ describe 'one', type: :class do
             end
             context 'with oneflow' do
               let(:params) { {
-                  oneflow: true
+                oneflow: true
               } }
               it { should contain_class('one::oned::oneflow') }
               it { should contain_class('one::oned::oneflow::install') }
@@ -273,7 +277,7 @@ describe 'one', type: :class do
             end
             context 'with onegate' do
               let(:params) { {
-                  onegate: true
+                onegate: true
               } }
               it { should contain_class('one::oned::onegate') }
               it { should contain_class('one::oned::onegate::install') }
@@ -288,9 +292,9 @@ describe 'one', type: :class do
               it { should contain_service('opennebula-gate').with_ensure('running') }
               context 'with ha-setup' do
                 let(:params) { {
-                    onegate: true,
-                    oneflow: true,
-                    ha_setup: true
+                  onegate: true,
+                  oneflow: true,
+                  ha_setup: true
                 } }
                 it { should contain_class('one::oned::onegate') }
                 it { should contain_service('opennebula-flow').with_enable(false) }
@@ -301,7 +305,7 @@ describe 'one', type: :class do
             end
             context 'with sunstone' do
               let(:params) { {
-                  sunstone: true
+                sunstone: true
               } }
               sunstone_config = "#{configdir}/sunstone-server.conf"
               it { should contain_class('one::oned::sunstone') }
@@ -315,16 +319,16 @@ describe 'one', type: :class do
               it { should contain_service('opennebula-sunstone').with_ensure('running').with_require('Service[opennebula]') }
               context 'with passenger' do
                 let(:params) { {
-                    sunstone: true,
-                    sunstone_passenger: true
+                  sunstone: true,
+                  sunstone_passenger: true
                 } }
                 it { should contain_service('opennebula-sunstone').with_ensure('stopped').with_enable(false) }
               end
               context 'with ldap' do
                 let(:params) { {
-                    oned: true,
-                    sunstone: true,
-                    ldap: true
+                  oned: true,
+                  sunstone: true,
+                  ldap: true
                 } }
                 ldap_config = "#{configdir}/auth/ldap_auth.conf"
                 it { should contain_class('one::oned::sunstone::ldap') }
@@ -340,17 +344,17 @@ describe 'one', type: :class do
               end
               context 'with wrong ldap' do
                 let(:params) { {
-                    oned: true,
-                    sunstone: true,
-                    ldap: 'foobar'
+                  oned: true,
+                  sunstone: true,
+                  ldap: 'foobar'
                 } }
                 it { expect { should contain_class('one::oned') }.to raise_error(Puppet::Error) }
               end
               context 'with ha' do
                 let(:params) { {
-                    oned: true,
-                    sunstone: true,
-                    ha_setup: true
+                  oned: true,
+                  sunstone: true,
+                  ha_setup: true
                 } }
                 it { should contain_service('opennebula').with_enable('false') }
                 it { should contain_service('opennebula-sunstone').with_ensure('running') }

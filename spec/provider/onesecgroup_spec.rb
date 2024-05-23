@@ -4,10 +4,8 @@ require 'spec_helper'
 
 provider_class = Puppet::Type.type(:onesecgroup).provider(:onesecgroup)
 describe provider_class do
-  let(:resource ) {
-    Puppet::Type::onesecgroup.new({
-      name: 'new_secgroup',
-    })
+  let(:resource) {
+    Puppet::Type::onesecgroup.new({ name: 'new_secgroup', })
   }
 
   let(:provider) {

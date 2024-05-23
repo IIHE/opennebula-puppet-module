@@ -36,7 +36,7 @@ Puppet::Type.newtype(:onesecgroup) do
     desc 'An array of hashes, each defining a rule for the security group.'
     defaultto []
     validate do |value|
-      if value.is_a?( Hash)
+      if value.is_a?(Hash)
         # TODO: validate each key
         valid_keys = [
           'protocol',
