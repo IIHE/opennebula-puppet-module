@@ -16,9 +16,9 @@ describe res_type do
     val.stubs(:defaultprovider).returns provider
     val
   }
-#  let(:resource) {
-#    res_type.new({:name => 'test'})
-#  }
+  #  let(:resource) {
+  #    res_type.new({:name => 'test'})
+  #  }
   before :each do
       @vm = res_type.new(name: 'test')
   end
