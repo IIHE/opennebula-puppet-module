@@ -53,10 +53,10 @@ Puppet::Type.type(:onevm).provide(:cli) do
         template_id = vm.xpath('./TEMPLATE/TEMPLATE_ID').text
         template_name = Nokogiri::XML(onetemplate('show',template_id,'-x')).root.xpath('/VMTEMPLATE/NAME').text
         new(
-            :name         vm.xpath('./NAME').text,
-            :ensure       :present,
-            :template     template_name,
-            :description  vm.xpath('./TEMPLATE/DESCRIPTION').text
+            name:         vm.xpath('./NAME').text,
+            ensure:       :present,
+            template:     template_name,
+            description:  vm.xpath('./TEMPLATE/DESCRIPTION').text
         )
     end
   end
