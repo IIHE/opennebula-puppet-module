@@ -64,9 +64,9 @@ Puppet::Type.type(:onesecgroup).provide(:cli) do
   def self.instances
     secgroups = Nokogiri::XML(onesecgroup('list', '-x')).root.xpath('/SECURITY_GROUP_POOL/SECURITY_GROUP')
     secgroups.collect do |secgroup|
-      rules=[]
+      rules = []
       secgroup.xpath('./TEMPLATE/RULE').collect do |rule|
-        ruleitems={}
+        ruleitems = {}
         rule.xpath('*').collect do |item|
           ruleitems[item.name.downcase] = item.text.upcase
         end
@@ -76,7 +76,7 @@ Puppet::Type.type(:onesecgroup).provide(:cli) do
         name:         secgroup.xpath('./NAME').text,
         ensure:       :present,
         description:  secgroup.xpath('./TEMPLATE/DESCRIPTION').text,
-        rules:        rules
+        rules:        rules,
       )
     end
   end

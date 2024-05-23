@@ -117,7 +117,7 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
         memory:         (template.xpath('./TEMPLATE/MEMORY').text unless template.xpath('./TEMPLATE/MEMORY').nil?),
         nics:           template.xpath('./TEMPLATE/NIC').map { |nic| get_nic(nic) },
         os:             Hash[template.xpath('./TEMPLATE/OS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
-        vcpu:           (template.xpath('./TEMPLATE/VCPU').text unless template.xpath('./TEMPLATE/VCPU').nil?)
+        vcpu:           (template.xpath('./TEMPLATE/VCPU').text unless template.xpath('./TEMPLATE/VCPU').nil?),
       )
     end
   end

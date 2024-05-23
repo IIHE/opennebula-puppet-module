@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 
 describe 'onevnet type' do
   before :all do
-    pp =<<-EOS
+    pp = <<-EOS
       class { 'one':
         oned => true,
       }
@@ -12,7 +12,7 @@ describe 'onevnet type' do
 
   describe 'when creating vnet' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onevnet { 'vnet1':
           ensure          => present,
           bridge          => 'basebr0',
@@ -31,7 +31,7 @@ describe 'onevnet type' do
 
   describe 'when creating vnet and addressrange' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onevnet { 'vnet2':
           ensure          => present,
           bridge          => 'basebr0',
@@ -59,7 +59,7 @@ describe 'onevnet type' do
 
   describe 'when creating an IPv6 Network' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onevnet { 'vnet3':
           ensure          => present,
           bridge          => 'basebr0',
@@ -87,7 +87,7 @@ describe 'onevnet type' do
 
   describe 'when creating a vnet with context variables' do
     it 'should idempotently run' do
-      pp =<<-eos
+      pp = <<-eos
       onevnet { 'vnet4':
           ensure          => present,
           bridge          => 'basebr0',
@@ -111,7 +111,7 @@ describe 'onevnet type' do
 
   describe 'when updating a vnet with context variables' do
     it 'should idempotently run' do
-      pp =<<-eos
+      pp = <<-eos
       onevnet { 'vnet4':
           ensure          => present,
           bridge          => 'basebr0',
@@ -136,7 +136,7 @@ describe 'onevnet type' do
 
   describe 'when updating a fixed vnet' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onevnet { 'vnet1':
           ensure          => present,
           bridge          => 'basebr0',
@@ -155,7 +155,7 @@ describe 'onevnet type' do
 
   describe 'when deleting a Network' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
         onevnet { 'vnet':
           ensure => absent,
         }

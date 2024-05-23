@@ -44,12 +44,12 @@ describe res_type do
 
   it 'should have property :disks' do
     @template[:disks] = ['base', 'storage']
-    @template[:disks].should == [{ 'image'=>'base' }, { 'image'=>'storage' }]
+    @template[:disks].should == [{ 'image' => 'base' }, { 'image' => 'storage' }]
   end
 
   it 'should have property :nics' do
     @template[:nics] = ['core', 'backup']
-    @template[:nics].should == [{ 'network'=>'core' }, { 'network'=>'backup' }]
+    @template[:nics].should == [{ 'network' => 'core' }, { 'network' => 'backup' }]
   end
 
   it 'should have property :context' do

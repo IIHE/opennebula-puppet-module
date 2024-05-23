@@ -78,7 +78,7 @@ describe 'onecluster type' do
 
   describe 'when adding a host to a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
         hosts => 'host01',
       }
@@ -91,7 +91,7 @@ describe 'onecluster type' do
 
   describe 'when adding a datastore to a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
         datastores => 'system',
       }
@@ -104,7 +104,7 @@ describe 'onecluster type' do
 
   describe 'when adding a vnet to a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
         vnets => 'vnet1',
       }
@@ -117,7 +117,7 @@ describe 'onecluster type' do
 
   describe 'when adding an array of hosts to a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
         hosts => ['host01', 'host02'],
       }
@@ -130,7 +130,7 @@ describe 'onecluster type' do
 
   describe 'when adding an array of datastores to a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
         datastores => ['system','default','files'],
       }
@@ -143,7 +143,7 @@ describe 'onecluster type' do
 
   describe 'when adding an array of vnets to a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
         vnets => ['vnet1', 'vnet2'],
       }
@@ -156,7 +156,7 @@ describe 'onecluster type' do
 
   describe 'when removing a host from a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
         hosts => 'host01',
       }
@@ -169,7 +169,7 @@ describe 'onecluster type' do
 
   describe 'when removing a datastore from a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
         datastores => 'default',
       }
@@ -182,7 +182,7 @@ describe 'onecluster type' do
 
   describe 'when removing a vnet from a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
          vnets => 'vnet1',
       }
@@ -195,7 +195,7 @@ describe 'onecluster type' do
 
   describe 'when removing all vnets from a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
          vnets => [],
       }
@@ -208,7 +208,7 @@ describe 'onecluster type' do
 
   describe 'when destroying a cluster' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onecluster { 'production':
         ensure => absent,
       }

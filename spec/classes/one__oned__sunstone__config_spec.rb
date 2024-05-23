@@ -46,7 +46,7 @@ describe 'one::oned::sunstone::config', type: :class do
       context 'with support disabled' do
         let (:params) { { enable_support: 'no' } }
 
-        unexpected_routes ='
+        unexpected_routes = '
     - vcenter
     - support'
 

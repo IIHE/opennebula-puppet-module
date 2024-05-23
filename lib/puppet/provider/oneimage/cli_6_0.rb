@@ -88,7 +88,7 @@ Puppet::Type.type(:oneimage).provide(:cli_6_0) do
         size:           image.xpath('./SIZE').text,
         source:         (image.xpath('./TEMPLATE/SOURCE') || image.xpath('./SOURCE')).text,
         target:         (image.xpath('./TEMPLATE/TARGET').text unless image.xpath('./TEMPLATE/TARGET').nil?),
-        type:           { '0' => :OS, '1' => :CDROM, '2' => :DATABLOCK, '5' => :CONTEXT }[image.xpath('./TYPE').text]
+        type:           { '0' => :OS, '1' => :CDROM, '2' => :DATABLOCK, '5' => :CONTEXT }[image.xpath('./TYPE').text],
       )
     end
   end

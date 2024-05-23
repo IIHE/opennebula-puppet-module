@@ -90,7 +90,7 @@ Puppet::Type.type(:onecluster).provide(:cli) do
         ensure:     :present,
         datastores: datastores,
         hosts:      hosts,
-        vnets:      vnets
+        vnets:      vnets,
       )
     end
   end

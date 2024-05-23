@@ -69,8 +69,7 @@ Puppet::Type.newtype(:oneimage) do
   end
 
   newparam(:source) do
-    desc 'Source to be used in the DISK attribute. Useful for non-file based '+
-      'images.'
+    desc 'Source to be used in the DISK attribute. Useful for non-file based images.'
   end
 
   # Mandatory options for disk images with no path

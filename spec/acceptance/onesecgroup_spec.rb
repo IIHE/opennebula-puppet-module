@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 
 describe 'onesecgroup type' do
   before :all do
-    pp =<<-EOS
+    pp = <<-EOS
       class { 'one':
         oned => true,
       }
@@ -12,7 +12,7 @@ describe 'onesecgroup type' do
 
   describe 'when creating secgroup' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onesecgroup { 'secgroup1':
         ensure      => present,
         description => 'Description.',
@@ -26,7 +26,7 @@ describe 'onesecgroup type' do
 
   describe 'when updating a fixed secgroup' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onesecgroup { 'secgroup1':
         ensure      => present,
         description => 'Description.',
@@ -40,7 +40,7 @@ describe 'onesecgroup type' do
 
   describe 'when deleting a Security Group' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
         onesecgroup { 'secgroup1':
           ensure => absent,
         }

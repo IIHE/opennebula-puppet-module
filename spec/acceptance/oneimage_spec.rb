@@ -76,7 +76,7 @@ describe 'oneimage type' do
 
   describe 'when destroying an OS image' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       oneimage { 'Ubuntu':
         ensure => absent,
       }
@@ -89,7 +89,7 @@ describe 'oneimage type' do
 
   describe 'when destroying a CDROM image' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       oneimage { 'MATLAB install CD':
         ensure => absent,
       }
@@ -102,7 +102,7 @@ describe 'oneimage type' do
 
   describe 'when destroying a DATABLOCK image' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       oneimage { 'Experiment results':
         ensure => absent,
       }

@@ -56,7 +56,7 @@ Puppet::Type.type(:onevm).provide(:cli) do
         name:         vm.xpath('./NAME').text,
         ensure:       :present,
         template:     template_name,
-        description:  vm.xpath('./TEMPLATE/DESCRIPTION').text
+        description:  vm.xpath('./TEMPLATE/DESCRIPTION').text,
       )
     end
   end

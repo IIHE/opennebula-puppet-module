@@ -24,7 +24,7 @@ Puppet::Type.newtype(:onedatastore) do
 
   newparam(
     :self_test,
-    boolean: true
+    boolean: true,
   ) do
     desc 'Param to activate self-test: defaults to false'
   end

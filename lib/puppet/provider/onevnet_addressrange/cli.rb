@@ -77,7 +77,7 @@ Puppet::Type.type(:onevnet_addressrange).provide(:cli) do
         ip_start:       (ar.xpath('../IP').text unless ar.xpath('../IP').nil?),
         globalprefix:   (ar.xpath('../GLOBAL_PRFIX').text unless ar.xpath('../GLOBAL_PREFIX').nil?),
         mac:            (ar.xpath('../MAC').text unless ar.xpath('../MAC').nil?),
-        ulaprefix:      (ar.xpath('../ULA_PREFIX').text unless ar.xpath('../ULA_PREFIX').nil?)
+        ulaprefix:      (ar.xpath('../ULA_PREFIX').text unless ar.xpath('../ULA_PREFIX').nil?),
       )
     end
   end

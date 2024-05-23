@@ -57,7 +57,7 @@ Puppet::Type.type(:onehost).provide(:cli_4_14) do
         ensure:  :present,
         im_mad:  host.xpath('./IM_MAD').text,
         vm_mad:  host.xpath('./VM_MAD').text,
-        vn_mad:  host.xpath('./VN_MAD').text
+        vn_mad:  host.xpath('./VN_MAD').text,
       )
 	  end
   end

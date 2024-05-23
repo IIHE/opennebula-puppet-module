@@ -15,7 +15,7 @@ describe 'onetemplate type' do
   end
 
   after :all do
-    pp =<<-EOS
+    pp = <<-EOS
     onetemplate { 'test-template':
       ensure => absent,
     }
@@ -91,7 +91,7 @@ describe 'onetemplate type' do
 
   describe 'when destroying a template' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onetemplate { 'test-template':
         ensure => absent,
       }

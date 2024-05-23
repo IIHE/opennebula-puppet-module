@@ -110,7 +110,7 @@ describe 'one', type: :class do
                       'content' => /ftp.us.debian.org/,
                       'owner' => 'oneadmin',
                       'group' => 'oneadmin',
-                    }
+                    },
                 )}
               end
             end
@@ -170,7 +170,7 @@ describe 'one', type: :class do
                   'user' => hiera.lookup('one::oned::backup::db_user', nil, nil),
                   'target' => hiera.lookup('one::oned::backup::db_user', nil, nil),
                   'minute' => hiera.lookup('one::oned::backup::intervall', nil, nil),
-                }
+                },
               )}
               it { should contain_file(hiera.lookup('one::oned::backup::dir', nil, nil)).with_ensure('directory') }
             end
@@ -185,7 +185,7 @@ describe 'one', type: :class do
               it { should contain_file('/etc/one/oned.conf').with_content(/MAX_CONN           = 5000/) }
             end
             context 'with hookscripts configured in oned.conf' do
-              expected_vm_hook=%q{
+              expected_vm_hook = %q{
             VM_HOOK = \[
               name      = "dnsupdate",
               on        = "CREATE",
@@ -201,7 +201,7 @@ describe 'one', type: :class do
               arguments = "\$TEMPLATE",
               remote    = "no" \]
           }
-              expected_host_hook=%q{
+              expected_host_hook = %q{
             HOST_HOOK = \[
               name      = "error",
               on        = "ERROR",
@@ -211,8 +211,8 @@ describe 'one', type: :class do
           }
               # Check for correct template replacement but ignore whitspaces and stuff.
               # Hint for editing: with %q{} only escaping of doublequote is not needed.
-              expected_vm_hook=expected_vm_hook.gsub(/\s+/, '\\s+')
-              expected_host_hook=expected_host_hook.gsub(/\s+/, '\\s+')
+              expected_vm_hook = expected_vm_hook.gsub(/\s+/, '\\s+')
+              expected_host_hook = expected_host_hook.gsub(/\s+/, '\\s+')
               it { should contain_file(oned_config).with_content(/^#{expected_vm_hook}/m) }
               it { should contain_file(oned_config).with_content(/^#{expected_host_hook}/m) }
             end

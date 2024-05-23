@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 
 describe 'onehost type' do
   before :all do
-    pp =<<-EOS
+    pp = <<-EOS
       class { 'one':
         oned => true,
       }
@@ -26,7 +26,7 @@ describe 'onehost type' do
 
   describe 'when destroying a onehost' do
     it 'should idempotently run' do
-      pp =<<-EOS
+      pp = <<-EOS
       onehost { 'host01':
         ensure => absent,
       }

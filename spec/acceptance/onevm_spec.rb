@@ -70,7 +70,7 @@ describe 'onevm type' do
   describe 'when destroying a vm' do
     it 'should idempotently run' do
       skip
-      pp =<<-EOS
+      pp = <<-EOS
       onevm { 'new_vm':
         ensure => absent,
       }
