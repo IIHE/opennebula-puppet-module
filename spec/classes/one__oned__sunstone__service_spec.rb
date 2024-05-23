@@ -2,7 +2,7 @@ require 'spec_helper'
 
 hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
-describe 'one::oned::sunstone::service', :type => :class do
+describe 'one::oned::sunstone::service', type: :class do
   on_supported_os.each do |os, os_facts|
     context "On #{os}" do
       let(:facts) { os_facts }
@@ -18,7 +18,7 @@ describe 'one::oned::sunstone::service', :type => :class do
         }
       end
       context 'with passenger enabled' do
-        let (:params) { {:sunstone_passenger => true} }
+        let (:params) { {sunstone_passenger: true} }
         it { should contain_service('opennebula-sunstone') \
         .with_ensure('stopped') \
         .with_enable('false') \

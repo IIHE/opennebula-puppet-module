@@ -15,41 +15,41 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onecluster).provide(:cli) do
-  confine :feature => :nokogiri
-  desc "onecluster provider"
+  confine feature: :nokogiri
+  desc 'onecluster provider'
 
-  has_command(:onecluster, "onecluster") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onecluster, 'onecluster') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
-  has_command(:onedatastore, "onedatastore") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onedatastore, 'onedatastore') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
-  has_command(:onehost, "onehost") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onehost, 'onehost') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
-  has_command(:onevnet, "onevnet") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onevnet, 'onevnet') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
 
   def create
     onecluster('create', resource[:name])
-    self.debug "We have hosts: #{resource[:hosts]}"
-    self.debug "We have vnets: #{resource[:vnets]}"
+    debug "We have hosts: #{resource[:hosts]}"
+    debug "We have vnets: #{resource[:vnets]}"
     resource[:hosts].each { |host|
-      self.debug "Adding host #{host} to cluster #{resource[:name]}"
+      debug "Adding host #{host} to cluster #{resource[:name]}"
       onecluster('addhost', resource[:name], host)
     }
     resource[:vnets].each { |vnet|
-      self.debug "Adding vnet #{vnet} to cluster #{resource[:name]}"
+      debug "Adding vnet #{vnet} to cluster #{resource[:name]}"
       onecluster('addvnet', resource[:name], vnet)
     }
     resource[:datastores].each { |datastore|
-      self.debug "Adding datastore #{datastore} to cluster #{resource[:name]}"
+      debug "Adding datastore #{datastore} to cluster #{resource[:name]}"
       onecluster('adddatastore', resource[:name], datastore)
     }
     @property_hash[:ensure] = :present
@@ -73,7 +73,6 @@ Puppet::Type.type(:onecluster).provide(:cli) do
     @property_hash[:ensure] == :present
   end
 
-
   def self.instances
     clusters = Nokogiri::XML(onecluster('list', '-x')).root.xpath('/CLUSTER_POOL/CLUSTER')
     clusters.collect do |cluster|
@@ -87,11 +86,11 @@ Puppet::Type.type(:onecluster).provide(:cli) do
         Nokogiri::XML(onevnet('show', vnet.text, '-x')).root.xpath('/VNET/NAME').text
       end
       new(
-        :name       => cluster.xpath('./NAME').text,
-        :ensure     => :present,
-        :datastores => datastores,
-        :hosts      => hosts,
-        :vnets      => vnets
+        name:       cluster.xpath('./NAME').text,
+        ensure:     :present,
+        datastores: datastores,
+        hosts:      hosts,
+        vnets:      vnets
       )
     end
   end

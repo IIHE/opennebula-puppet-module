@@ -17,7 +17,7 @@ describe res_type do
     val
   }
   before :each do
-      @host = res_type.new(:name => 'test')
+      @host = res_type.new(name: 'test')
   end
 
   it 'should have :name be its namevar' do
@@ -40,10 +40,10 @@ describe res_type do
   end
 
   parameter_tests = {
-    :name => {
-      :valid => ["test", "foo"],
-      :default => "test",
-      :invalid => ["0./fouzb&$", "&fr5"],
+    name: {
+      valid: ["test", "foo"],
+      default: "test",
+      invalid: ["0./fouzb&$", "&fr5"],
     },
 # :im_mad => {
 # },

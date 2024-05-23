@@ -15,7 +15,7 @@ Puppet::Type.newtype(:onedatastore) do
 
   ensurable
 
-  newparam(:name, :namevar => true) do
+  newparam(:name, namevar: true) do
     desc 'Name of datastore.'
     validate do |value|
       fail("Invalid name: #{value}") unless value =~ /^([A-Za-z]).*/
@@ -24,7 +24,7 @@ Puppet::Type.newtype(:onedatastore) do
 
   newparam(
     :self_test,
-    :boolean => true
+    boolean: true
   ) do
     desc 'Param to activate self-test: defaults to false'
   end
@@ -102,7 +102,7 @@ Puppet::Type.newtype(:onedatastore) do
     desc 'Temporary scratch space. Must be big enough to store raw image size plus sparse version'
   end
 
-  newproperty(:safe_dirs, :array_matching => :all) do
+  newproperty(:safe_dirs, array_matching: :all) do
     desc 'Array of safe directories'
   end
 

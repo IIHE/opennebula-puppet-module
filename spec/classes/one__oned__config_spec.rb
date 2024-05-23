@@ -30,9 +30,9 @@ describe 'one::oned::config' do
 
       context 'with mysql backend' do
         let (:params) { {
-            :backend => 'mysql',
-            :backup_script_path => '/var/lib/one/bin/one_db_backup.sh',
-            :backup_dir => '/srv/backup'
+            backend: 'mysql',
+            backup_script_path: '/var/lib/one/bin/one_db_backup.sh',
+            backup_dir: '/srv/backup'
         } }
         it { should contain_file('/srv/backup') }
         it { should contain_file('/var/lib/one/bin/one_db_backup.sh') }
@@ -45,7 +45,7 @@ describe 'one::oned::config' do
 
       context 'with kvm driver emulator settings' do
         let(:params) { {
-            :kvm_driver_emulator => '/usr/bin/foobar/kvm-bogus'
+            kvm_driver_emulator: '/usr/bin/foobar/kvm-bogus'
         } }
         it { should contain_ini_setting('set_kvm_driver_emulator').with_value('/usr/bin/foobar/kvm-bogus') }
       end
@@ -56,7 +56,7 @@ describe 'one::oned::config' do
 
       context 'with kvm driver nic settings' do
         let(:params) { {
-            :kvm_driver_nic_attrs => '[ filter="clean-traffic", model="bogus" ]'
+            kvm_driver_nic_attrs: '[ filter="clean-traffic", model="bogus" ]'
         } }
         it { should contain_ini_setting('set_kvm_driver_nic').with_value('[ filter="clean-traffic", model="bogus" ]') }
       end

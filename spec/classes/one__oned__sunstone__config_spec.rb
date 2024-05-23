@@ -2,7 +2,7 @@ require 'spec_helper'
 
 hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
-describe 'one::oned::sunstone::config', :type => :class do
+describe 'one::oned::sunstone::config', type: :class do
   on_supported_os.each do |os, os_facts|
     context "On #{os}" do
       let(:facts) { os_facts }
@@ -19,7 +19,7 @@ describe 'one::oned::sunstone::config', :type => :class do
         }
       end
       context 'with sunstone listen ip set' do
-        let (:params) { {:listen_ip => '1.2.3.4'} }
+        let (:params) { {listen_ip: '1.2.3.4'} }
         it { should contain_file('/etc/one/sunstone-server.conf') \
         .with_content(/:host: 1.2.3.4/m)
         }
@@ -31,7 +31,7 @@ describe 'one::oned::sunstone::config', :type => :class do
         }
       end
       context 'with support enabled' do
-        let (:params) { {:enable_support => 'yes'} }
+        let (:params) { {enable_support: 'yes'} }
 
         expected_routes = ':routes:
     - oneflow
@@ -44,7 +44,7 @@ describe 'one::oned::sunstone::config', :type => :class do
         }
       end
       context 'with support disabled' do
-        let (:params) { {:enable_support => 'no'} }
+        let (:params) { {enable_support: 'no'} }
 
         unexpected_routes ='
     - vcenter

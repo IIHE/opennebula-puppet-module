@@ -52,18 +52,18 @@ class one::oned::sunstone::config (
     ensure  => file,
     content => template("one/${one::template_path}/sunstone-server.conf.erb"),
     notify  => Service['opennebula-sunstone'],
-  } ->
-  file { '/etc/one/sunstone-views.yaml':
+  }
+  -> file { '/etc/one/sunstone-views.yaml':
     ensure  => file,
     mode    => '0640',
     content => template("one/${one::template_path}/sunstone-views.yaml.erb"),
-  } ->
-  file { "${sunstone_views_root}/admin.yaml":
+  }
+  -> file { "${sunstone_views_root}/admin.yaml":
     ensure  => file,
     mode    => '0640',
     content => template("one/${one::template_path}/sunstone-views-admin.yaml.erb"),
-  } ->
-  file { "${sunstone_views_root}/user.yaml":
+  }
+  -> file { "${sunstone_views_root}/user.yaml":
     ensure  => file,
     mode    => '0640',
     content => template("one/${one::template_path}/sunstone-views-user.yaml.erb"),

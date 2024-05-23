@@ -2,7 +2,7 @@ require 'spec_helper'
 
 hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
-describe 'one::compute_node', :type => :class do
+describe 'one::compute_node', type: :class do
   on_supported_os.each do |os, os_facts|
     context "On #{os}" do
       let(:facts) { os_facts }
@@ -19,13 +19,13 @@ describe 'one::compute_node', :type => :class do
       end
       context 'with puppetdb enabled' do
         let(:params) { {
-            :puppetdb => true,
+            puppetdb: true,
         } }
         # cannot test exported resource
       end
       context 'with puppetdb disabled' do
         let(:params) { {
-            :puppetdb => false,
+            puppetdb: false,
         } }
         # cannot test exported resource
       end

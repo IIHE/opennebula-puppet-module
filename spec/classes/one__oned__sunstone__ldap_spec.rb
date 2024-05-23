@@ -2,12 +2,12 @@ require 'spec_helper'
 
 hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
-describe 'one::oned::sunstone::ldap', :type => :class do
+describe 'one::oned::sunstone::ldap', type: :class do
   on_supported_os.each do |os, os_facts|
     context "On #{os}" do
       let(:facts) { os_facts }
       let (:hiera_config) { hiera_config }
-      let (:params) { {:oned_sunstone_ldap_pkg => 'bogus-ldap-package'} }
+      let (:params) { {oned_sunstone_ldap_pkg: 'bogus-ldap-package'} }
       context 'general' do
         it { should contain_class('one::oned::sunstone::ldap') }
         it { should contain_package('bogus-ldap-package').with_ensure('latest') }

@@ -17,11 +17,11 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onevnet_addressrange).provide(:cli) do
-  confine :feature => :nokogiri
-  desc "onevnet provider for addressranges"
+  confine feature: :nokogiri
+  desc 'onevnet provider for addressranges'
 
-  has_command(:onevnet, "onevnet") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onevnet, 'onevnet') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
@@ -68,16 +68,16 @@ Puppet::Type.type(:onevnet_addressrange).provide(:cli) do
 #pry.binding
       vnet_ar.collect do |ar|
           new(
-              :name          => ar.text,
-              :ensure        => :present,
-              :onevnet_name  => ar.xpath('../../../NAME').text,
-              :protocol      => ar.xpath('../TYPE').text.downcase,
-              :ip_size       => ar.xpath('../SIZE').text,
-              :ar_id         => ar.xpath('../AR_ID').text,
-              :ip_start      => (ar.xpath('../IP').text unless ar.xpath('../IP').nil?),
-              :globalprefix  => (ar.xpath('../GLOBAL_PRFIX').text unless ar.xpath('../GLOBAL_PREFIX').nil?),
-              :mac           => (ar.xpath('../MAC').text unless ar.xpath('../MAC').nil?),
-              :ulaprefix     => (ar.xpath('../ULA_PREFIX').text unless ar.xpath('../ULA_PREFIX').nil?)
+              name:           ar.text,
+              ensure:         :present,
+              onevnet_name:   ar.xpath('../../../NAME').text,
+              protocol:       ar.xpath('../TYPE').text.downcase,
+              ip_size:        ar.xpath('../SIZE').text,
+              ar_id:          ar.xpath('../AR_ID').text,
+              ip_start:       (ar.xpath('../IP').text unless ar.xpath('../IP').nil?),
+              globalprefix:   (ar.xpath('../GLOBAL_PRFIX').text unless ar.xpath('../GLOBAL_PREFIX').nil?),
+              mac:            (ar.xpath('../MAC').text unless ar.xpath('../MAC').nil?),
+              ulaprefix:      (ar.xpath('../ULA_PREFIX').text unless ar.xpath('../ULA_PREFIX').nil?)
           )
       end
   end

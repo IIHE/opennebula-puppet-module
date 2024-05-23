@@ -25,7 +25,7 @@ class one::prerequisites (
     'RedHat': {
       if ( $one_repo_enable ) {
         yumrepo { 'opennebula':
-          baseurl  => "http://downloads.opennebula.org/repo/${::one::one_version_short}/CentOS/${facts['os']['release']['major']}/x86_64/",
+          baseurl  => "http://downloads.opennebula.org/repo/${one::one_version_short}/CentOS/${facts['os']['release']['major']}/x86_64/",
           descr    => 'OpenNebula',
           enabled  => 1,
           gpgcheck => 0,
@@ -50,9 +50,9 @@ class one::prerequisites (
         apt::key { 'one_repo_key':
           key        => '85E16EBF',
           key_source => 'http://downloads.opennebula.org/repo/Debian/repo.key',
-        } ->
+        }
 
-        apt::source { 'one-official': # lint:ignore:security_apt_no_key
+        -> apt::source { 'one-official': # lint:ignore:security_apt_no_key
           location          => "http://downloads.opennebula.org/repo/${apt_location}",
           release           => 'stable',
           repos             => 'opennebula',
@@ -69,8 +69,8 @@ class one::prerequisites (
   group { 'oneadmin':
     ensure => present,
     gid    => $one::onegid,
-  } ->
-  user { 'oneadmin':
+  }
+  -> user { 'oneadmin':
     ensure     => present,
     uid        => $one::oneuid,
     gid        => $one::onegid,

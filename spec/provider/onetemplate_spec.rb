@@ -6,7 +6,7 @@ provider_class = Puppet::Type.type(:onetemplate).provider(:onetemplate)
 describe provider_class do
   let(:resource ) {
     Puppet::Type::Onetemplate.new({
-      :name => 'new_cluster',
+      name: 'new_cluster',
     })
   }
 

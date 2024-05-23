@@ -20,6 +20,6 @@ class { 'one':
   sunstone           => true,
   sunstone_passenger => true,
   one_version        => $one_version,
-} ->
+}
 
-class { 'httpd': }
+-> class { 'httpd': }

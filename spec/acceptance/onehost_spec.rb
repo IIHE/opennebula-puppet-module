@@ -7,7 +7,7 @@ describe 'onehost type' do
         oned => true,
       }
     EOS
-    apply_manifest(pp, :catch_failures => true)
+    apply_manifest(pp, catch_failures: true)
   end
 
   describe 'when creating a onehost' do
@@ -20,7 +20,7 @@ describe 'onehost type' do
         } 
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
   end
 
@@ -32,8 +32,8 @@ describe 'onehost type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 

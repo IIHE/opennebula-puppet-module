@@ -2,17 +2,17 @@ require 'spec_helper'
 
 hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
-describe 'one::compute_node::config', :type => :class do
+describe 'one::compute_node::config', type: :class do
   on_supported_os.each do |os, os_facts|
     context "On #{os}" do
       let(:facts) { os_facts }
       let(:params) { {
-          :debian_mirror_url => 'http://ftp.de.debian.org/debian',
-          :preseed_data => {'does' => 'not_matter'},
-          :libvirtd_cfg => '/etc/some/libvirt/config',
-          :oneadmin_sudoers_file => '/etc/test-sudoers.d/10_oneadmin',
-          :imaginator_sudoers_file => '/etc/test-sudoers.d/20_imaginator',
-          :manage_sudoer_config    => true
+          debian_mirror_url:        'http://ftp.de.debian.org/debian',
+          preseed_data:             {'does' => 'not_matter'},
+          libvirtd_cfg:             '/etc/some/libvirt/config',
+          oneadmin_sudoers_file:    '/etc/test-sudoers.d/10_oneadmin',
+          imaginator_sudoers_file:  '/etc/test-sudoers.d/20_imaginator',
+          manage_sudoer_config:     true
       } }
       it { should contain_class('one::compute_node::config') }
       it { should contain_file('/etc/libvirt/libvirtd.conf') }
@@ -31,12 +31,12 @@ describe 'one::compute_node::config', :type => :class do
       end
       context "with disabled sudoer management" do
         let(:params) { {
-            :debian_mirror_url => 'http://ftp.de.debian.org/debian',
-            :preseed_data => {'does' => 'not_matter'},
-            :libvirtd_cfg => '/etc/some/libvirt/config',
-            :oneadmin_sudoers_file => '/etc/test-sudoers.d/10_oneadmin',
-            :imaginator_sudoers_file => '/etc/test-sudoers.d/20_imaginator',
-            :manage_sudoer_config    => false
+            debian_mirror_url:        'http://ftp.de.debian.org/debian',
+            preseed_data:             {'does' => 'not_matter'},
+            libvirtd_cfg:             '/etc/some/libvirt/config',
+            oneadmin_sudoers_file:    '/etc/test-sudoers.d/10_oneadmin',
+            imaginator_sudoers_file:  '/etc/test-sudoers.d/20_imaginator',
+            manage_sudoer_config:     false
         } }
         it { should_not contain_file('/etc/test-sudoers.d/10_oneadmin') }
         it { should_not contain_file('/etc/test-sudoers.d/20_imaginator') }

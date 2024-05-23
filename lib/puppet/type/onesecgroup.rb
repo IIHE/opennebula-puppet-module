@@ -12,28 +12,28 @@
 #
 
 Puppet::Type.newtype(:onesecgroup) do
-  @doc = "Type for managing security groups in OpenNebula using the" +
-         "onesecgroup wrapper command."
+  @doc = 'Type for managing security groups in OpenNebula using the' +
+         'onesecgroup wrapper command.'
 
   ensurable
 
   # Capacity Section
-  newparam(:name, :namevar => true) do
-    desc "Name of security group."
+  newparam(:name, namevar: true) do
+    desc 'Name of security group.'
     validate do |value|
       fail("Invalid name: #{value}") unless value =~ /^([A-Za-z]).*/
     end
   end
 
   newproperty(:description) do
-    desc "Description of the security group."
+    desc 'Description of the security group.'
     validate do |value|
       fail("Invalid description: #{value}") unless value =~ /^([A-Za-z]).*/
     end
   end
 
-  newproperty(:rules, :array_matching => :all) do
-    desc "An array of hashes, each defining a rule for the security group."
+  newproperty(:rules, array_matching: :all) do
+    desc 'An array of hashes, each defining a rule for the security group.'
     defaultto []
     validate do |value|
       if value.is_a?( Hash)

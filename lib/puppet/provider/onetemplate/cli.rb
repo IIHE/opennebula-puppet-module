@@ -15,11 +15,11 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onetemplate).provide(:cli) do
-  confine :feature => :nokogiri
-  desc "onetemplate provider"
+  confine feature: :nokogiri
+  desc 'onetemplate provider'
 
-  has_command(:onetemplate, "onetemplate") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onetemplate, 'onetemplate') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
@@ -106,18 +106,18 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
       templates = Nokogiri::XML(onetemplate('list', '-x')).root.xpath('/VMTEMPLATE_POOL/VMTEMPLATE')
       templates.collect do |template|
         new(
-            :name        => template.xpath('./NAME').text,
-            :ensure      => :present,
-            :description => template.xpath('./TEMPLATE/DESCRIPTION').text,
-            :context     => Hash[template.xpath('./TEMPLATE/CONTEXT/*').map { |e| [e.name.downcase, e.text.downcase] } ],
-            :cpu         => (template.xpath('./TEMPLATE/CPU').text unless template.xpath('./TEMPLATE/CPU').nil?),
-            :disks       => template.xpath('./TEMPLATE/DISK').map { |disk| {'image' => disk.xpath('./IMAGE').text} },
-            :features    => Hash[template.xpath('./TEMPLATE/FEATURES/*').map { |e| [e.name.downcase, { e.text => e.text, 'true' => true, 'false' => false }[e.text.downcase]] } ],
-            :graphics    => Hash[template.xpath('./TEMPLATE/GRAPHICS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
-            :memory      => (template.xpath('./TEMPLATE/MEMORY').text unless template.xpath('./TEMPLATE/MEMORY').nil?),
-            :nics        => template.xpath('./TEMPLATE/NIC').map { |nic| get_nic(nic) },
-            :os          => Hash[template.xpath('./TEMPLATE/OS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
-            :vcpu        => (template.xpath('./TEMPLATE/VCPU').text unless template.xpath('./TEMPLATE/VCPU').nil?)
+            name:           template.xpath('./NAME').text,
+            ensure:         :present,
+            description:    template.xpath('./TEMPLATE/DESCRIPTION').text,
+            context:        Hash[template.xpath('./TEMPLATE/CONTEXT/*').map { |e| [e.name.downcase, e.text.downcase] } ],
+            cpu:            (template.xpath('./TEMPLATE/CPU').text unless template.xpath('./TEMPLATE/CPU').nil?),
+            disks:          template.xpath('./TEMPLATE/DISK').map { |disk| {'image' => disk.xpath('./IMAGE').text} },
+            features:       Hash[template.xpath('./TEMPLATE/FEATURES/*').map { |e| [e.name.downcase, { e.text => e.text, 'true' => true, 'false' => false }[e.text.downcase]] } ],
+            graphics:       Hash[template.xpath('./TEMPLATE/GRAPHICS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
+            memory:         (template.xpath('./TEMPLATE/MEMORY').text unless template.xpath('./TEMPLATE/MEMORY').nil?),
+            nics:           template.xpath('./TEMPLATE/NIC').map { |nic| get_nic(nic) },
+            os:             Hash[template.xpath('./TEMPLATE/OS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
+            vcpu:           (template.xpath('./TEMPLATE/VCPU').text unless template.xpath('./TEMPLATE/VCPU').nil?)
         )
       end
   end

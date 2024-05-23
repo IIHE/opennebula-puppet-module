@@ -17,7 +17,7 @@ shared_examples "a puppet type" do |parameter_tests,res_type_name|
     val
   }
   let(:resource) {
-    type.new({:name => 'test'})
+    type.new({name: 'test'})
   }
 
   parameter_tests.each do |param, tests|

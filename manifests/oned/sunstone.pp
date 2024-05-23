@@ -24,14 +24,14 @@ class one::oned::sunstone (
   include one::oned::sunstone::config
   include one::oned::sunstone::service
 
-  Class['one::prerequisites'] ->
-  Class['one::oned::sunstone::install'] ->
-  Class['one::oned::sunstone::config'] ~>
-  Class['one::oned::sunstone::service']
+  Class['one::prerequisites']
+  -> Class['one::oned::sunstone::install']
+  -> Class['one::oned::sunstone::config']
+  ~> Class['one::oned::sunstone::service']
 
   if $ldap {
     include one::oned::sunstone::ldap
-    Class['one::oned::sunstone::config'] ->
-    Class['one::oned::sunstone::ldap']
+    Class['one::oned::sunstone::config']
+    -> Class['one::oned::sunstone::ldap']
   }
 }

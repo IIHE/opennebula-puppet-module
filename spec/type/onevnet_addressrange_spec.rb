@@ -21,10 +21,10 @@ describe res_type do
 #  }
 
   before :each do
-    @vnet = res_type.new(:name => 'test', :onevnet_name => 'testnet')
-    #@onevnet_name = res_type.new(:name => 'test')
-    @vnet4 = res_type.new(:name => 'test', :onevnet_name => 'testnet')
-    @vnet6 = res_type.new(:name => 'test', :onevnet_name => 'testnet')
+    @vnet = res_type.new(name: 'test', onevnet_name: 'testnet')
+    #@onevnet_name = res_type.new(name: 'test')
+    @vnet4 = res_type.new(name: 'test', onevnet_name: 'testnet')
+    @vnet6 = res_type.new(name: 'test', onevnet_name: 'testnet')
   end
 
   it 'should have :name be its namevar' do
@@ -82,10 +82,10 @@ describe res_type do
   end
 
   parameter_tests = {
-    :name => {
-      :valid => ["test", "foo"],
-      :default => "test",
-      :invalid => ["0./fouzb&$", "&fr5"],
+    name: {
+      valid: ["test", "foo"],
+      default: "test",
+      invalid: ["0./fouzb&$", "&fr5"],
     },
   }
 

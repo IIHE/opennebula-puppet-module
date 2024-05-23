@@ -6,7 +6,7 @@ provider_class = Puppet::Type.type(:onevnet_addressrange).provider(:onevnet_addr
 describe provider_class do
   let(:resource ) {
     Puppet::Type::Onevnet.new({
-      :name => 'new_vnet',
+      name: 'new_vnet',
     })
   }
 

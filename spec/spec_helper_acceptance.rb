@@ -29,12 +29,12 @@ RSpec.configure do |c|
         }
       EOS
 
-      apply_manifest_on(hosts, pp, :catch_failures => false)
+      apply_manifest_on(hosts, pp, catch_failures: false)
     end
 
     hosts.each do |host|
       # Install module
-      copy_module_to(host, :source => proj_root, :module_name => 'one')
+      copy_module_to(host, source: proj_root, module_name: 'one')
 
       if fact('osfamily') == 'RedHat'
         on host, "yum -y install rubygem-nokogiri"
@@ -46,8 +46,8 @@ RSpec.configure do |c|
       on host, "echo -e 'one::enable_opennebula_repo: true' > /etc/puppet/hiera.yaml"
 
       # Install dependencies
-      on host, puppet('module','install','puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
-      on host, puppet('module','install','puppetlabs-apt'), { :acceptable_exit_codes => [0,1] }
+      on host, puppet('module','install','puppetlabs-stdlib'), { acceptable_exit_codes: [0,1] }
+      on host, puppet('module','install','puppetlabs-apt'), { acceptable_exit_codes: [0,1] }
     end
   end
 end

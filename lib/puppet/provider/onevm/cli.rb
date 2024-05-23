@@ -18,13 +18,13 @@ require 'erb'
 
 Puppet::Type.type(:onevm).provide(:cli) do
   confine :feature => :nokogiri
-  desc "onevm provider"
+  desc 'onevm provider'
 
-  has_command(:onevm, "onevm") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onevm, 'onevm') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
-  has_command(:onetemplate, "onetemplate") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onetemplate, 'onetemplate') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
@@ -53,10 +53,10 @@ Puppet::Type.type(:onevm).provide(:cli) do
         template_id = vm.xpath('./TEMPLATE/TEMPLATE_ID').text
         template_name = Nokogiri::XML(onetemplate('show',template_id,'-x')).root.xpath('/VMTEMPLATE/NAME').text
         new(
-            :name        => vm.xpath('./NAME').text,
-            :ensure      => :present,
-            :template    => template_name,
-            :description => vm.xpath('./TEMPLATE/DESCRIPTION').text
+            :name         vm.xpath('./NAME').text,
+            :ensure       :present,
+            :template     template_name,
+            :description  vm.xpath('./TEMPLATE/DESCRIPTION').text
         )
     end
   end

@@ -7,7 +7,7 @@ describe 'onesecgroup type' do
         oned => true,
       }
     EOS
-    apply_manifest(pp, :catch_failures => true)
+    apply_manifest(pp, catch_failures: true)
   end
 
   describe 'when creating secgroup' do
@@ -20,7 +20,7 @@ describe 'onesecgroup type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
   end
 
@@ -34,7 +34,7 @@ describe 'onesecgroup type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
@@ -46,8 +46,8 @@ describe 'onesecgroup type' do
         }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 end

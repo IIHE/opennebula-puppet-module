@@ -20,7 +20,7 @@ describe res_type do
 #    res_type.new({:name => 'test'})
 #  }
   before :each do
-      @vm = res_type.new(:name => 'test')
+      @vm = res_type.new(name: 'test')
   end
 
   it 'should have :name be its namevar' do
@@ -33,10 +33,10 @@ describe res_type do
   end
 
   parameter_tests = {
-    :name => {
-      :valid => ["test", "foo"],
-      :default => "test",
-      :invalid => ["0./fouzb&$", "&fr5"],
+    name: {
+      valid: ["test", "foo"],
+      default: "test",
+      invalid: ["0./fouzb&$", "&fr5"],
     },
   }
   it_should_behave_like "a puppet type", parameter_tests, res_type_name

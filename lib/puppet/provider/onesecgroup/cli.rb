@@ -15,11 +15,11 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onesecgroup).provide(:cli) do
-  confine :feature => :nokogiri
-  desc "onesecgroup provider"
+  confine feature: :nokogiri
+  desc 'onesecgroup provider'
 
-  has_command(:onesecgroup, "onesecgroup") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onesecgroup, 'onesecgroup') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
@@ -73,10 +73,10 @@ Puppet::Type.type(:onesecgroup).provide(:cli) do
         rules << ruleitems
       end
       new(
-        :name        => secgroup.xpath('./NAME').text,
-        :ensure      => :present,
-        :description => secgroup.xpath('./TEMPLATE/DESCRIPTION').text,
-        :rules       => rules
+        name:         secgroup.xpath('./NAME').text,
+        ensure:       :present,
+        description:  secgroup.xpath('./TEMPLATE/DESCRIPTION').text,
+        rules:        rules
       )
     end
   end

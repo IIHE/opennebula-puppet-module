@@ -15,19 +15,19 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:oneimage).provide(:cli_4_0) do
-  confine :feature => :nokogiri
-  confine :true => begin
+  confine feature: :nokogiri
+  confine true: begin
     if File.exists?('/var/lib/one/remotes/VERSION')
-      file = File.open("/var/lib/one/remotes/VERSION", "r")
+      file = File.open('/var/lib/one/remotes/VERSION', 'r')
       one_version = file.read
       file.close
       (Gem::Version.new(one_version) > Gem::Version.new('4.0')) && (Gem::Version.new(one_version) < Gem::Version.new('5.0'))
     end
   end
-  desc "oneimage provider for OpenNebula 4.x"
+  desc 'oneimage provider for OpenNebula 4.x'
 
-  has_command(:oneimage, "oneimage") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:oneimage, 'oneimage') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
@@ -93,20 +93,20 @@ Puppet::Type.type(:oneimage).provide(:cli_4_0) do
     images = Nokogiri::XML(oneimage('list','-x')).root.xpath('/IMAGE_POOL/IMAGE').map
     images.collect do |image|
         new(
-            :name        => image.xpath('./NAME').text,
-            :ensure      => :present,
-            :datastore   => image.xpath('./DATASTORE').text,
-            :description => image.xpath('./TEMPLATE/DESCRIPTION').text,
-            :dev_prefix  => image.xpath('./TEMPLATE/DEV_PREFIX').text,
-            :disk_type   => image.xpath('./DISK_TYPE').text,
-            :driver      => (image.xpath('./DRIVER').text unless image.xpath('./DRIVER').nil?),
-            :fstype      => image.xpath('./FSTYPE').text,
-            :path        => (image.xpath('./TEMPLATE/PATH').text || image.xpath('./PATH').text),
-            :persistent  => ((image.xpath('./TEMPLATE/PERSISTENT') || image.xpath('./PERSISTENT')).text == "1").to_s.to_sym,
-            :size        => image.xpath('./SIZE').text,
-            :source      => (image.xpath('./TEMPLATE/SOURCE') || image.xpath('./SOURCE')).text,
-            :target      => (image.xpath('./TARGET').text unless image.xpath('./TARGET').nil?),
-            :type        => { '0' => :OS, '1' => :CDROM, '5' => :CONTEXT }[(image.xpath('./TEMPLATE/TYPE') || image.xpath('./TYPE')).text]
+            name:           image.xpath('./NAME').text,
+            ensure:         :present,
+            datastore:      image.xpath('./DATASTORE').text,
+            description:    image.xpath('./TEMPLATE/DESCRIPTION').text,
+            dev_prefix:     image.xpath('./TEMPLATE/DEV_PREFIX').text,
+            disk_type:      image.xpath('./DISK_TYPE').text,
+            driver:         (image.xpath('./DRIVER').text unless image.xpath('./DRIVER').nil?),
+            fstype:         image.xpath('./FSTYPE').text,
+            path:           (image.xpath('./TEMPLATE/PATH').text || image.xpath('./PATH').text),
+            persistent:     ((image.xpath('./TEMPLATE/PERSISTENT') || image.xpath('./PERSISTENT')).text == '1').to_s.to_sym,
+            size:           image.xpath('./SIZE').text,
+            source:         (image.xpath('./TEMPLATE/SOURCE') || image.xpath('./SOURCE')).text,
+            target:         (image.xpath('./TARGET').text unless image.xpath('./TARGET').nil?),
+            type:           { '0' => :OS, '1' => :CDROM, '5' => :CONTEXT }[(image.xpath('./TEMPLATE/TYPE') || image.xpath('./TYPE')).text]
         )
     end
   end
@@ -121,37 +121,37 @@ Puppet::Type.type(:oneimage).provide(:cli_4_0) do
 
   #setters
   def datastore=(value)
-      raise "Can not modify datastore on images"
+      raise 'Can not modify datastore on images'
   end
   def type=(value)
-      raise "Can not modify type of images"
+      raise 'Can not modify type of images'
   end
   def persistent=(value)
-      raise "Can not make images persistent"
+      raise 'Can not make images persistent'
   end
   def dev_prefix=(value)
-      raise "Can not modify dev_prefix on images"
+      raise 'Can not modify dev_prefix on images'
   end
   def target=(value)
-      raise "Can not modify target of images"
+      raise 'Can not modify target of images'
   end
   def path=(value)
-      raise "Can not modify path of images"
+      raise 'Can not modify path of images'
   end
   def driver=(value)
-      raise "Can not modify driver of images"
+      raise 'Can not modify driver of images'
   end
   def disk_type=(value)
-      raise "Can not modify disk_type of images"
+      raise 'Can not modify disk_type of images'
   end
   def source=(value)
-      raise "Can not modify source of images"
+      raise 'Can not modify source of images'
   end
   def size=(value)
-      raise "Can not modify size of images"
+      raise 'Can not modify size of images'
   end
   def fstype=(value)
-      raise "Can not modify fstype of images"
+      raise 'Can not modify fstype of images'
   end
 
 end

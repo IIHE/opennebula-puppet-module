@@ -2,7 +2,7 @@ require 'spec_helper'
 
 hiera_config = 'spec/fixtures/hiera/hiera.yaml'
 
-describe 'one::oned::install', :type => :class do
+describe 'one::oned::install', type: :class do
   on_supported_os.each do |os, os_facts|
     context "On #{os}" do
       let(:facts) { os_facts }
@@ -17,7 +17,7 @@ describe 'one::oned::install', :type => :class do
       end
       if os_facts[:osfamily] == 'RedHat'
         context 'with rpm instead of gems' do
-          let (:params) { {:use_gems => false} }
+          let (:params) { {use_gems: false} }
           it { should contain_package('rubygem-sinatra') }
           it { should contain_package('rubygem-builder') }
           it { should_not contain_package('sinatra').with_provider('gem') }

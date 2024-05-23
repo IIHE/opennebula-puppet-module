@@ -7,7 +7,7 @@ describe 'onevnet type' do
         oned => true,
       }
     EOS
-    apply_manifest(pp, :catch_failures => true)
+    apply_manifest(pp, catch_failures: true)
   end
 
   describe 'when creating vnet' do
@@ -25,7 +25,7 @@ describe 'onevnet type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
   end
 
@@ -53,7 +53,7 @@ describe 'onevnet type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
   end
 
@@ -81,7 +81,7 @@ describe 'onevnet type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
   end
 
@@ -105,7 +105,7 @@ describe 'onevnet type' do
       }
       eos
 
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
   end
 
@@ -130,7 +130,7 @@ describe 'onevnet type' do
       }
       eos
 
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
   end
 
@@ -149,7 +149,7 @@ describe 'onevnet type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
   end
 
@@ -170,8 +170,8 @@ describe 'onevnet type' do
         }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 end

@@ -18,11 +18,11 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onedatastore).provide(:cli) do
-  confine :feature => :nokogiri
+  confine feature: :nokogiri
   desc 'onedatastore provider'
 
   has_command(:onedatastore, 'onedatastore') do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods

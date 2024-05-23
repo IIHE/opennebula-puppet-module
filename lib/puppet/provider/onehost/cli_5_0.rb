@@ -15,29 +15,29 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onehost).provide(:cli_5_0) do
-  confine :feature => :nokogiri
-  confine :true => begin
+  confine feature: :nokogiri
+  confine true: begin
     if File.exists?('/var/lib/one/remotes/VERSION')
-      file = File.open("/var/lib/one/remotes/VERSION", "r")
+      file = File.open('/var/lib/one/remotes/VERSION', 'r')
       one_version = file.read
       file.close
       Gem::Version.new(one_version) > Gem::Version.new('5.0')
     end
   end
-  desc "onehost provider for opennebula 5.0 and up"
+  desc 'onehost provider for opennebula 5.0 and up'
 
-  commands(:onehost => "onehost") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  commands(onehost: 'onehost') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
 
   def create
     if resource[:vn_mad]
-      Puppet.warning("onehost does not use vn_mad in opennebula 5.0. Please remove that parameter from your onehost declaration")
+      Puppet.warning('onehost does not use vn_mad in opennebula 5.0. Please remove that parameter from your onehost declaration')
     end
     onehost('create', resource[:name], '--im', resource[:im_mad], '--vm', resource[:vm_mad])
-    Puppet.debug("Validate Resource State")
+    Puppet.debug('Validate Resource State')
     post_validate_change
     @property_hash[:ensure] = :present
   end
@@ -56,10 +56,10 @@ Puppet::Type.type(:onehost).provide(:cli_5_0) do
      hosts = Nokogiri::XML(onehost('list','-x')).root.xpath('/HOST_POOL/HOST')
      hosts.collect do |host|
         new(
-           :name   => host.xpath('./NAME').text,
-           :ensure => :present,
-           :im_mad => host.xpath('./IM_MAD').text,
-           :vm_mad => host.xpath('./VM_MAD').text
+           name:    host.xpath('./NAME').text,
+           ensure:  :present,
+           im_mad:  host.xpath('./IM_MAD').text,
+           vm_mad:  host.xpath('./VM_MAD').text
         )
 	 end
   end
@@ -86,10 +86,10 @@ Puppet::Type.type(:onehost).provide(:cli_5_0) do
 
   def post_validate_change()
     unless resource[:self_test]
-      Puppet.debug("nothing to validate, bye bye")
+      Puppet.debug('nothing to validate, bye bye')
       return
     end
-    Puppet.debug("Validating state")
+    Puppet.debug('Validating state')
     postfetch
     resource_state = Hash.new
     resource_state[:name] = resource[:name].to_s
@@ -109,7 +109,7 @@ Puppet::Type.type(:onehost).provide(:cli_5_0) do
           raise "Failed to apply resource, final Resource state: #{@post_property_hash[:status]}"
         end
         if attempts == max_attempts and @post_property_hash != resource_state
-          raise "Failed to apply resource change"
+          raise 'Failed to apply resource change'
         end
     end
 
@@ -117,15 +117,15 @@ Puppet::Type.type(:onehost).provide(:cli_5_0) do
 
   # setters
   def im_mad=(value)
-     raise "onehosts can not be updated. You have to remove and recreate the host"
+     raise 'onehosts can not be updated. You have to remove and recreate the host'
   end
 
   def vm_mad=(value)
-     raise "onehosts can not be updated. You have to remove and recreate the host"
+     raise 'onehosts can not be updated. You have to remove and recreate the host'
   end
 
   def vn_mad=(value)
-    Puppet.warning("onehost does not use vn_mad in opennebula 5.0. Please remove that parameter from your onehost declaration")
+    Puppet.warning('onehost does not use vn_mad in opennebula 5.0. Please remove that parameter from your onehost declaration')
   end
 
 end
