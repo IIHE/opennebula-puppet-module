@@ -22,7 +22,7 @@ describe res_type do
 
   before :each do
     @vnet = res_type.new(name: 'test', onevnet_name: 'testnet')
-    #@onevnet_name = res_type.new(name: 'test')
+    # @onevnet_name = res_type.new(name: 'test')
     @vnet4 = res_type.new(name: 'test', onevnet_name: 'testnet')
     @vnet6 = res_type.new(name: 'test', onevnet_name: 'testnet')
   end
@@ -89,26 +89,26 @@ describe res_type do
     },
   }
 
-  #it_should_behave_like "a puppet type", parameter_tests, res_type_name
+  # it_should_behave_like "a puppet type", parameter_tests, res_type_name
 
   it 'should fail when passing wrong paramter to mac' do
-      #expect {
-      #    @vnet[:mac] = 'foo'
-      #}.to raise_error(Puppet::Error)
+      # expect {
+      #     @vnet[:mac] = 'foo'
+      # }.to raise_error(Puppet::Error)
       skip('needs parameter validation')
   end
 
   it 'should fail when passing ipv4 and not providing ip' do
-      #expect {
-      #    @vnet4[:ip] = :undef
-      #}.to raise_error(Puppet::Error)
+      # expect {
+      #     @vnet4[:ip] = :undef
+      # }.to raise_error(Puppet::Error)
       skip('needs parameter validation')
   end
 
   it 'should fail when passing ipv4 and not providing size' do
-      #expect {
-      #    @vnet4[:ip_size] = :undef
-      #}.to raise_error(Puppet::Error)
+      # expect {
+      #     @vnet4[:ip_size] = :undef
+      # }.to raise_error(Puppet::Error)
       skip('needs parameter validation')
   end
 

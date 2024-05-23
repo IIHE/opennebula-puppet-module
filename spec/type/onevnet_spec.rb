@@ -106,9 +106,9 @@ describe res_type do
   end
 
   it 'should fail when passing ipv4 and not providing DNS server' do
-      #expect {
-      #    @vnet4[:dnsservers] = :undef
-      #}.to raise_error(Puppet::Error)
+      # expect {
+      #     @vnet4[:dnsservers] = :undef
+      # }.to raise_error(Puppet::Error)
       skip('needs parameter validation')
   end
 

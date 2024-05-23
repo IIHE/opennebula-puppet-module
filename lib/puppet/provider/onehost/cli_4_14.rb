@@ -39,7 +39,7 @@ Puppet::Type.type(:onehost).provide(:cli_4_14) do
     @property_hash[:ensure] = :present
   end
 
-  #TODO: requires validation as well
+  # TODO: requires validation as well
   def destroy
     onehost('delete', resource[:name])
     @property_hash.clear

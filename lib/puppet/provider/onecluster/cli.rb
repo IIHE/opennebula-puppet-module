@@ -103,7 +103,7 @@ Puppet::Type.type(:onecluster).provide(:cli) do
     end
   end
 
-  #setters
+  # setters
   def hosts=(value)
     hosts = @property_hash[:hosts] || []
     (hosts - value).each do |host|

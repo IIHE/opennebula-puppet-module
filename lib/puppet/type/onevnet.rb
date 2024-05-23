@@ -10,7 +10,7 @@
 # initial provider had no copyright
 # Deutsche Post E-POST Development GmbH - 2014, 2015
 #
-#require 'IPAddress'
+# require 'IPAddress'
 Puppet::Type.newtype(:onevnet) do
   @doc = 'Type for managing networks in OpenNebula using the onevnet' +
          'wrapper command.'

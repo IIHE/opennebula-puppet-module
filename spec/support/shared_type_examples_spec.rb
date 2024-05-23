@@ -3,7 +3,7 @@ shared_examples 'a puppet type' do |parameter_tests,res_type_name|
 
   let(:provider) {
     prov = stub 'provider'
-    #prov.stubs(:name).returns(res_type_name)
+    # prov.stubs(:name).returns(res_type_name)
     if res_type_name == :onehost then
       prov.stubs(:name).returns('cli_5_0')
     else

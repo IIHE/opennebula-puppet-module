@@ -119,7 +119,7 @@ Puppet::Type.type(:oneimage).provide(:cli_4_0) do
     end
   end
 
-  #setters
+  # setters
   def datastore=(value)
       raise 'Can not modify datastore on images'
   end

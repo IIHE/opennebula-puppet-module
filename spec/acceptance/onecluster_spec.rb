@@ -42,7 +42,7 @@ describe 'onecluster type' do
 
     EOS
     apply_manifest(pp, catch_failures: true)
-    #apply_manifest(pp, catch_changes: true) # FIXME - Hosts can't run idempotently
+    # apply_manifest(pp, catch_changes: true) # FIXME - Hosts can't run idempotently
   end
 
   after :all do

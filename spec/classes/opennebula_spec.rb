@@ -283,7 +283,7 @@ describe 'one', type: :class do
               if os_facts[:osfamily] == 'RedHat'
                 it { should contain_package('rubygem-parse-cron') }
               elsif os_facts[:osfamily] == 'Debian'
-                #it { should contain_package('parse-cron') }
+                # it { should contain_package('parse-cron') }
               end
               it { should contain_service('opennebula-gate').with_ensure('running') }
               context 'with ha-setup' do

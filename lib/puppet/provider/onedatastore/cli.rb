@@ -186,7 +186,7 @@ Puppet::Type.type(:onedatastore).provide(:cli) do
     file.delete
   end
 
-  #setters
+  # setters
   def type=(value)
     raise 'Can not modify type. You need to delete and recreate the datastore'
   end
