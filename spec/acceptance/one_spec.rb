@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 
 describe 'one class' do
   describe 'without parameters' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
         class { one: }
       EOS

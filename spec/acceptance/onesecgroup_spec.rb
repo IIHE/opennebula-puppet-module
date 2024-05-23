@@ -11,7 +11,7 @@ describe 'onesecgroup type' do
   end
 
   describe 'when creating secgroup' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onesecgroup { 'secgroup1':
         ensure      => present,
@@ -25,7 +25,7 @@ describe 'onesecgroup type' do
   end
 
   describe 'when updating a fixed secgroup' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onesecgroup { 'secgroup1':
         ensure      => present,
@@ -39,7 +39,7 @@ describe 'onesecgroup type' do
   end
 
   describe 'when deleting a Security Group' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
         onesecgroup { 'secgroup1':
           ensure => absent,

@@ -53,7 +53,7 @@ describe 'onevm type' do
   end
 
   describe 'when creating vm' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       skip
       pending 'Need fix'
       pp = <<-EOS
@@ -68,7 +68,7 @@ describe 'onevm type' do
   end
 
   describe 'when destroying a vm' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       skip
       pp = <<-EOS
       onevm { 'new_vm':

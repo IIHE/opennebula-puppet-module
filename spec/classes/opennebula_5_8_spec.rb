@@ -19,13 +19,13 @@ describe 'one', type: :class do
           sunstone: true,
           node: false,
         } }
-        it { should contain_file(oned_config).with_content(/^MONITORING_INTERVAL_HOST\s+= 180/m) }
-        it { should contain_file(oned_config).with_content(/^MONITORING_INTERVAL_VM\s+= 180/m) }
-        it { should contain_file(oned_config).with_content(/^MONITORING_INTERVAL_DATASTORE\s+= 300/m) }
-        it { should contain_file(oned_config).with_content(/^MONITORING_INTERVAL_MARKET\s+= 600/m) }
-        it { should contain_file('/etc/one/sunstone-views/mixed/admin.yaml').with_ensure('file') }
-        it { should contain_file('/etc/one/sunstone-views/mixed/cloud.yaml').with_ensure('file') }
-        it { should contain_file('/etc/one/sunstone-views/mixed/user.yaml').with_ensure('file') }
+        it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_HOST\s+= 180/m) }
+        it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_VM\s+= 180/m) }
+        it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_DATASTORE\s+= 300/m) }
+        it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_MARKET\s+= 600/m) }
+        it { is_expected.to contain_file('/etc/one/sunstone-views/mixed/admin.yaml').with_ensure('file') }
+        it { is_expected.to contain_file('/etc/one/sunstone-views/mixed/cloud.yaml').with_ensure('file') }
+        it { is_expected.to contain_file('/etc/one/sunstone-views/mixed/user.yaml').with_ensure('file') }
       end
       context 'as oned-5.8 with custom params' do
         let(:params) { {
@@ -37,10 +37,10 @@ describe 'one', type: :class do
           monitoring_interval_datastore: '400',
           monitoring_interval_market: '800',
         } }
-        it { should contain_file(oned_config).with_content(/^MONITORING_INTERVAL_HOST\s+= 200/m) }
-        it { should contain_file(oned_config).with_content(/^MONITORING_INTERVAL_VM\s+= 200/m) }
-        it { should contain_file(oned_config).with_content(/^MONITORING_INTERVAL_DATASTORE\s+= 400/m) }
-        it { should contain_file(oned_config).with_content(/^MONITORING_INTERVAL_MARKET\s+= 800/m) }
+        it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_HOST\s+= 200/m) }
+        it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_VM\s+= 200/m) }
+        it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_DATASTORE\s+= 400/m) }
+        it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_MARKET\s+= 800/m) }
       end
     end
   end

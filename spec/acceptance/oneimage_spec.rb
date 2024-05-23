@@ -15,7 +15,7 @@ describe 'oneimage type' do
   end
 
   describe 'when creating an OS image' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       skip
       pp = <<-EOS
         exec { '/usr/bin/qemu-img create /home/one_user/images/ubuntu_desktop.img 1G':
@@ -35,7 +35,7 @@ describe 'oneimage type' do
   end
 
   describe 'when creating a CDROM image' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       skip
       pp = <<-EOS
         exec { '/usr/bin/mkisofs -o /home/one_user/images/matlab.iso /tmp':
@@ -56,7 +56,7 @@ describe 'oneimage type' do
   end
 
   describe 'when creating a DATABLOCK image' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       skip
       pending 'This example from the doc does not actually work!'
       pp = <<-EOS
@@ -75,7 +75,7 @@ describe 'oneimage type' do
   end
 
   describe 'when destroying an OS image' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       oneimage { 'Ubuntu':
         ensure => absent,
@@ -88,7 +88,7 @@ describe 'oneimage type' do
   end
 
   describe 'when destroying a CDROM image' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       oneimage { 'MATLAB install CD':
         ensure => absent,
@@ -101,7 +101,7 @@ describe 'oneimage type' do
   end
 
   describe 'when destroying a DATABLOCK image' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       oneimage { 'Experiment results':
         ensure => absent,

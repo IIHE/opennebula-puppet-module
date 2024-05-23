@@ -23,11 +23,11 @@ describe res_type do
     @vm = res_type.new(name: 'test')
   end
 
-  it 'should have :name be its namevar' do
+  it 'has :name be its namevar' do
     res_type.key_attributes.should == [:name]
   end
 
-  it 'should have property :template' do
+  it 'has property :template' do
     @vm[:template] = 'abc'
     @vm[:template].should == 'abc'
   end

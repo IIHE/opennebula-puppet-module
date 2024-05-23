@@ -25,7 +25,7 @@ describe 'onetemplate type' do
   end
 
   describe 'when creating a template with default properties' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
         onetemplate { 'test-template':
           cpu    => 1,
@@ -39,7 +39,7 @@ describe 'onetemplate type' do
   end
 
   describe 'when creating a template with custom properties' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       skip
       pp = <<-EOS
         onetemplate { 'test-template':
@@ -90,7 +90,7 @@ describe 'onetemplate type' do
   end
 
   describe 'when destroying a template' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onetemplate { 'test-template':
         ensure => absent,

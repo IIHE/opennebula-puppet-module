@@ -23,36 +23,36 @@ describe res_type do
     @template = res_type.new(name: 'test')
   end
 
-  it 'should have :name be its namevar' do
+  it 'has :name be its namevar' do
     res_type.key_attributes.should == [:name]
   end
 
-  it 'should have property :memory' do
+  it 'has property :memory' do
     @template[:memory] = '4096'
     @template[:memory].should == '4096'
   end
 
-  it 'should have property :cpu' do
+  it 'has property :cpu' do
     @template[:cpu] = '0.5'
     @template[:cpu].should == '0.5'
   end
 
-  it 'should have property :vcpu' do
+  it 'has property :vcpu' do
     @template[:vcpu] = '8'
     @template[:vcpu].should == '8'
   end
 
-  it 'should have property :disks' do
+  it 'has property :disks' do
     @template[:disks] = ['base', 'storage']
     @template[:disks].should == [{ 'image' => 'base' }, { 'image' => 'storage' }]
   end
 
-  it 'should have property :nics' do
+  it 'has property :nics' do
     @template[:nics] = ['core', 'backup']
     @template[:nics].should == [{ 'network' => 'core' }, { 'network' => 'backup' }]
   end
 
-  it 'should have property :context' do
+  it 'has property :context' do
     @template[:context] = 'foo'
     @template[:context].should == 'foo'
   end

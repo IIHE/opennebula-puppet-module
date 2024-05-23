@@ -10,8 +10,8 @@ describe 'one::install', type: :class do
         let(:params) { {
           dbus_pkg: 'dbus',
         } }
-        it { should contain_class('one::install') }
-        it { should contain_package('dbus') \
+        it { is_expected.to contain_class('one::install') }
+        it { is_expected.to contain_package('dbus') \
           .with_ensure('latest')
         }
       end
@@ -21,7 +21,7 @@ describe 'one::install', type: :class do
           dbus_pkg: 'dbus',
         } }
         no_proxy = %Q{---\nhttp_proxy: \n}
-        it { should contain_file('/etc/gemrc').with_content(no_proxy) }
+        it { is_expected.to contain_file('/etc/gemrc').with_content(no_proxy) }
       end
       context 'with gemrc and proxy set' do
         let(:params) { {
@@ -29,7 +29,7 @@ describe 'one::install', type: :class do
           dbus_pkg: 'dbus',
         } }
         proxy = %Q{---\nhttp_proxy: http://some.crap.com:8080\n}
-        it { should contain_file('/etc/gemrc').with_content(proxy) }
+        it { is_expected.to contain_file('/etc/gemrc').with_content(proxy) }
       end
     end
   end

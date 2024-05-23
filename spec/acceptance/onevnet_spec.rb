@@ -11,7 +11,7 @@ describe 'onevnet type' do
   end
 
   describe 'when creating vnet' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onevnet { 'vnet1':
           ensure          => present,
@@ -30,7 +30,7 @@ describe 'onevnet type' do
   end
 
   describe 'when creating vnet and addressrange' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onevnet { 'vnet2':
           ensure          => present,
@@ -58,7 +58,7 @@ describe 'onevnet type' do
   end
 
   describe 'when creating an IPv6 Network' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onevnet { 'vnet3':
           ensure          => present,
@@ -86,7 +86,7 @@ describe 'onevnet type' do
   end
 
   describe 'when creating a vnet with context variables' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-eos
       onevnet { 'vnet4':
           ensure          => present,
@@ -110,7 +110,7 @@ describe 'onevnet type' do
   end
 
   describe 'when updating a vnet with context variables' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-eos
       onevnet { 'vnet4':
           ensure          => present,
@@ -135,7 +135,7 @@ describe 'onevnet type' do
   end
 
   describe 'when updating a fixed vnet' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onevnet { 'vnet1':
           ensure          => present,
@@ -154,7 +154,7 @@ describe 'onevnet type' do
   end
 
   describe 'when deleting a Network' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
         onevnet { 'vnet':
           ensure => absent,

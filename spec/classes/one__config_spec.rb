@@ -8,7 +8,7 @@ describe 'one::config', type: :class do
       let(:facts) { os_facts }
       context 'general' do
         let(:params) { {} }
-        it { should contain_file('/var/lib/one') \
+        it { is_expected.to contain_file('/var/lib/one') \
           .with_ensure('directory') \
           .with_owner('oneadmin') \
           .with_group('oneadmin')

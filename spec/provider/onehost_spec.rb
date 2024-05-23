@@ -12,7 +12,7 @@ describe provider_class do
     @provider = provider_class.new(@resource)
   }
 
-  it 'should exist' do
+  it 'exists' do
     @provider
   end
 end

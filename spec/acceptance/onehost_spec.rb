@@ -11,7 +11,7 @@ describe 'onehost type' do
   end
 
   describe 'when creating a onehost' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
         onehost { 'host01':
           im_mad => 'kvm',
@@ -25,7 +25,7 @@ describe 'onehost type' do
   end
 
   describe 'when destroying a onehost' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onehost { 'host01':
         ensure => absent,

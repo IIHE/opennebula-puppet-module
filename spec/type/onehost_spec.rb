@@ -20,21 +20,21 @@ describe res_type do
     @host = res_type.new(name: 'test')
   end
 
-  it 'should have :name be its namevar' do
+  it 'has :name be its namevar' do
     res_type.key_attributes.should == [:name]
   end
 
-  it 'should have property :im_mad' do
+  it 'has property :im_mad' do
     @host[:im_mad] = 'kvm'
     @host[:im_mad].should == :kvm
   end
 
-  it 'should have property :im_mad with kvm_pull' do
+  it 'has property :im_mad with kvm_pull' do
     @host[:im_mad] = 'kvm_pull'
     @host[:im_mad].should == :kvm_pull
   end
 
-  it 'should have property :vm_mad' do
+  it 'has property :vm_mad' do
     @host[:vm_mad] = 'kvm'
     @host[:vm_mad].should == :kvm
   end

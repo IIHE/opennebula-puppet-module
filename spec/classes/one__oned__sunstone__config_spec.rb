@@ -10,8 +10,8 @@ describe 'one::oned::sunstone::config', type: :class do
       let (:pre_condition) { 'include one' }
 
       context 'general' do
-        it { should contain_class('one::oned::sunstone::config') }
-        it { should contain_file('/usr/lib/one/sunstone') \
+        it { is_expected.to contain_class('one::oned::sunstone::config') }
+        it { is_expected.to contain_file('/usr/lib/one/sunstone') \
           .with_ensure('directory') \
           .with_owner('oneadmin') \
           .with_group('oneadmin') \
@@ -20,12 +20,12 @@ describe 'one::oned::sunstone::config', type: :class do
       end
       context 'with sunstone listen ip set' do
         let (:params) { { listen_ip: '1.2.3.4' } }
-        it { should contain_file('/etc/one/sunstone-server.conf') \
+        it { is_expected.to contain_file('/etc/one/sunstone-server.conf') \
           .with_content(/:host: 1.2.3.4/m)
         }
       end
       context 'with sunstone listen not ip set' do
-        it { should contain_file('/etc/one/sunstone-server.conf') \
+        it { is_expected.to contain_file('/etc/one/sunstone-server.conf') \
           .with_group('oneadmin') \
           .with_content(/:host: /m)
         }
@@ -38,7 +38,7 @@ describe 'one::oned::sunstone::config', type: :class do
     - vcenter
     - support'
 
-        it { should contain_file('/etc/one/sunstone-server.conf') \
+        it { is_expected.to contain_file('/etc/one/sunstone-server.conf') \
           .with_group('oneadmin') \
           .with_content(/#{expected_routes}/m)
         }
@@ -50,7 +50,7 @@ describe 'one::oned::sunstone::config', type: :class do
     - vcenter
     - support'
 
-        it { should_not contain_file('/etc/one/sunstone-server.conf').with_content(/#{unexpected_routes}/m) }
+        it { is_expected.not_to contain_file('/etc/one/sunstone-server.conf').with_content(/#{unexpected_routes}/m) }
       end
     end
   end
