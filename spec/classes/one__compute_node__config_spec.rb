@@ -29,7 +29,7 @@ describe 'one::compute_node::config', type: :class do
             .with_path('/etc/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla')
         }
       end
-      context "with disabled sudoer management" do
+      context 'with disabled sudoer management' do
         let(:params) { {
             debian_mirror_url:        'http://ftp.de.debian.org/debian',
             preseed_data:             {'does' => 'not_matter'},

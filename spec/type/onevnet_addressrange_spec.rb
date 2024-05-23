@@ -83,9 +83,9 @@ describe res_type do
 
   parameter_tests = {
     name: {
-      valid: ["test", "foo"],
-      default: "test",
-      invalid: ["0./fouzb&$", "&fr5"],
+      valid: ['test', 'foo'],
+      default: 'test',
+      invalid: ['0./fouzb&$', '&fr5'],
     },
   }
 
@@ -95,21 +95,21 @@ describe res_type do
       #expect {
       #    @vnet[:mac] = 'foo'
       #}.to raise_error(Puppet::Error)
-      skip("needs parameter validation")
+      skip('needs parameter validation')
   end
 
   it 'should fail when passing ipv4 and not providing ip' do
       #expect {
       #    @vnet4[:ip] = :undef
       #}.to raise_error(Puppet::Error)
-      skip("needs parameter validation")
+      skip('needs parameter validation')
   end
 
   it 'should fail when passing ipv4 and not providing size' do
       #expect {
       #    @vnet4[:ip_size] = :undef
       #}.to raise_error(Puppet::Error)
-      skip("needs parameter validation")
+      skip('needs parameter validation')
   end
 
 end

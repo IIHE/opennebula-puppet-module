@@ -18,7 +18,7 @@ Puppet::Type.type(:onehost).provide(:cli_4_14) do
   confine feature: :nokogiri
   confine true: begin
     if File.exists?('/var/lib/one/remotes/VERSION')
-      file = File.open("/var/lib/one/remotes/VERSION", "r")
+      file = File.open('/var/lib/one/remotes/VERSION', 'r')
       one_version = file.read
       file.close
       Gem::Version.new(one_version) < Gem::Version.new('5.0')
@@ -34,7 +34,7 @@ Puppet::Type.type(:onehost).provide(:cli_4_14) do
 
   def create
     onehost('create', resource[:name], '--im', resource[:im_mad], '--vm', resource[:vm_mad], '--net', resource[:vn_mad])
-    Puppet.debug("Validate Resource State")
+    Puppet.debug('Validate Resource State')
     post_validate_change
     @property_hash[:ensure] = :present
   end
@@ -85,7 +85,7 @@ Puppet::Type.type(:onehost).provide(:cli_4_14) do
 
   def post_validate_change()
     unless resource[:self_test]
-      Puppet.debug("nothing to validate, bye bye")
+      Puppet.debug('nothing to validate, bye bye')
       return
     end
     Puppet.debug('Validating state')

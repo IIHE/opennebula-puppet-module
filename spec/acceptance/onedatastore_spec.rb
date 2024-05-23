@@ -24,7 +24,7 @@ describe 'onedatastore type' do
       apply_manifest(pp, catch_changes: true)
     end
 
-    context "with default values" do
+    context 'with default values' do
       it 'should idempotently run' do
         pp = <<-EOS
         onedatastore { 'nfs_ds':
@@ -38,7 +38,7 @@ describe 'onedatastore type' do
       end
     end
 
-    context "with custom values" do
+    context 'with custom values' do
       it 'should idempotently run' do
         pp = <<-EOS
         onedatastore { 'nfs_ds':
@@ -55,7 +55,7 @@ describe 'onedatastore type' do
       end
     end
 
-    context "with custom basepath" do
+    context 'with custom basepath' do
       it 'should idempotently run' do
         pp = <<-EOS
         onedatastore { 'nfs_ds':

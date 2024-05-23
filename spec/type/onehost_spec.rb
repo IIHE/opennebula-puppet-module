@@ -41,9 +41,9 @@ describe res_type do
 
   parameter_tests = {
     name: {
-      valid: ["test", "foo"],
-      default: "test",
-      invalid: ["0./fouzb&$", "&fr5"],
+      valid: ['test', 'foo'],
+      default: 'test',
+      invalid: ['0./fouzb&$', '&fr5'],
     },
 # :im_mad => {
 # },
@@ -52,5 +52,5 @@ describe res_type do
 # :tm_mad => {
 # },
   }
-  it_should_behave_like "a puppet type", parameter_tests, res_type_name
+  it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 end

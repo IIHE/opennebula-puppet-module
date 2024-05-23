@@ -312,7 +312,7 @@ describe 'one', type: :class do
               it { should contain_file("#{configdir}/sunstone-views.yaml").with_ensure('file') }
               it { should contain_file('/usr/lib/one/sunstone').with_ensure('directory') }
               it { should contain_file(sunstone_config) }
-              it { should contain_service('opennebula-sunstone').with_ensure('running').with_require("Service[opennebula]") }
+              it { should contain_service('opennebula-sunstone').with_ensure('running').with_require('Service[opennebula]') }
               context 'with passenger' do
                 let(:params) { {
                     sunstone: true,

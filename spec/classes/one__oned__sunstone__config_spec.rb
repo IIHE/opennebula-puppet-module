@@ -70,14 +70,14 @@ describe 'sunstone_views template on 4.12' do
     harness = TemplateHarness.new('spec/../templates/unversioned/sunstone-views.yaml.erb', scope)
     harness.set('@enable_marketplace', 'yes')
     result = harness.run
-    expect(result).to include("- marketplace-tab")
+    expect(result).to include('- marketplace-tab')
   end
 
   it 'with marketplace disabled' do
     harness = TemplateHarness.new('spec/../templates/unversioned/sunstone-views.yaml.erb', scope)
     harness.set('@enable_marketplace', 'no')
     result = harness.run
-    expect(result).to_not include("- marketplace-tab")
+    expect(result).to_not include('- marketplace-tab')
   end
 end
 
@@ -94,13 +94,13 @@ describe 'sunstone_views template on 4.14' do
     harness = TemplateHarness.new('spec/../templates/unversioned/sunstone-views-admin.yaml.erb', scope)
     harness.set('@enable_marketplace', 'yes')
     result = harness.run
-    expect(result).to include("- marketplace-tab")
+    expect(result).to include('- marketplace-tab')
   end
 
   it 'with marketplace disabled' do
     harness = TemplateHarness.new('spec/../templates/unversioned/sunstone-views-admin.yaml.erb', scope)
     harness.set('@enable_marketplace', 'no')
     result = harness.run
-    expect(result).to_not include("- marketplace-tab")
+    expect(result).to_not include('- marketplace-tab')
   end
 end

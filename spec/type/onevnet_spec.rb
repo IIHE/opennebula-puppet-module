@@ -92,12 +92,12 @@ describe res_type do
 
   parameter_tests = {
     name: {
-      valid: ["test", "foo"],
-      default: "test",
-      invalid: ["0./fouzb&$", "&fr5"],
+      valid: ['test', 'foo'],
+      default: 'test',
+      invalid: ['0./fouzb&$', '&fr5'],
     },
   }
-  it_should_behave_like "a puppet type", parameter_tests, res_type_name
+  it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 
   it 'should fail when passing wrong argument to model' do
       expect {
@@ -109,7 +109,7 @@ describe res_type do
       #expect {
       #    @vnet4[:dnsservers] = :undef
       #}.to raise_error(Puppet::Error)
-      skip("needs parameter validation")
+      skip('needs parameter validation')
   end
 
 end

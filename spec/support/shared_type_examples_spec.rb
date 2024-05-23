@@ -1,4 +1,4 @@
-shared_examples "a puppet type" do |parameter_tests,res_type_name|
+shared_examples 'a puppet type' do |parameter_tests,res_type_name|
   res_type = Puppet::Type.type(res_type_name)
 
   let(:provider) {
@@ -22,7 +22,7 @@ shared_examples "a puppet type" do |parameter_tests,res_type_name|
 
   parameter_tests.each do |param, tests|
     describe "parameter #{param}" do
-      it "should exist" do
+      it 'should exist' do
         expect { resource[param] }.to_not raise_error
       end
 
@@ -31,7 +31,7 @@ shared_examples "a puppet type" do |parameter_tests,res_type_name|
           resource[param].should == tests[:default]
         end
       else
-        pending("should have a default")
+        pending('should have a default')
       end
 
       if tests[:valid] then
@@ -42,7 +42,7 @@ shared_examples "a puppet type" do |parameter_tests,res_type_name|
           end
         end
       else
-        pending("should accept valid values")
+        pending('should accept valid values')
       end
 
       if tests[:invalid] then
@@ -52,13 +52,13 @@ shared_examples "a puppet type" do |parameter_tests,res_type_name|
           end
         end
       else
-        pending("should throw an error for invalid values")
+        pending('should throw an error for invalid values')
       end
 
       if prop = res_type.propertybyname(param) then
-        it "should have docs" do
+        it 'should have docs' do
           prop.doc.should_not == nil
-          prop.doc.should_not == ""
+          prop.doc.should_not == ''
         end
       end
     end

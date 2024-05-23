@@ -37,9 +37,9 @@ RSpec.configure do |c|
       copy_module_to(host, source: proj_root, module_name: 'one')
 
       if fact('osfamily') == 'RedHat'
-        on host, "yum -y install rubygem-nokogiri"
-        on host, "yum clean all"
-        on host, "rm -rf /etc/yum.repos.d/puppetlabs.repo"
+        on host, 'yum -y install rubygem-nokogiri'
+        on host, 'yum clean all'
+        on host, 'rm -rf /etc/yum.repos.d/puppetlabs.repo'
       end
 
       # Configure hiera
