@@ -21,8 +21,8 @@ class one::oned::onegate {
   include one::oned::onegate::install
   include one::oned::onegate::config
   include one::oned::onegate::service
-  Class['one::prerequisites'] ->
-  Class['one::oned::onegate::install'] ->
-  Class['one::oned::onegate::config'] ~>
-  Class['one::oned::onegate::service']
+  Class['one::prerequisites']
+  -> Class['one::oned::onegate::install']
+  -> Class['one::oned::onegate::config']
+  ~> Class['one::oned::onegate::service']
 }

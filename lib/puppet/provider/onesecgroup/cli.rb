@@ -15,11 +15,11 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onesecgroup).provide(:cli) do
-  confine :feature => :nokogiri
-  desc "onesecgroup provider"
+  confine feature: :nokogiri
+  desc 'onesecgroup provider'
 
-  has_command(:onesecgroup, "onesecgroup") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onesecgroup, 'onesecgroup') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
@@ -64,19 +64,19 @@ Puppet::Type.type(:onesecgroup).provide(:cli) do
   def self.instances
     secgroups = Nokogiri::XML(onesecgroup('list', '-x')).root.xpath('/SECURITY_GROUP_POOL/SECURITY_GROUP')
     secgroups.collect do |secgroup|
-      rules=[]
+      rules = []
       secgroup.xpath('./TEMPLATE/RULE').collect do |rule|
-        ruleitems={}
+        ruleitems = {}
         rule.xpath('*').collect do |item|
           ruleitems[item.name.downcase] = item.text.upcase
         end
         rules << ruleitems
       end
       new(
-        :name        => secgroup.xpath('./NAME').text,
-        :ensure      => :present,
-        :description => secgroup.xpath('./TEMPLATE/DESCRIPTION').text,
-        :rules       => rules
+        name:         secgroup.xpath('./NAME').text,
+        ensure:       :present,
+        description:  secgroup.xpath('./TEMPLATE/DESCRIPTION').text,
+        rules:        rules,
       )
     end
   end
@@ -84,7 +84,7 @@ Puppet::Type.type(:onesecgroup).provide(:cli) do
   def self.prefetch(resources)
     secgroups = instances
     resources.keys.each do |name|
-      provider = secgroups.find{ |secgroup| secgroup.name == name }
+      provider = secgroups.find { |secgroup| secgroup.name == name }
       resources[name].provider = provider unless provider.nil?
     end
   end

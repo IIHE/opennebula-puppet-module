@@ -43,13 +43,13 @@ class one::oned (
   include one::oned::config
   include one::oned::service
 
-  Class['one::prerequisites'] ->
-  Class['one::install'] ->
-  Class['one::config'] ->
-  Class['one::oned::install'] ->
-  Class['one::oned::config'] ~>
-  Class['one::oned::service'] ~>
-  Class['one::service']
+  Class['one::prerequisites']
+  -> Class['one::install']
+  -> Class['one::config']
+  -> Class['one::oned::install']
+  -> Class['one::oned::config']
+  ~> Class['one::oned::service']
+  ~> Class['one::service']
 
   # lint:ignore:strict_indent
   if ( $backend != 'mysql' and $backend != 'sqlite') {

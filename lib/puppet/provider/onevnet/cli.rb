@@ -15,11 +15,11 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onevnet).provide(:cli) do
-  confine :feature => :nokogiri
+  confine feature: :nokogiri
   desc 'onevnet provider'
 
   has_command(:onevnet, 'onevnet') do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
@@ -68,20 +68,20 @@ Puppet::Type.type(:onevnet).provide(:cli) do
     vnets = Nokogiri::XML(onevnet('list', '-x')).root.xpath('/VNET_POOL/VNET')
     vnets.collect do |vnet|
       new(
-          :ensure   => :present,
-          :name     => vnet.xpath('./NAME').text,
-          :vn_mad   => (vnet.xpath('./VN_MAD').text unless vnet.xpath('./VN_MAD').nil?),
-          :bridge   => vnet.xpath('./BRIDGE').text,
-          :phydev   => vnet.xpath('./PHYDEV').text,
-          :vlanid   => vnet.xpath('./VLAN_ID').text,
-          :context         => ( Hash[ vnet.xpath('./TEMPLATE').children.collect { |c|
+          ensure:           :present,
+          name:             vnet.xpath('./NAME').text,
+          vn_mad:           (vnet.xpath('./VN_MAD').text unless vnet.xpath('./VN_MAD').nil?),
+          bridge:           vnet.xpath('./BRIDGE').text,
+          phydev:           vnet.xpath('./PHYDEV').text,
+          vlanid:           vnet.xpath('./VLAN_ID').text,
+          context:          (Hash[ vnet.xpath('./TEMPLATE').children.collect { |c|
                                   [c.name.downcase, c.text] unless parameter_names.include?(c.name.upcase)
-                                }.reject{ |c| c.nil? } ] unless vnet.xpath('./TEMPLATE').nil? ),
-          :dnsservers      => (vnet.xpath('./TEMPLATE/DNS').text.split(' ') unless vnet.xpath('./TEMPLATE/DNS').nil?),
-          :gateway         => (vnet.xpath('./TEMPLATE/GATEWAY').text unless vnet.xpath('./TEMPLATE/GATEWAY').nil?),
-          :netmask         => (vnet.xpath('./TEMPLATE/NETWORK_MASK').text unless vnet.xpath('./TEMPLATE/NETWORK_MASK').nil?),
-          :network_address => (vnet.xpath('./TEMPLATE/NETWORK_ADDRESS').text unless vnet.xpath('./TEMPLATE/NETWORK_ADDRESS').nil?),
-          :mtu             => (vnet.xpath('./TEMPLATE/MTU').text unless vnet.xpath('./TEMPLATE/MTU').nil?)
+                                }.reject { |c| c.nil? } ] unless vnet.xpath('./TEMPLATE').nil?),
+          dnsservers:       (vnet.xpath('./TEMPLATE/DNS').text.split(' ') unless vnet.xpath('./TEMPLATE/DNS').nil?),
+          gateway:          (vnet.xpath('./TEMPLATE/GATEWAY').text unless vnet.xpath('./TEMPLATE/GATEWAY').nil?),
+          netmask:          (vnet.xpath('./TEMPLATE/NETWORK_MASK').text unless vnet.xpath('./TEMPLATE/NETWORK_MASK').nil?),
+          network_address:  (vnet.xpath('./TEMPLATE/NETWORK_ADDRESS').text unless vnet.xpath('./TEMPLATE/NETWORK_ADDRESS').nil?),
+          mtu:              (vnet.xpath('./TEMPLATE/MTU').text unless vnet.xpath('./TEMPLATE/MTU').nil?),
       )
     end
   end
@@ -102,7 +102,7 @@ Puppet::Type.type(:onevnet).provide(:cli) do
           when :vlanid
             ['VLAN_ID', v]
           when :addressrange
-            k.each_pair { |key, value|}
+            k.each_pair { |key, value| }
           when :dnsservers
             ['DNS', "\"#{v.join(' ')}\""]
           when :netmask
@@ -116,7 +116,7 @@ Puppet::Type.type(:onevnet).provide(:cli) do
     }.map { |a| "#{a[0]} = #{a[1]}" unless a.nil? }.join("\n")
     unless @property_hash[:context].nil? or @property_hash[:context].to_s.empty?
       file << "\n"
-      file << @property_hash[:context].map{ |k,v|
+      file << @property_hash[:context].map { |k, v|
         [k.to_s.upcase, v]
       }.map { |a| "#{a[0]} = #{a[1]}" unless a.nil? }.join("\n")
     end

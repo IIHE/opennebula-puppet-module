@@ -10,22 +10,22 @@ describe 'onetemplate type' do
       ensure => absent,
     }
     EOS
-    apply_manifest(pp, :catch_failures => true)
-    apply_manifest(pp, :catch_changes => true)
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
   end
 
   after :all do
-    pp =<<-EOS
+    pp = <<-EOS
     onetemplate { 'test-template':
       ensure => absent,
     }
     EOS
-    apply_manifest(pp, :catch_failures => true)
-    apply_manifest(pp, :catch_changes => true)
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
   end
 
   describe 'when creating a template with default properties' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
         onetemplate { 'test-template':
           cpu    => 1,
@@ -33,13 +33,13 @@ describe 'onetemplate type' do
         }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when creating a template with custom properties' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       skip
       pp = <<-EOS
         onetemplate { 'test-template':
@@ -84,21 +84,21 @@ describe 'onetemplate type' do
         }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when destroying a template' do
-    it 'should idempotently run' do
-      pp =<<-EOS
+    it 'idempotently runs' do
+      pp = <<-EOS
       onetemplate { 'test-template':
         ensure => absent,
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 

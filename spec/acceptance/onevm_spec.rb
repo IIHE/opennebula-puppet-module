@@ -48,12 +48,12 @@ describe 'onevm type' do
       },
     }
     EOS
-    apply_manifest(pp, :catch_failures => true)
-    apply_manifest(pp, :catch_changes => true)
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
   end
 
   describe 'when creating vm' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       skip
       pending 'Need fix'
       pp = <<-EOS
@@ -62,22 +62,22 @@ describe 'onevm type' do
         }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when destroying a vm' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       skip
-      pp =<<-EOS
+      pp = <<-EOS
       onevm { 'new_vm':
         ensure => absent,
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 

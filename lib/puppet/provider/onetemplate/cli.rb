@@ -15,11 +15,11 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onetemplate).provide(:cli) do
-  confine :feature => :nokogiri
-  desc "onetemplate provider"
+  confine feature: :nokogiri
+  desc 'onetemplate provider'
 
-  has_command(:onetemplate, "onetemplate") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onetemplate, 'onetemplate') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
@@ -28,49 +28,49 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
   def create
     file = Tempfile.new("onetemplate-#{resource[:name]}")
     builder = Nokogiri::XML::Builder.new do |xml|
-        xml.TEMPLATE do
-            xml.NAME resource[:name]
-            xml.MEMORY resource[:memory]
-            xml.CPU resource[:cpu]
-            xml.VCPU resource[:vcpu]
-            xml.DESCRIPTION do
-                resource[:description]
-            end if resource[:description]
-            xml.OS do
-                resource[:os].each do |k, v|
-                    xml.send(k.upcase, v)
-                end
-            end if resource[:os]
-            resource[:disks].each do |disk|
-                xml.DISK do
-                    disk.each do |k, v|
-                        xml.send(k.upcase, v)
-                    end
-                end
-            end if resource[:disks]
-            resource[:nics].each do |nic|
-                xml.NIC do
-                    nic.each do |k, v|
-                        xml.send(k.upcase, v)
-                    end
-                end
-            end if resource[:nics]
-            xml.GRAPHICS do
-                resource[:graphics].each do |k, v|
-                    xml.send(k.upcase, v)
-                end
-            end if resource[:graphics]
-            xml.FEATURES do
-                resource[:features].each do |k, v|
-                    xml.send(k.upcase, v)
-                end
-            end if resource[:features]
-            xml.CONTEXT do
-                resource[:context].each do |k, v|
-                    xml.send(k.upcase, v)
-                end
-            end if resource[:context]
-        end
+      xml.TEMPLATE do
+        xml.NAME resource[:name]
+        xml.MEMORY resource[:memory]
+        xml.CPU resource[:cpu]
+        xml.VCPU resource[:vcpu]
+        xml.DESCRIPTION do
+          resource[:description]
+        end if resource[:description]
+        xml.OS do
+          resource[:os].each do |k, v|
+            xml.send(k.upcase, v)
+          end
+        end if resource[:os]
+        resource[:disks].each do |disk|
+          xml.DISK do
+            disk.each do |k, v|
+              xml.send(k.upcase, v)
+            end
+          end
+        end if resource[:disks]
+        resource[:nics].each do |nic|
+          xml.NIC do
+            nic.each do |k, v|
+              xml.send(k.upcase, v)
+            end
+          end
+        end if resource[:nics]
+        xml.GRAPHICS do
+          resource[:graphics].each do |k, v|
+            xml.send(k.upcase, v)
+          end
+        end if resource[:graphics]
+        xml.FEATURES do
+          resource[:features].each do |k, v|
+            xml.send(k.upcase, v)
+          end
+        end if resource[:features]
+        xml.CONTEXT do
+          resource[:context].each do |k, v|
+            xml.send(k.upcase, v)
+          end
+        end if resource[:context]
+      end
     end
     tempfile = builder.to_xml
     file.write(tempfile)
@@ -103,23 +103,23 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
 
   # Return the full hash of all existing onetemplate resources
   def self.instances
-      templates = Nokogiri::XML(onetemplate('list', '-x')).root.xpath('/VMTEMPLATE_POOL/VMTEMPLATE')
-      templates.collect do |template|
-        new(
-            :name        => template.xpath('./NAME').text,
-            :ensure      => :present,
-            :description => template.xpath('./TEMPLATE/DESCRIPTION').text,
-            :context     => Hash[template.xpath('./TEMPLATE/CONTEXT/*').map { |e| [e.name.downcase, e.text.downcase] } ],
-            :cpu         => (template.xpath('./TEMPLATE/CPU').text unless template.xpath('./TEMPLATE/CPU').nil?),
-            :disks       => template.xpath('./TEMPLATE/DISK').map { |disk| {'image' => disk.xpath('./IMAGE').text} },
-            :features    => Hash[template.xpath('./TEMPLATE/FEATURES/*').map { |e| [e.name.downcase, { e.text => e.text, 'true' => true, 'false' => false }[e.text.downcase]] } ],
-            :graphics    => Hash[template.xpath('./TEMPLATE/GRAPHICS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
-            :memory      => (template.xpath('./TEMPLATE/MEMORY').text unless template.xpath('./TEMPLATE/MEMORY').nil?),
-            :nics        => template.xpath('./TEMPLATE/NIC').map { |nic| get_nic(nic) },
-            :os          => Hash[template.xpath('./TEMPLATE/OS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
-            :vcpu        => (template.xpath('./TEMPLATE/VCPU').text unless template.xpath('./TEMPLATE/VCPU').nil?)
-        )
-      end
+    templates = Nokogiri::XML(onetemplate('list', '-x')).root.xpath('/VMTEMPLATE_POOL/VMTEMPLATE')
+    templates.collect do |template|
+      new(
+        name:           template.xpath('./NAME').text,
+        ensure:         :present,
+        description:    template.xpath('./TEMPLATE/DESCRIPTION').text,
+        context:        Hash[template.xpath('./TEMPLATE/CONTEXT/*').map { |e| [e.name.downcase, e.text.downcase] } ],
+        cpu:            (template.xpath('./TEMPLATE/CPU').text unless template.xpath('./TEMPLATE/CPU').nil?),
+        disks:          template.xpath('./TEMPLATE/DISK').map { |disk| { 'image' => disk.xpath('./IMAGE').text } },
+        features:       Hash[template.xpath('./TEMPLATE/FEATURES/*').map { |e| [e.name.downcase, { e.text => e.text, 'true' => true, 'false' => false }[e.text.downcase]] } ],
+        graphics:       Hash[template.xpath('./TEMPLATE/GRAPHICS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
+        memory:         (template.xpath('./TEMPLATE/MEMORY').text unless template.xpath('./TEMPLATE/MEMORY').nil?),
+        nics:           template.xpath('./TEMPLATE/NIC').map { |nic| get_nic(nic) },
+        os:             Hash[template.xpath('./TEMPLATE/OS/*').map { |e| [e.name.downcase, e.text.downcase] } ],
+        vcpu:           (template.xpath('./TEMPLATE/VCPU').text unless template.xpath('./TEMPLATE/VCPU').nil?),
+      )
+    end
   end
 
   def self.prefetch(resources)
@@ -144,24 +144,24 @@ Puppet::Type.type(:onetemplate).provide(:cli) do
           when :memory
             ['MEMORY', "\'#{v}\'"]
           when :context
-            ['CONTEXT', "#{v.map{ |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
+            ['CONTEXT', "#{v.map { |key, value| key.to_s.upcase + "='" + value.to_s + "'" } }"]
           when :os
-            ['OS', "#{v.map{ |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
+            ['OS', "#{v.map { |key, value| key.to_s.upcase + "='" + value.to_s + "'" } }"]
           when :graphics
-            ['GRAPHICS', "#{v.map{ |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
+            ['GRAPHICS', "#{v.map { |key, value| key.to_s.upcase + "='" + value.to_s + "'" } }"]
           else
             [k.to_s.upcase, v]
         end
       end
-    }.map{|a| "#{a[0]}=#{a[1].gsub(/"/,'').gsub(/'/,'"')}" unless a.nil? }.join("\n")
+    }.map {|a| "#{a[0]}=#{a[1].gsub(/"/, '').gsub(/'/, '"')}" unless a.nil? }.join("\n")
 
     tempfile2 = @property_hash[:nics].map { |e|
-      ['NIC', "#{e.map{ |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
-    }.map{|a| "#{a[0]}=#{a[1].gsub(/"/,'').gsub(/'/,'"')}" unless a.nil? }.join("\n")
+      ['NIC', "#{e.map { |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
+    }.map { |a| "#{a[0]}=#{a[1].gsub(/"/, '').gsub(/'/, '"')}" unless a.nil? }.join("\n")
 
     tempfile3 = @property_hash[:disks].map { |e|
-      ['DISK', "#{e.map{ |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
-    }.map{|a| "#{a[0]}=#{a[1].gsub(/"/,'').gsub(/'/,'"')}" unless a.nil? }.join("\n")
+      ['DISK', "#{e.map { |key, value| key.to_s.upcase + "='" + value.to_s + "'" }}"]
+    }.map { |a| "#{a[0]}=#{a[1].gsub(/"/, '').gsub(/'/, '"')}" unless a.nil? }.join("\n")
 
     tempfile = tempfile1 + "\n"  + tempfile2 + "\n" + tempfile3
     file.write(tempfile)

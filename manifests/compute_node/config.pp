@@ -56,60 +56,60 @@ class one::compute_node::config (
     owner  => 'root',
     group  => 'root',
     notify => Service[$libvirtd_srv],
-  } ->
+  }
 
-  file { $libvirtd_cfg:
+  -> file { $libvirtd_cfg:
     ensure  => file,
     content => template($libvirtd_source),
     owner   => 'root',
     group   => 'root',
     notify  => Service[$libvirtd_srv],
-  } ->
+  }
 
-  file { '/etc/udev/rules.d/80-kvm.rules':
+  -> file { '/etc/udev/rules.d/80-kvm.rules':
     ensure => file,
     owner  => 'root',
     group  => 'root',
     source => 'puppet:///modules/one/udev-kvm-rules',
-  } ->
+  }
 
-  file { 'polkit-opennebula':
+  -> file { 'polkit-opennebula':
     ensure => file,
     path   => $_polkit_file_path,
     owner  => 'root',
     group  => 'root',
     source => 'puppet:///modules/one/50-org.libvirt.unix.manage-opennebula.pkla',
-  } ->
+  }
 
-  file { '/etc/libvirt/qemu.conf':
+  -> file { '/etc/libvirt/qemu.conf':
     ensure => file,
     owner  => 'root',
     group  => 'root',
     source => 'puppet:///modules/one/qemu.conf',
-  } ->
+  }
 
-  file { '/var/lib/one/.virtinst':
+  -> file { '/var/lib/one/.virtinst':
     ensure => directory,
     owner  => 'oneadmin',
     group  => 'oneadmin',
     mode   => '0755',
-  } ->
+  }
 
-  file { '/var/lib/one/.libvirt':
+  -> file { '/var/lib/one/.libvirt':
     ensure => directory,
     owner  => 'oneadmin',
     group  => 'oneadmin',
     mode   => '0755',
-  } ->
+  }
 
-  file { '/var/lib/libvirt/boot':
+  -> file { '/var/lib/libvirt/boot':
     ensure => directory,
     owner  => 'oneadmin',
     group  => 'oneadmin',
     mode   => '0771',
-  } ->
+  }
 
-  file { ['/var/lib/one/etc/kickstart.d', '/var/lib/one/etc/preseed.d']:
+  -> file { ['/var/lib/one/etc/kickstart.d', '/var/lib/one/etc/preseed.d']:
     ensure  => directory,
     owner   => 'oneadmin',
     group   => 'oneadmin',
@@ -117,9 +117,9 @@ class one::compute_node::config (
     recurse => true,
     force   => true,
     mode    => '0755',
-  } ->
+  }
 
-  file { '/var/lib/one/bin/imaginator':
+  -> file { '/var/lib/one/bin/imaginator':
     ensure => file,
     owner  => 'root',
     group  => 'oneadmin',

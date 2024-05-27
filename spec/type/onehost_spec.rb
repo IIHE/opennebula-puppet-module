@@ -17,40 +17,40 @@ describe res_type do
     val
   }
   before :each do
-      @host = res_type.new(:name => 'test')
+    @host = res_type.new(name: 'test')
   end
 
-  it 'should have :name be its namevar' do
+  it 'has :name be its namevar' do
     res_type.key_attributes.should == [:name]
   end
 
-  it 'should have property :im_mad' do
-      @host[:im_mad] = 'kvm'
-      @host[:im_mad].should == :kvm
+  it 'has property :im_mad' do
+    @host[:im_mad] = 'kvm'
+    @host[:im_mad].should == :kvm
   end
 
-  it 'should have property :im_mad with kvm_pull' do
-      @host[:im_mad] = 'kvm_pull'
-      @host[:im_mad].should == :kvm_pull
+  it 'has property :im_mad with kvm_pull' do
+    @host[:im_mad] = 'kvm_pull'
+    @host[:im_mad].should == :kvm_pull
   end
 
-  it 'should have property :vm_mad' do
-      @host[:vm_mad] = 'kvm'
-      @host[:vm_mad].should == :kvm
+  it 'has property :vm_mad' do
+    @host[:vm_mad] = 'kvm'
+    @host[:vm_mad].should == :kvm
   end
 
   parameter_tests = {
-    :name => {
-      :valid => ["test", "foo"],
-      :default => "test",
-      :invalid => ["0./fouzb&$", "&fr5"],
+    name: {
+      valid: ['test', 'foo'],
+      default: 'test',
+      invalid: ['0./fouzb&$', '&fr5'],
     },
-# :im_mad => {
-# },
-# :vm_mad => {
-# },
-# :tm_mad => {
-# },
+    # :im_mad => {
+    # },
+    # :vm_mad => {
+    # },
+    # :tm_mad => {
+    # },
   }
-  it_should_behave_like "a puppet type", parameter_tests, res_type_name
+  it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 end

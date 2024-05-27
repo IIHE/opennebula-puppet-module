@@ -16,53 +16,53 @@ describe res_type do
     val.stubs(:defaultprovider).returns provider
     val
   }
-#  let(:resource) {
-#    res_type.new({:name => 'test'})
-#  }
+  #  let(:resource) {
+  #    res_type.new({:name => 'test'})
+  #  }
   before :each do
-      @template = res_type.new(:name => 'test')
+    @template = res_type.new(name: 'test')
   end
 
-  it 'should have :name be its namevar' do
+  it 'has :name be its namevar' do
     res_type.key_attributes.should == [:name]
   end
 
-  it 'should have property :memory' do
-      @template[:memory] = '4096'
-      @template[:memory].should == '4096'
+  it 'has property :memory' do
+    @template[:memory] = '4096'
+    @template[:memory].should == '4096'
   end
 
-  it 'should have property :cpu' do
-      @template[:cpu] = '0.5'
-      @template[:cpu].should == '0.5'
+  it 'has property :cpu' do
+    @template[:cpu] = '0.5'
+    @template[:cpu].should == '0.5'
   end
 
-  it 'should have property :vcpu' do
-      @template[:vcpu] = '8'
-      @template[:vcpu].should == '8'
+  it 'has property :vcpu' do
+    @template[:vcpu] = '8'
+    @template[:vcpu].should == '8'
   end
 
-  it 'should have property :disks' do
-      @template[:disks] = ['base', 'storage']
-      @template[:disks].should == [{"image"=>"base"}, {"image"=>"storage"}]
+  it 'has property :disks' do
+    @template[:disks] = ['base', 'storage']
+    @template[:disks].should == [{ 'image' => 'base' }, { 'image' => 'storage' }]
   end
 
-  it 'should have property :nics' do
-      @template[:nics] = ['core', 'backup']
-      @template[:nics].should == [{"network"=>"core"}, {"network"=>"backup"}]
+  it 'has property :nics' do
+    @template[:nics] = ['core', 'backup']
+    @template[:nics].should == [{ 'network' => 'core' }, { 'network' => 'backup' }]
   end
 
-  it 'should have property :context' do
-      @template[:context] = 'foo'
-      @template[:context].should == 'foo'
+  it 'has property :context' do
+    @template[:context] = 'foo'
+    @template[:context].should == 'foo'
   end
 
   parameter_tests = {
-    :name => {
-      :valid => ["test", "foo"],
-      :default => "test",
-      :invalid => ["0./fouzb&$", "&fr5"],
+    name: {
+      valid: ['test', 'foo'],
+      default: 'test',
+      invalid: ['0./fouzb&$', '&fr5'],
     },
   }
-  it_should_behave_like "a puppet type", parameter_tests, res_type_name
+  it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 end

@@ -16,28 +16,28 @@ describe res_type do
     val.stubs(:defaultprovider).returns provider
     val
   }
-#  let(:resource) {
-#    res_type.new({:name => 'test'})
-#  }
+  #  let(:resource) {
+  #    res_type.new({:name => 'test'})
+  #  }
   before :each do
-      @vm = res_type.new(:name => 'test')
+    @vm = res_type.new(name: 'test')
   end
 
-  it 'should have :name be its namevar' do
+  it 'has :name be its namevar' do
     res_type.key_attributes.should == [:name]
   end
 
-  it 'should have property :template' do
-      @vm[:template] = 'abc'
-      @vm[:template].should == 'abc'
+  it 'has property :template' do
+    @vm[:template] = 'abc'
+    @vm[:template].should == 'abc'
   end
 
   parameter_tests = {
-    :name => {
-      :valid => ["test", "foo"],
-      :default => "test",
-      :invalid => ["0./fouzb&$", "&fr5"],
+    name: {
+      valid: ['test', 'foo'],
+      default: 'test',
+      invalid: ['0./fouzb&$', '&fr5'],
     },
   }
-  it_should_behave_like "a puppet type", parameter_tests, res_type_name
+  it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 end

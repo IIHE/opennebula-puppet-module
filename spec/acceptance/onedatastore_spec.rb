@@ -7,8 +7,8 @@ describe 'onedatastore type' do
       oned => true,
     }
     EOS
-    apply_manifest(pp, :catch_failures => true)
-    apply_manifest(pp, :catch_changes => true)
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
   end
 
   describe 'when creating a System datastore' do
@@ -20,12 +20,12 @@ describe 'onedatastore type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
-    context "with default values" do
-      it 'should idempotently run' do
+    context 'with default values' do
+      it 'idempotently runs' do
         pp = <<-EOS
         onedatastore { 'nfs_ds':
           tm_mad    => 'shared',
@@ -33,13 +33,13 @@ describe 'onedatastore type' do
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
     end
 
-    context "with custom values" do
-      it 'should idempotently run' do
+    context 'with custom values' do
+      it 'idempotently runs' do
         pp = <<-EOS
         onedatastore { 'nfs_ds':
           ensure    => present,
@@ -50,13 +50,13 @@ describe 'onedatastore type' do
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
     end
 
-    context "with custom basepath" do
-      it 'should idempotently run' do
+    context 'with custom basepath' do
+      it 'idempotently runs' do
         pp = <<-EOS
         onedatastore { 'nfs_ds':
           ensure    => present,
@@ -68,8 +68,8 @@ describe 'onedatastore type' do
         }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
     end
   end
@@ -85,12 +85,12 @@ describe 'onedatastore type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
   end
 
   describe 'when creating a Filesystem datastore' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onedatastore { 'production':
         ds_mad    => 'fs',
@@ -98,13 +98,13 @@ describe 'onedatastore type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when creating a VMFS datastore' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onedatastore { 'vmfs_ds':
         ds_mad    => 'vmfs',
@@ -112,13 +112,13 @@ describe 'onedatastore type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when creating a LVM datastore' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onedatastore { 'lvm_ds':
         ds_mad    => 'fs_lvm',
@@ -126,13 +126,13 @@ describe 'onedatastore type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when creating a Ceph datastore' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
       onedatastore { 'ceph_ds':
         ds_mad      => 'ceph',
@@ -147,86 +147,86 @@ describe 'onedatastore type' do
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when destroying a System datastore' do
-    it 'should idempotently run' do
-      pp =<<-EOS
+    it 'idempotently runs' do
+      pp = <<-EOS
       onedatastore { 'nfs_ds':
         ensure    => absent,
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when destroying a Files datastore' do
-    it 'should idempotently run' do
-      pp =<<-EOS
+    it 'idempotently runs' do
+      pp = <<-EOS
       onedatastore { 'kernels':
         ensure    => absent,
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when destroying a Filesystem datastore' do
-    it 'should idempotently run' do
-      pp =<<-EOS
+    it 'idempotently runs' do
+      pp = <<-EOS
       onedatastore { 'production':
         ensure    => absent,
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when destroying a VMFS datastore' do
-    it 'should idempotently run' do
-      pp =<<-EOS
+    it 'idempotently runs' do
+      pp = <<-EOS
       onedatastore { 'vmfs_ds':
         ensure    => absent,
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when destroying a LVM datastore' do
-    it 'should idempotently run' do
-      pp =<<-EOS
+    it 'idempotently runs' do
+      pp = <<-EOS
       onedatastore { 'lvm_ds':
         ensure    => absent,
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 
   describe 'when destroying a Ceph datastore' do
-    it 'should idempotently run' do
-      pp =<<-EOS
+    it 'idempotently runs' do
+      pp = <<-EOS
       onedatastore { 'ceph_ds':
         ensure    => absent,
       }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
 

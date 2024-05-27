@@ -16,22 +16,22 @@ describe res_type do
     val.stubs(:defaultprovider).returns provider
     val
   }
-#  let(:resource) {
-#    res_type.new({:name => 'test'})
-#  }
+  #  let(:resource) {
+  #    res_type.new({name: 'test'})
+  #  }
 
   before :each do
-    @secgroup = res_type.new(:name => 'test')
+    @secgroup = res_type.new(name: 'test')
   end
 
-  it 'should have :name be its namevar' do
+  it 'has :name be its namevar' do
     res_type.key_attributes.should == [:name]
   end
 
   parameters = []
 
   parameters.each do |params|
-    it "should have a #{params} parameter" do
+    it "has a #{params} parameter" do
       expect(described_class.attrtype(params)).to eq :param
     end
   end
@@ -39,32 +39,32 @@ describe res_type do
   properties = [:description, :rules]
 
   properties.each do |property|
-    it "should have a #{property} property" do
+    it "has a #{property} property" do
       described_class.attrclass(property).ancestors.should be_include(Puppet::Property)
     end
 
-    it "should have documentation for its #{property} property" do
+    it "has documentation for its #{property} property" do
       described_class.attrclass(property).doc.should be_instance_of(String)
     end
   end
 
-  it 'should have property :description' do
+  it 'has property :description' do
     @secgroup[:description] = 'This is a description.'
     @secgroup[:description].should == 'This is a description.'
   end
 
-  it 'should have property :rules' do
-    @secgroup[:rules] = [{'protocol' => 'ALL', 'rule_type' => 'OUTBOUND'}, {'protocol' => 'ALL', 'rule_type' => 'INBOUND'}]
-    @secgroup[:rules].should == [{'protocol' => 'ALL', 'rule_type' => 'OUTBOUND'}, {'protocol' => 'ALL', 'rule_type' => 'INBOUND'}]
+  it 'has property :rules' do
+    @secgroup[:rules] = [{ 'protocol' => 'ALL', 'rule_type' => 'OUTBOUND' }, { 'protocol' => 'ALL', 'rule_type' => 'INBOUND' }]
+    @secgroup[:rules].should == [{ 'protocol' => 'ALL', 'rule_type' => 'OUTBOUND' }, { 'protocol' => 'ALL', 'rule_type' => 'INBOUND' }]
   end
 
   parameter_tests = {
-    :name => {
-      :valid => ["test", "foo"],
-      :default => "test",
-      :invalid => ["0./fouzb&$", "&fr5"],
+    name: {
+      valid: ['test', 'foo'],
+      default: 'test',
+      invalid: ['0./fouzb&$', '&fr5'],
     },
   }
-  it_should_behave_like "a puppet type", parameter_tests, res_type_name
+  it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 
 end

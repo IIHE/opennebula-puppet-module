@@ -11,17 +11,17 @@
 # Deutsche Post E-POST Development GmbH - 2014, 2015
 #
 
-#require 'pry'
+# require 'pry'
 
 require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onevnet_addressrange).provide(:cli) do
-  confine :feature => :nokogiri
-  desc "onevnet provider for addressranges"
+  confine feature: :nokogiri
+  desc 'onevnet provider for addressranges'
 
-  has_command(:onevnet, "onevnet") do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+  has_command(:onevnet, 'onevnet') do
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
@@ -33,14 +33,14 @@ Puppet::Type.type(:onevnet_addressrange).provide(:cli) do
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.TEMPLATE do
         xml.AR do
-            xml.TYPE resource[:protocol].to_s.upcase
-            xml.SIZE resource[:ip_size].to_s
-            xml.IP resource[:ip_start].to_s
-            xml.MAC resource[:mac].to_s
-            xml.GLOBAL_PREFIX resource[:globalprefix].to_s
-            xml.ULA_PREFIX resource[:ulaprefix].to_s
-            xml.PUPPET_NAME resource[:name].to_s
-         end
+          xml.TYPE resource[:protocol].to_s.upcase
+          xml.SIZE resource[:ip_size].to_s
+          xml.IP resource[:ip_start].to_s
+          xml.MAC resource[:mac].to_s
+          xml.GLOBAL_PREFIX resource[:globalprefix].to_s
+          xml.ULA_PREFIX resource[:ulaprefix].to_s
+          xml.PUPPET_NAME resource[:name].to_s
+        end
       end
     end
     tempfile = builder.to_xml
@@ -64,28 +64,28 @@ Puppet::Type.type(:onevnet_addressrange).provide(:cli) do
 
   # Return the full hash of all existing onevnet_addressrange resources for all onevnets
   def self.instances
-      vnet_ar = Nokogiri::XML(onevnet('list', '-x')).root.xpath('/VNET_POOL/VNET/AR_POOL/AR/PUPPET_NAME')
-#pry.binding
-      vnet_ar.collect do |ar|
-          new(
-              :name          => ar.text,
-              :ensure        => :present,
-              :onevnet_name  => ar.xpath('../../../NAME').text,
-              :protocol      => ar.xpath('../TYPE').text.downcase,
-              :ip_size       => ar.xpath('../SIZE').text,
-              :ar_id         => ar.xpath('../AR_ID').text,
-              :ip_start      => (ar.xpath('../IP').text unless ar.xpath('../IP').nil?),
-              :globalprefix  => (ar.xpath('../GLOBAL_PRFIX').text unless ar.xpath('../GLOBAL_PREFIX').nil?),
-              :mac           => (ar.xpath('../MAC').text unless ar.xpath('../MAC').nil?),
-              :ulaprefix     => (ar.xpath('../ULA_PREFIX').text unless ar.xpath('../ULA_PREFIX').nil?)
-          )
-      end
+    vnet_ar = Nokogiri::XML(onevnet('list', '-x')).root.xpath('/VNET_POOL/VNET/AR_POOL/AR/PUPPET_NAME')
+    # pry.binding
+    vnet_ar.collect do |ar|
+      new(
+        name:           ar.text,
+        ensure:         :present,
+        onevnet_name:   ar.xpath('../../../NAME').text,
+        protocol:       ar.xpath('../TYPE').text.downcase,
+        ip_size:        ar.xpath('../SIZE').text,
+        ar_id:          ar.xpath('../AR_ID').text,
+        ip_start:       (ar.xpath('../IP').text unless ar.xpath('../IP').nil?),
+        globalprefix:   (ar.xpath('../GLOBAL_PRFIX').text unless ar.xpath('../GLOBAL_PREFIX').nil?),
+        mac:            (ar.xpath('../MAC').text unless ar.xpath('../MAC').nil?),
+        ulaprefix:      (ar.xpath('../ULA_PREFIX').text unless ar.xpath('../ULA_PREFIX').nil?),
+      )
+    end
   end
 
   def self.prefetch(resources)
     vnets = instances
     resources.keys.each do |name|
-      provider = vnets.find{ |vnet| vnet.name == name }
+      provider = vnets.find { |vnet| vnet.name == name }
       resources[name].provider = provider unless provider.nil?
     end
   end
@@ -108,7 +108,7 @@ Puppet::Type.type(:onevnet_addressrange).provide(:cli) do
             [ 'PUPPET_NAME', v ]
         end
       end
-    }.map{|a| "#{a[0]} = #{a[1]}," unless a.nil? }.join("\n")
+    }.map {|a| "#{a[0]} = #{a[1]}," unless a.nil? }.join("\n")
     file << "AR_ID = #{resource[:ar_id]}" unless resource[:ar_id].nil?
     file << ']'
     file.close

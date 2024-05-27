@@ -16,13 +16,13 @@ describe res_type do
     val.stubs(:defaultprovider).returns provider
     val
   }
-#  let(:resource) {
-#    res_type.new({:name => 'test'})
-#  }
+  #  let(:resource) {
+  #    res_type.new({:name => 'test'})
+  #  }
   before :each do
-    @datastore = res_type.new(:name => 'test')
+    @datastore = res_type.new(name: 'test')
   end
-  it 'should have :name be its namevar' do
+  it 'has :name be its namevar' do
     res_type.key_attributes.should == [:name]
   end
 
@@ -31,86 +31,86 @@ describe res_type do
                 :cluster]
 
   properties.each do |property|
-    it "should have a #{property} property" do
+    it "has a #{property} property" do
       described_class.attrclass(property).ancestors.should be_include(Puppet::Property)
     end
 
-    it "should have documentation for its #{property} property" do
+    it "has documentation for its #{property} property" do
       described_class.attrclass(property).doc.should be_instance_of(String)
     end
   end
 
-  it 'should have property :type' do
+  it 'has property :type' do
     @datastore[:type] = 'IMAGE_DS'
     @datastore[:type].should == :IMAGE_DS
   end
 
-  it 'should have property :ds_mad' do
+  it 'has property :ds_mad' do
     @datastore[:ds_mad] = 'baz'
     @datastore[:ds_mad].should == 'baz'
   end
 
-  it 'should have property :tm_MAD' do
+  it 'has property :tm_MAD' do
     @datastore[:tm_mad] = 'foobar'
     @datastore[:tm_mad].should == 'foobar'
   end
 
-  it 'should have property :disk_type' do
+  it 'has property :disk_type' do
     @datastore[:disk_type] = 'file'
     @datastore[:disk_type].should == 'file'
   end
 
-  it 'should have property :driver' do
+  it 'has property :driver' do
     @datastore[:driver] = 'qcow2'
     @datastore[:driver].should == 'qcow2'
   end
 
-  it 'should have property :ceph_host' do
+  it 'has property :ceph_host' do
     @datastore[:ceph_host] = 'cephhost'
     @datastore[:ceph_host].should == 'cephhost'
   end
 
-  it 'should have property :ceph_user' do
+  it 'has property :ceph_user' do
     @datastore[:ceph_user] = 'cephuser'
     @datastore[:ceph_user].should == 'cephuser'
   end
 
-  it 'should have property :ceph_secret' do
+  it 'has property :ceph_secret' do
     @datastore[:ceph_secret] = 'cephsecret'
     @datastore[:ceph_secret].should == 'cephsecret'
   end
 
-  it 'should have property :ceph_conf' do
+  it 'has property :ceph_conf' do
     @datastore[:ceph_conf] = '/etc/ceph/somecluster.conf'
     @datastore[:ceph_conf].should == '/etc/ceph/somecluster.conf'
   end
 
-  it 'should have property :ceph_key' do
+  it 'has property :ceph_key' do
     @datastore[:ceph_key] = '/opt/custom/somecluster.client.admin.keyring'
     @datastore[:ceph_key].should == '/opt/custom/somecluster.client.admin.keyring'
   end
 
-  it 'should have property :ec_pool_name' do
+  it 'has property :ec_pool_name' do
     @datastore[:ec_pool_name] = 'my_ec_pool'
     @datastore[:ec_pool_name].should == 'my_ec_pool'
   end
 
-  it 'should have property :poolname' do
+  it 'has property :poolname' do
     @datastore[:pool_name] = 'poolname'
     @datastore[:pool_name].should == 'poolname'
   end
 
-  it 'should have property :bridgelist' do
+  it 'has property :bridgelist' do
     @datastore[:bridge_list] = 'host1 host2 host3'
     @datastore[:bridge_list].should == 'host1 host2 host3'
   end
 
   parameter_tests = {
-      :name => {
-          :valid => ["test", "foo"],
-          :default => "test",
-          :invalid => ["0./fouzb&$", "&fr5"],
-      },
+    name: {
+      valid: ['test', 'foo'],
+      default: 'test',
+      invalid: ['0./fouzb&$', '&fr5'],
+    },
   }
-  it_should_behave_like "a puppet type", parameter_tests, res_type_name
+  it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 end

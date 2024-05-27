@@ -2,13 +2,13 @@ require 'spec_helper_acceptance'
 
 describe 'one class' do
   describe 'without parameters' do
-    it 'should idempotently run' do
+    it 'idempotently runs' do
       pp = <<-EOS
         class { one: }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
   end
   describe 'as ONE HEAD' do
@@ -17,8 +17,8 @@ describe 'one class' do
         class { one: oned => true, node => false,}
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
     describe user('oneadmin') do
@@ -47,8 +47,8 @@ describe 'one class' do
         class { one: oned => true, sunstone => true, node => false}
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
     describe package('opennebula-sunstone') do
@@ -71,8 +71,8 @@ describe 'one class' do
         class { one: node => true }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
     if fact('osfamily') == 'RedHat'

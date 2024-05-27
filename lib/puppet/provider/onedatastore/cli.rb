@@ -18,11 +18,11 @@ require 'rubygems'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onedatastore).provide(:cli) do
-  confine :feature => :nokogiri
+  confine feature: :nokogiri
   desc 'onedatastore provider'
 
   has_command(:onedatastore, 'onedatastore') do
-    environment :HOME => '/root', :ONE_AUTH => '/var/lib/one/.one/one_auth'
+    environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
   mk_resource_methods
@@ -45,7 +45,7 @@ Puppet::Type.type(:onedatastore).provide(:cli) do
         self.class.get_attributes.each do |node|
           xml.send node.to_s.upcase, resource[node] unless resource[node].nil?
 
-          if node.to_s == "cluster_id" and not resource[node].nil?
+          if node.to_s == 'cluster_id' and not resource[node].nil?
             self.warning "#{node} specified but datastore will not be added to the cluster; the only change is that the parameter is added to the onedatastore template; call `onecluster adddatastore` to add the datastore to the cluster"
           end
         end
@@ -64,11 +64,11 @@ Puppet::Type.type(:onedatastore).provide(:cli) do
 
   def post_validate_change
     unless resource[:self_test]
-      self.debug ":self_test not defined"
+      self.debug ':self_test not defined'
       return
     end
 
-    self.debug ":self_test defined: running post validation"
+    self.debug ':self_test defined: running post validation'
 
     [1..3].each do
       if is_status_success?
@@ -186,7 +186,7 @@ Puppet::Type.type(:onedatastore).provide(:cli) do
     file.delete
   end
 
-  #setters
+  # setters
   def type=(value)
     raise 'Can not modify type. You need to delete and recreate the datastore'
   end

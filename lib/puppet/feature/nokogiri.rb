@@ -1,1 +1,1 @@
-Puppet.features.add(:nokogiri, :libs => ["nokogiri"])
+Puppet.features.add(:nokogiri, libs: ['nokogiri'])

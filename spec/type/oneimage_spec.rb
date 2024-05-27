@@ -16,83 +16,83 @@ describe res_type do
     val.stubs(:defaultprovider).returns provider
     val
   }
-#  let(:resource) {
-#    res_type.new({:name => 'test'})
-#  }
+  #  let(:resource) {
+  #    res_type.new({:name => 'test'})
+  #  }
   before :each do
-      @image = res_type.new(:name => 'test')
+    @image = res_type.new(name: 'test')
   end
 
-  it 'should have :name be its namevar' do
+  it 'has :name be its namevar' do
     res_type.key_attributes.should == [:name]
   end
 
-  it 'should have property :datastore' do
-      @image[:datastore] = 'ds1'
-      @image[:datastore].should == 'ds1'
+  it 'has property :datastore' do
+    @image[:datastore] = 'ds1'
+    @image[:datastore].should == 'ds1'
   end
 
-  it 'should have property :description' do
-      @image[:description] = 'foo'
-      @image[:description].should == 'foo'
+  it 'has property :description' do
+    @image[:description] = 'foo'
+    @image[:description].should == 'foo'
   end
 
-  it 'should have property :type' do
-      @image[:type] = 'os'
-      @image[:type].should == :OS
+  it 'has property :type' do
+    @image[:type] = 'os'
+    @image[:type].should == :OS
   end
 
-  it 'should have property :persistent' do
-      @image[:persistent] = :true
-      @image[:persistent].should == :true
+  it 'has property :persistent' do
+    @image[:persistent] = :true
+    @image[:persistent].should == :true
   end
 
-  it 'should have property :dev_prefix' do
-      @image[:dev_prefix] = 'hd'
-      @image[:dev_prefix].should == 'hd'
+  it 'has property :dev_prefix' do
+    @image[:dev_prefix] = 'hd'
+    @image[:dev_prefix].should == 'hd'
   end
 
-  it 'should have propery :target' do
-      @image[:target] = 'hda'
-      @image[:target].should == 'hda'
+  it 'has propery :target' do
+    @image[:target] = 'hda'
+    @image[:target].should == 'hda'
   end
 
-  it 'should have property :path' do
-      @image[:path] = '/foo'
-      @image[:path].should == '/foo'
+  it 'has property :path' do
+    @image[:path] = '/foo'
+    @image[:path].should == '/foo'
   end
 
-  it 'should have property :driver' do
-      @image[:driver] = 'raw'
-      @image[:driver].should == 'raw'
+  it 'has property :driver' do
+    @image[:driver] = 'raw'
+    @image[:driver].should == 'raw'
   end
 
-  it 'should have property :disk_type' do
-      @image[:disk_type] = 'block'
-      @image[:disk_type].should == 'block'
+  it 'has property :disk_type' do
+    @image[:disk_type] = 'block'
+    @image[:disk_type].should == 'block'
   end
 
-  it 'should have property :soruce' do
-      @image[:source] = 'foo'
-      @image[:source].should == 'foo'
+  it 'has property :soruce' do
+    @image[:source] = 'foo'
+    @image[:source].should == 'foo'
   end
 
-  it 'should have property :size' do
-      @image[:size] = '4096'
-      @image[:size].should == '4096'
+  it 'has property :size' do
+    @image[:size] = '4096'
+    @image[:size].should == '4096'
   end
 
-  it 'should have property :fstype' do
-      @image[:fstype] = 'ext2'
-      @image[:fstype].should == 'ext2'
+  it 'has property :fstype' do
+    @image[:fstype] = 'ext2'
+    @image[:fstype].should == 'ext2'
   end
 
   parameter_tests = {
-    :name => {
-      :valid => ["test", "foo"],
-      :default => "test",
-      :invalid => ["0./fouzb&$", "&fr5"],
+    name: {
+      valid: ['test', 'foo'],
+      default: 'test',
+      invalid: ['0./fouzb&$', '&fr5'],
     },
   }
-  it_should_behave_like "a puppet type", parameter_tests, res_type_name
+  it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 end
