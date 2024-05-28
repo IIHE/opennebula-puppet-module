@@ -6,3 +6,4 @@ one::oned::db_user: oneadmin
 one::oned::db_password: oneadmin
 one::oned::db_host: localhost
 one::oned::sunstone_listen_ip: '0.0.0.0'
+one::one_version: '6.6'

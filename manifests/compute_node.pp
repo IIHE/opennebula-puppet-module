@@ -32,8 +32,8 @@ class one::compute_node (
   String $vm_mad                  = $one::vm_mad,
   String $vn_mad                  = $one::vn_mad,
   Boolean $libvirt_with_ceph      = false,
-  String $libvirt_rbd_secret_uuid = undef,
-  String $libvirt_rbd_secret_key  = undef,
+  Optional[String] $libvirt_rbd_secret_uuid = undef,
+  Optional[String] $libvirt_rbd_secret_key  = undef,
 ) {
   include one::prerequisites
   include one::install

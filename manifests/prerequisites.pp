@@ -23,14 +23,16 @@ class one::prerequisites (
 ) {
   case $facts['os']['family'] {
     'RedHat': {
+      $repourl = "http://downloads.opennebula.org/repo/${one::one_version_short}/RedHat/${facts['os']['release']['major']}/x86_64/"
       if ( $one_repo_enable ) {
         yumrepo { 'opennebula':
-          baseurl  => "http://downloads.opennebula.org/repo/${one::one_version_short}/CentOS/${facts['os']['release']['major']}/x86_64/",
+          baseurl  => $repourl,
           descr    => 'OpenNebula',
           enabled  => 1,
           gpgcheck => 0,
         }
       }
+      notice("We use repo ${repourl} for opennebula.")
     }
     'Debian' : {
       if ( $one_repo_enable ) {

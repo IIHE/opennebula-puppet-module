@@ -1,8 +1,9 @@
 ---
-:backends:
-  - yaml
-:hierarchy:
-  - docker
+version: 5
+defaults:
+  datadir: data
+  data_hash: yaml_data
 
-:yaml:
-    :datadir: '/etc/puppet/data'
+hierarchy:
+  - name: "Docker data"
+    path: "docker.yaml"

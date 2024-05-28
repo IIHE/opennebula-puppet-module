@@ -1,16 +1,19 @@
-FROM centos:7
-MAINTAINER John Noss "noss@harvard.edu"
+FROM centos:8
 
 ENV HOSTNAME localhost
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
-ENV FACTER_operatingsystemmajrelease="7"
-ENV FACTER_operatingsystemrelease="7.3"
-ENV FACTER_lsbmajdistrelease="7"
+ENV FACTER_operatingsystemmajrelease="8"
+ENV FACTER_operatingsystemrelease="8"
+ENV FACTER_lsbmajdistrelease="8"
 
-RUN yum -y install https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm epel-release
-RUN yum makecache && yum -y install puppet tar hostname openssh-server
+RUN cd /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+RUN yum -y install http://yum.puppetlabs.com/puppet/puppet-release-el-8.noarch.rpm epel-release
+RUN yum makecache && yum -y install puppet-agent tar hostname openssh-server
+
+ENV PATH="${PATH}:/opt/puppetlabs/bin"
 
 RUN puppet module install puppetlabs-inifile
 RUN puppet module install puppetlabs-stdlib

@@ -70,20 +70,20 @@ Run puppet in the container, choose one:
 
 Only build a container which acts as a OpenNebula head, gui, but not the kvm things:
 
-    docker run --rm -v $(pwd):/etc/puppet/modules/one epost-dev/one puppet apply /etc/puppet/modules/one/spec/docker-int/one-head.pp
+    docker run --rm -v $(pwd):/etc/puppet/modules/one:z epost-dev/one puppet apply --hiera_config=/etc/puppet/hiera.yaml --modulepath=/etc/puppet/modules:/etc/puppetlabs/code/environments/production/modules /etc/puppet/modules/one/spec/docker-int/one-head.pp
 
 Only build a container which acts like an OpenNebula node:
 
     # here is a common error i wasn't able to fix. centos 6 in docker has some issues with ksm
-    docker run --rm -v $(pwd):/etc/puppet/modules/one epost-dev/one puppet apply /etc/puppet/modules/one/spec/docker-int/one-node.pp
+    docker run --rm -v $(pwd):/etc/puppet/modules/one:z epost-dev/one puppet apply --hiera_config=/etc/puppet/hiera.yaml --modulepath=/etc/puppet/modules:/etc/puppetlabs/code/environments/production/modules /etc/puppet/modules/one/spec/docker-int/one-node.pp
 
 Build a container which acts as head and node
 
-    docker run --rm -v $(pwd):/etc/puppet/modules/one epost-dev/one puppet apply /etc/puppet/modules/one/spec/docker-int/one-head-node.pp
+    docker run --rm -v $(pwd):/etc/puppet/modules/one:z epost-dev/one puppet apply --hiera_config=/etc/puppet/hiera.yaml --modulepath=/etc/puppet/modules:/etc/puppetlabs/code/environments/production/modules /etc/puppet/modules/one/spec/docker-int/one-head-node.pp
 
 Build a container which has an apache for the OpenNebula Sunstone configured:
 
-    docker run --rm -v $(pwd):/etc/puppet/modules/one epost-dev/one puppet apply /etc/puppet/modules/one/spec/docker-int/one-head-httpd.pp
+    docker run --rm -v $(pwd):/etc/puppet/modules/one:z epost-dev/one puppet apply --hiera_config=/etc/puppet/hiera.yaml --modulepath=/etc/puppet/modules:/etc/puppetlabs/code/environments/production/modules /etc/puppet/modules/one/spec/docker-int/one-head-httpd.pp
 
 This Docker command will add the current directory as ```ect/puppet/modules/one```. So one can test each new change without committing or rebuilding the image.
 
