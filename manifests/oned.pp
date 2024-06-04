@@ -10,6 +10,7 @@
 # - Martin Alfke
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
+# - Stephane Gerard (Vrije Universiteit Brussel)
 #
 # === Parameters
 # backend sqlite|mysql - default: sqlite
