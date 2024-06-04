@@ -68,7 +68,7 @@ describe 'one class' do
   describe 'as ONE Node' do
     it 'set up ONE Node' do
       pp = <<-EOS
-        class { one: node => true }
+        class { one: workernode => true }
       EOS
 
       apply_manifest(pp, catch_failures: true)

@@ -1,7 +1,7 @@
 # head with vlanids and vxlanids for docker testing
 class { 'one':
   oned                  => true,
-  node                  => false,
+  workernode            => false,
   sunstone              => true,
   one_version           => $one_version,
   vlan_ids_start        => 10,

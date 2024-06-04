@@ -17,7 +17,7 @@ describe 'one', type: :class do
           oned: true,
           one_version: '5.8',
           sunstone: true,
-          node: false,
+          workernode: false,
         } }
         it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_HOST\s+= 180/m) }
         it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_VM\s+= 180/m) }
@@ -31,7 +31,7 @@ describe 'one', type: :class do
         let(:params) { {
           oned: true,
           one_version: '5.8',
-          node: false,
+          workernode: false,
           monitoring_interval_host: '200',
           monitoring_interval_vm: '200',
           monitoring_interval_datastore: '400',

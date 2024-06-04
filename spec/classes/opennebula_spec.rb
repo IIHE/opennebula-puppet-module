@@ -44,7 +44,7 @@ describe 'one', type: :class do
           context 'as compute_node' do
             let(:params) { {
               oned: false,
-              node: true,
+              workernode: true,
             } }
             networkconfig = hiera.lookup('one::node::kickstart::network', nil, nil)
             sshpubkey = hiera.lookup('one::head::ssh_pub_key', nil, nil)
@@ -118,7 +118,7 @@ describe 'one', type: :class do
           context 'as oned' do
             let(:params) { {
               oned: true,
-              node: false,
+              workernode: false,
             } }
             sshprivkey = hiera.lookup('one::head::ssh_priv_key', nil, nil)
             sshpubkey = hiera.lookup('one::head::ssh_pub_key', nil, nil)
