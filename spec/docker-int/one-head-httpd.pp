@@ -16,7 +16,7 @@ class httpd {
 
 class { 'one':
   oned               => true,
-  node               => false,
+  workernode         => false,
   sunstone           => true,
   sunstone_passenger => true,
   one_version        => $one_version,

@@ -12,6 +12,7 @@
 # - Martin Alfke
 # - Achim Ledermueller (Netways)
 # - Sebastian Saemann (Netways)
+# - Stephane Gerard (Vrije Universiteit Brussel)
 #
 # === Parameters
 # none

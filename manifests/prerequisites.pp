@@ -13,6 +13,7 @@
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
 # - Thomas Fricke (Endocode AG)
+# - Stephane Gerard (Vrije Universiteit Brussel)
 #
 # === License
 # Apache License Version 2.0

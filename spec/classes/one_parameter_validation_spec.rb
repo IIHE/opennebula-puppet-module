@@ -106,7 +106,7 @@ describe 'one', type: :class do
         context 'missing the mandatory private key for one::head' do
           let(:params) do
             {
-              'node'        => false,
+              'workernode'  => false,
               'ssh_pub_key' => 'ssh pub key'
             }
           end
@@ -117,7 +117,7 @@ describe 'one', type: :class do
         context 'passing the mandatory private key for one::head' do
           let(:params) do
             {
-              'node'               => false,
+              'workernode'         => false,
               'ssh_pub_key'        => 'ssh pub key',
               'ssh_priv_key_param' => 'ssh-dsa priv key'
             }

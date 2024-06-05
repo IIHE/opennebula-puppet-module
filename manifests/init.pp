@@ -11,6 +11,7 @@
 # - Martin Alfke
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
+# - Stephane Gerard (Vrije Universiteit Brussel)
 #
 # === Parameters
 #
@@ -19,7 +20,7 @@
 # $oneid <string> - default to one-cloud
 #   set the id of the cloud
 #
-# $node true|false - default true
+# $workernode true|false - default true
 #  defines whether the host is node (virtualization host/worker)
 #
 # $im_mad - default kvm
@@ -361,7 +362,7 @@
 #
 class one (
   String $oneid                           = 'one-cloud',
-  Boolean $node                           = true,
+  Boolean $workernode                     = true,
   String $im_mad                          = 'kvm',
   String $vm_mad                          = 'kvm',
   String $vn_mad                          = '802.1Q',
@@ -505,7 +506,7 @@ class one (
     fail('The ssh_pub_key is mandatory for all nodes')
   }
 
-  if ( $node == false ) {
+  if ( $workernode == false ) {
     if ($ssh_priv_key_param != '') {
       fail('The ssh_priv_key_param is mandatory for the head')
     }
@@ -629,7 +630,7 @@ class one (
       fail("Information Manager type: ${im_mad} is not supported")
     }
   }
-  if ($node) {
+  if ($workernode) {
     contain one::compute_node
   }
   if ($sunstone) {
