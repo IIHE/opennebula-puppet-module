@@ -22,59 +22,59 @@
 #
 class one::params {
   # OpenNebula parameters
-  $oned_log_system     = lookup('one::oned::oned_log_system', undef, undef, 'file')
-  $oned_port           = lookup('one::oned::port', undef, undef, '2633')
+  #$oned_log_system     = lookup('one::oned::oned_log_system', undef, undef, 'file')
+  #$oned_port           = lookup('one::oned::port', undef, undef, '2633')
   $oned_listen_address = lookup('one::oned_listen_address', undef, undef, '0.0.0.0')
-  $oned_db             = lookup('one::oned::db', undef, undef, 'oned')
-  $oned_db_user        = lookup('one::oned::db_user', undef, undef, 'oned')
-  $oned_db_password    = lookup('one::oned::db_password', undef, undef, 'oned')
-  $oned_db_host        = lookup('one::oned::db_host', undef, undef, 'localhost')
+  #$oned_db             = lookup('one::oned::db', undef, undef, 'oned')
+  #$oned_db_user        = lookup('one::oned::db_user', undef, undef, 'oned')
+  #$oned_db_password    = lookup('one::oned::db_password', undef, undef, 'oned')
+  #$oned_db_host        = lookup('one::oned::db_host', undef, undef, 'localhost')
   # default auth parameter - if needed for override
-  $oned_default_auth = lookup('one::oned_default_auth', undef, undef, '')
+  #$oned_default_auth = lookup('one::oned_default_auth', undef, undef, '')
   # ldap stuff (optional needs one::oned::ldap in hiera set to true)
-  $oned_ldap_host = lookup('one::oned::ldap_host', undef, undef, 'ldap')
-  $oned_ldap_port = lookup('one::oned::ldap_port', undef, undef, '636')
-  $oned_ldap_base = lookup('one::oned::ldap_base', undef, undef, 'dc=example,dc=com')
+  #$oned_ldap_host = lookup('one::oned::ldap_host', undef, undef, 'ldap')
+  #$oned_ldap_port = lookup('one::oned::ldap_port', undef, undef, '636')
+  #$oned_ldap_base = lookup('one::oned::ldap_base', undef, undef, 'dc=example,dc=com')
   # $oned_ldap_user: can be empty if anonymous query is possible
-  $oned_ldap_user = lookup('one::oned::ldap_user', undef, undef, 'cn=ldap_query,ou=user,dc=example,dc=com')
-  $oned_ldap_pass = lookup('one::oned::ldap_pass', undef, undef, 'default_password')
+  #$oned_ldap_user = lookup('one::oned::ldap_user', undef, undef, 'cn=ldap_query,ou=user,dc=example,dc=com')
+  #$oned_ldap_pass = lookup('one::oned::ldap_pass', undef, undef, 'default_password')
   # $oned_ldap_group: can be empty, can be set to a group to restrict access to sunstone
-  $oned_ldap_group = lookup( 'one::oned::ldap_group', undef, undef, '')
+  #$oned_ldap_group = lookup( 'one::oned::ldap_group', undef, undef, '')
   # $oned_ldap_user_field: defaults to uid, can be set to the field, that holds the username in ldap
-  $oned_ldap_user_field = lookup('one::oned::ldap_user_field', undef, undef, '')
+  #$oned_ldap_user_field = lookup('one::oned::ldap_user_field', undef, undef, '')
   # $oned_ldap_group_field: default to member, can be set to the filed that holds the groupname
-  $oned_ldap_group_field = lookup('one::oned::ldap_group_field', undef, undef, '')
+  #$oned_ldap_group_field = lookup('one::oned::ldap_group_field', undef, undef, '')
   # $oned_ldap_user_group_field: default to dn, can be set to the user field that is in the group group_field
-  $oned_ldap_user_group_field = lookup('one::oned::ldap_user_group_field', undef, undef, '')
+  #$oned_ldap_user_group_field = lookup('one::oned::ldap_user_group_field', undef, undef, '')
   # ldap mapping options
-  $oned_ldap_mapping_generate = lookup('one::oned::ldap_mapping_generate', undef, undef, '')
-  $oned_ldap_mapping_timeout  = lookup('one::oned::ldap_mapping_timeout', undef, undef, 300)
-  $oned_ldap_mapping_filename = lookup('one::oned::ldap_mapping_filename', undef, undef, "${facts['networking']['hostname']}.yaml")
-  $oned_ldap_mapping_key      = lookup('one::oned::ldap_mapping_key', undef, undef, '')
-  $oned_ldap_mapping_default  = lookup('one::oned::ldap_mapping_default', undef, undef, '')
-  $oned_ldap_mappings         = lookup('one::oned::ldap_mappings', undef, undef, {})
+  #$oned_ldap_mapping_generate = lookup('one::oned::ldap_mapping_generate', undef, undef, '')
+  #$oned_ldap_mapping_timeout  = lookup('one::oned::ldap_mapping_timeout', undef, undef, 300)
+  #$oned_ldap_mapping_filename = lookup('one::oned::ldap_mapping_filename', undef, undef, "${facts['networking']['hostname']}.yaml")
+  #$oned_ldap_mapping_key      = lookup('one::oned::ldap_mapping_key', undef, undef, '')
+  #$oned_ldap_mapping_default  = lookup('one::oned::ldap_mapping_default', undef, undef, '')
+  #$oned_ldap_mappings         = lookup('one::oned::ldap_mappings', undef, undef, {})
   # should we enable opennebula repos?
-  $one_repo_enable = lookup('one::enable_opennebula_repo', undef, undef, true)
+  #$repo_enable = lookup('one::enable_opennebula_repo', undef, undef, true)
   # Which version
   $one_version = lookup('one::one_version', undef, undef, '4.12')
   # should VM_SUBMIT_ON_HOLD be enabled in oned.conf?
-  $oned_vm_submit_on_hold = lookup('one::oned::vm_submit_on_hold', undef, undef, 'NO')
+  #$oned_vm_submit_on_hold = lookup('one::oned::vm_submit_on_hold', undef, undef, 'NO')
 
   # SSH Key
   $ssh_priv_key_param        = lookup('one::head::ssh_priv_key', undef, undef, '')
   $ssh_pub_key               = lookup('one::head::ssh_pub_key', undef, undef, '')
 
   # OpenNebula XMLRPC tuning parameters
-  $xmlrpc_maxconn            = lookup('one::oned::xmlrpc_maxconn', undef, undef, 15)
-  $xmlrpc_maxconn_backlog    = lookup('one::oned::xmlrpc_maxconn_backlog', undef, undef, 15)
-  $xmlrpc_keepalive_timeout  = lookup('one::oned::xmlrpc_keepalive_timeout', undef, undef, 15)
-  $xmlrpc_keepalive_max_conn = lookup('one::oned::xmlrpc_keepalive_max_conn', undef, undef, 30)
-  $xmlrpc_timeout            = lookup('one::oned::xmlrpc_timeout', undef, undef, 15)
+  # $xmlrpc_maxconn            = lookup('one::oned::xmlrpc_maxconn', undef, undef, 15)
+  # $xmlrpc_maxconn_backlog    = lookup('one::oned::xmlrpc_maxconn_backlog', undef, undef, 15)
+  # $xmlrpc_keepalive_timeout  = lookup('one::oned::xmlrpc_keepalive_timeout', undef, undef, 15)
+  # $xmlrpc_keepalive_max_conn = lookup('one::oned::xmlrpc_keepalive_max_conn', undef, undef, 30)
+  # $xmlrpc_timeout            = lookup('one::oned::xmlrpc_timeout', undef, undef, 15)
 
   # OpenNebula INHERIT attrs
   # (NOTE: setting default to undef causes value to show up as "" in ERB
   # template for ruby 1.9.x)
-  $inherit_datastore_attrs   = lookup('one::oned::inherit_datastore_attrs', undef, undef, [])
+  #$inherit_datastore_attrs   = lookup('one::oned::inherit_datastore_attrs', undef, undef, [])
 
   # VLAN_IDS and VXLAN_IDS for OpenNebula Physical Networks
   # see oned.conf for more information
@@ -87,35 +87,35 @@ class one::params {
   $kvm_driver_nic_attrs      = lookup ('one::oned::kvm_driver_nic_attrs', undef, undef, '')
 
   # Sunstone configuration parameters
-  $sunstone_listen_ip        = lookup('one::oned::sunstone_listen_ip', undef, undef, '127.0.0.1')
-  $sunstone_logo_png         = lookup('one::oned::sunstone_logo_png', undef, undef, '')
-  $sunstone_logo_small_png   = lookup('one::oned::sunstone_logo_small_png', undef, undef, '')
-  $enable_support            = lookup('one::oned::enable_support', undef, undef, 'yes')
-  $enable_marketplace        = lookup('one::oned::enable_marketplace', undef, undef, 'yes')
-  $sunstone_tmpdir           = lookup('one::oned::sunstone_tmpdir', undef, undef, '/var/tmp')
-  $sunstone_sessions         = lookup('one::oned::sunstone_sessions', undef, undef, 'memory')
-  $vnc_proxy_port            = lookup('one::oned::vnc_proxy_port', undef, undef, '29876')
-  $vnc_proxy_support_wss     = lookup('one::oned::vnc_proxy_support_wss', undef, undef, 'no')
-  $vnc_proxy_cert            = lookup('one::oned::vnc_proxy_cert', undef, undef, '')
-  $vnc_proxy_key             = lookup('one::oned::vnc_proxy_key', undef, undef, '')
-  $vnc_proxy_ipv6            = lookup('one::oned::vnc_proxy_ipv6', undef, undef, 'false') # lint:ignore:quoted_booleans
-  $sunstone_fireedge_priv_endpoint = lookup('one::sunstone_fireedge_priv_endpoint', undef, undef, 'http://localhost:2616')
-  $sunstone_fireedge_pub_endpoint  = lookup('one::sunstone_fireedge_pub_endpoint', undef, undef, 'http://localhost:2616')
+  #$sunstone_listen_ip        = lookup('one::oned::sunstone_listen_ip', undef, undef, '127.0.0.1')
+  #$sunstone_logo_png         = lookup('one::oned::sunstone_logo_png', undef, undef, '')
+  #$sunstone_logo_small_png   = lookup('one::oned::sunstone_logo_small_png', undef, undef, '')
+  #$enable_support            = lookup('one::oned::enable_support', undef, undef, 'yes')
+  #$enable_marketplace        = lookup('one::oned::enable_marketplace', undef, undef, 'yes')
+  #$sunstone_tmpdir           = lookup('one::oned::sunstone_tmpdir', undef, undef, '/var/tmp')
+  #$sunstone_sessions         = lookup('one::oned::sunstone_sessions', undef, undef, 'memory')
+  #$vnc_proxy_port            = lookup('one::oned::vnc_proxy_port', undef, undef, '29876')
+  #$vnc_proxy_support_wss     = lookup('one::oned::vnc_proxy_support_wss', undef, undef, 'no')
+  #$vnc_proxy_cert            = lookup('one::oned::vnc_proxy_cert', undef, undef, '')
+  #$vnc_proxy_key             = lookup('one::oned::vnc_proxy_key', undef, undef, '')
+  #$vnc_proxy_ipv6            = lookup('one::oned::vnc_proxy_ipv6', undef, undef, 'false') # lint:ignore:quoted_booleans
+  #$sunstone_fireedge_priv_endpoint = lookup('one::sunstone_fireedge_priv_endpoint', undef, undef, 'http://localhost:2616')
+  #$sunstone_fireedge_pub_endpoint  = lookup('one::sunstone_fireedge_pub_endpoint', undef, undef, 'http://localhost:2616')
 
   # generic params for nodes and oned
-  $oneuid = '9869'
-  $onegid = '9869'
+  #$oneuid = '9869'
+  #$onegid = '9869'
 
   # OpenNebula monitoring parameters
-  $monitoring_interval            = lookup('one::oned::monitoring_interval', undef, undef, 60)
-  $monitoring_interval_host       = lookup('one::oned::monitoring_interval_host', undef, undef, 180)
-  $monitoring_interval_vm         = lookup('one::oned::monitoring_interval_vm', undef, undef, 180)
-  $monitoring_interval_datastore  = lookup('one::oned::monitoring_interval_datastore', undef, undef, 300)
-  $monitoring_interval_market     = lookup('one::oned::monitoring_interval_market', undef, undef, 600)
-  $monitoring_threads             = lookup('one::oned::monitoring_threads', undef, undef, 50)
-  $information_collector_interval = lookup('one::oned::information_collector_interval', undef, undef, 20)
+  # $monitoring_interval            = lookup('one::oned::monitoring_interval', undef, undef, 60)
+  # $monitoring_interval_host       = lookup('one::oned::monitoring_interval_host', undef, undef, 180)
+  # $monitoring_interval_vm         = lookup('one::oned::monitoring_interval_vm', undef, undef, 180)
+  # $monitoring_interval_datastore  = lookup('one::oned::monitoring_interval_datastore', undef, undef, 300)
+  # $monitoring_interval_market     = lookup('one::oned::monitoring_interval_market', undef, undef, 600)
+  # $monitoring_threads             = lookup('one::oned::monitoring_threads', undef, undef, 50)
+  # $information_collector_interval = lookup('one::oned::information_collector_interval', undef, undef, 20)
 
-  $http_proxy = lookup('one::oned::http_proxy', undef, undef, '')
+  #$http_proxy = lookup('one::oned::http_proxy', undef, undef, '')
 
   # package ensure, default true
   $package_ensure_latest = true
@@ -127,22 +127,22 @@ class one::params {
   # Allows it to be overwritten by custom puppet profile
   # Should be the path to the folder which should be the source for the hookscripts on the puppetmaster
   # Default is a folder with an empty sample_hook.py
-  $hook_scripts_path = lookup('one::head::hook_script_path', undef, undef, 'puppet:///modules/one/hookscripts')
+  #$hook_scripts_path = lookup('one::head::hook_script_path', undef, undef, 'puppet:///modules/one/hookscripts')
 
   # Alternative 2: Define package(s) which install the hook scripts.
   # This should be the preferred way.
-  $hook_scripts_pkgs = lookup('one::head::hook_script_pkgs', undef, undef, [])
+  #$hook_scripts_pkgs = lookup('one::head::hook_script_pkgs', undef, undef, [])
 
   # Configuration for VM_HOOK and HOST_HOOK in oned.conf.
   # Activate and configure the hook scripts delivered via $hook_scripts_path or $hook_scripts_pkgs.
-  $hook_scripts      = lookup('one::head::hook_scripts', undef, undef, {})
+  #$hook_scripts      = lookup('one::head::hook_scripts', undef, undef, {})
   $vm_hook_scripts   = lookup('one::head::vm_hook_scripts', undef, undef, {})
   $host_hook_scripts = lookup('one::head::host_hook_scripts', undef, undef, {})
 
   # Todo: Use Serviceip from HA-Setup if ha enabled.
-  $oned_onegate_ip = lookup('one::oned::onegate::ip', undef, undef, '')
+  #$oned_onegate_ip = lookup('one::oned::onegate::ip', undef, undef, '')
   # Specify full endpoint if needed (such as if using https proxy)
-  $oned_onegate_endpoint = lookup('one::oned::onegate::endpoint', undef, undef, '')
+  #$oned_onegate_endpoint = lookup('one::oned::onegate::endpoint', undef, undef, '')
 
   # E-POST imaginator parameters
   $kickstart_network         = lookup ('one::node::kickstart::network', undef, undef, '')

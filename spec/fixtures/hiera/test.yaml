@@ -2,7 +2,7 @@
 one::head::ssh_pub_key: 'ssh pub key'
 one::head::ssh_priv_key: 'ssh-dsa priv key'
 
-one::enable_opennebula_repo: 'true'
+one::repo_enable: 'true'
 
 one::oned::db: oned
 one::oned::db_user: oned
@@ -90,4 +90,4 @@ one::node::preseed::ohd_deb_repo: 'deb http://example.com/debian/ one/'
 one::node::preseed::data:
   does: 'notmatter'
 
-one::oned::xmlrpc_maxconn: '5000'
+one::oned_xmlrpc_maxconn: '5000'

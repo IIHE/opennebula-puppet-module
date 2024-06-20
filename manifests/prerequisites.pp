@@ -20,7 +20,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::prerequisites (
-  Boolean $one_repo_enable  = $one::one_repo_enable,
+  Boolean $one_repo_enable  = $one::repo_enable,
 ) {
   case $facts['os']['family'] {
     'RedHat': {

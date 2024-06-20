@@ -58,8 +58,8 @@ LOG = [
 
 #MANAGER_TIMER = 15
 
-MONITORING_INTERVAL_DATASTORE = <%= scope['one::monitoring_interval_datastore'] %>
-MONITORING_INTERVAL_MARKET    = <%= scope['one::monitoring_interval_market'] %>
+MONITORING_INTERVAL_DATASTORE = <%= scope['one::oned_monitoring_interval_datastore'] %>
+MONITORING_INTERVAL_MARKET    = <%= scope['one::oned_monitoring_interval_market'] %>
 MONITORING_INTERVAL_DB_UPDATE = 0
 
 #DS_MONITOR_VM_DISK = 10
@@ -257,11 +257,11 @@ SHOWBACK_ONLY_RUNNING = "no"
 #     %% -- %
 #*******************************************************************************
 
-MAX_CONN           = <%= scope['one::xmlrpc_maxconn'] %>
-MAX_CONN_BACKLOG   = <%= scope['one::xmlrpc_maxconn_backlog'] %>
-KEEPALIVE_TIMEOUT  = <%= scope['one::xmlrpc_keepalive_timeout'] %>
-KEEPALIVE_MAX_CONN = <%= scope['one::xmlrpc_keepalive_max_conn'] %>
-TIMEOUT            = <%= scope['one::xmlrpc_timeout'] %>
+MAX_CONN           = <%= scope['one::oned_xmlrpc_maxconn'] %>
+MAX_CONN_BACKLOG   = <%= scope['one::oned_xmlrpc_maxconn_backlog'] %>
+KEEPALIVE_TIMEOUT  = <%= scope['one::oned_xmlrpc_keepalive_timeout'] %>
+KEEPALIVE_MAX_CONN = <%= scope['one::oned_xmlrpc_keepalive_max_conn'] %>
+TIMEOUT            = <%= scope['one::oned_xmlrpc_timeout'] %>
 #RPC_LOG            = NO
 #MESSAGE_SIZE       = 1073741824
 #LOG_CALL_FORMAT    = "Req:%i UID:%u IP:%A %m invoked %l20"
@@ -783,8 +783,12 @@ DEFAULT_UMASK = 177
 #   MUST be consistent with the values in onegate-server.conf
 #*******************************************************************************
 
-<% if scope['one::resulting_oned_onegate_endpoint'] -%>
-ONEGATE_ENDPOINT = "<%= scope['one::resulting_oned_onegate_endpoint'] %>"
+<% unless scope['one::oned_onegate_endpoint'].nil? -%>
+ONEGATE_ENDPOINT = "<%= scope['one::oned_onegate_endpoint'] %>"
+<% end -%>
+
+<% unless scope['one::oned_onegate_ip'].nil? -%>
+ONEGATE_ENDPOINT = "http://<%= scope['one::oned_onegate_ip'] %>:5030"
 <% else -%>
 #ONEGATE_ENDPOINT = "http://frontend:5030"
 <% end -%>
@@ -1064,8 +1068,8 @@ INHERIT_DATASTORE_ATTR  = "VCENTER_DS_REF"
 INHERIT_DATASTORE_ATTR  = "VCENTER_DS_IMAGE_DIR"
 INHERIT_DATASTORE_ATTR  = "VCENTER_DS_VOLATILE_DIR"
 INHERIT_DATASTORE_ATTR  = "VCENTER_INSTANCE_ID"
-<%- if @inherit_datastore_attrs != nil -%>
-  <%- @inherit_datastore_attrs.each do |attr| -%>
+<%- if @oned_inherit_datastore_attrs != nil -%>
+  <%- @oned_inherit_datastore_attrs.each do |attr| -%>
 INHERIT_DATASTORE_ATTR  = "<%= attr %>"
   <%- end -%>
 <%- end -%>
