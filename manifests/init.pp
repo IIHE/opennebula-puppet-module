@@ -15,6 +15,11 @@
 #
 # === Parameters
 #
+# Convention for parameters:
+# * parameters that are used in the generation of oned.conf are prefixed with oned_
+# * parameters that are used in the generation of sunstone-server.conf are prefixed with sunstone_
+# * parameters that are used in the generation of ldap_auth.conf are prefixed with ldap_
+#
 # ==== OpenNebula general parameters
 #
 # $oneid <string> - default to one-cloud
@@ -119,31 +124,31 @@
 # ===== OpenNebula LDAP configuration
 # optional needs $ldap set to true
 #
-# $oned_ldap_host - default ldap
+# $ldap_host - default ldap
 #   hostname of the ldap server
 #
-# $oned_ldap_port - default 636
+# $ldap_port - default 636
 #   port of the ldap service
 #
-# $oned_ldap_base - default dc=example,dc=com
+# $ldap_base - default dc=example,dc=com
 #   ldap base
 #
-# $oned_ldap_user - default cn=ldap_query,ou=user,dc=example,dc=com
+# $ldap_user - default cn=ldap_query,ou=user,dc=example,dc=com
 #   ldap user for queries - can be empty if anonymous query is possible
 #
-# $oned_ldap_pass - default default_password
+# $ldap_pass - default default_password
 #   ldap user password for queries - can be empty if anonymous query is possible
 #
-# $oned_ldap_group - default undef
+# $ldap_group - default undef
 #   restrict access to certain groups - cen be undef to allow all user access
 #
-# $oned_ldap_user_field - default undef
+# $ldap_user_field - default undef
 #   defaults to uid, can be set to the field, that holds the username in ldap
 #
-# $oned_ldap_group_field - default undef
+# $ldap_group_field - default undef
 #   default to member, can be set to the filed that holds the groupname
 #
-# $oned_ldap_user_group_field - default undef
+# $ldap_user_group_field - default undef
 #   default to dn, can be set to the user field that is in the group group_field
 #
 # ===== OpenNebula User configuration
@@ -387,21 +392,21 @@ class one (
   String $oned_db_host                          = 'localhost',
   String $oned_vm_submit_on_hold                = 'NO',
   String $oned_default_auth                     = 'default',
-  String $oned_ldap_host                        = 'ldap',
-  String $oned_ldap_port                        = '636',
-  String $oned_ldap_base                        = 'dc=example,dc=com',
-  String $oned_ldap_user                        = 'cn=ldap_query,ou=user,dc=example,dc=com',
-  String $oned_ldap_pass                        = 'default_password',
-  String $oned_ldap_group                       = '',
-  String $oned_ldap_user_field                  = '',
-  String $oned_ldap_group_field                 = '',
-  String $oned_ldap_user_group_field            = '',
-  Boolean $oned_ldap_mapping_generate           = false,
-  Integer $oned_ldap_mapping_timeout            = 300,
-  String $oned_ldap_mapping_filename            = "${facts['networking']['hostname']}.yaml",
-  Hash $oned_ldap_mappings                      = {},
-  String $oned_ldap_mapping_key                 = '',
-  String $oned_ldap_mapping_default             = '',
+  String $ldap_host                             = 'ldap',
+  String $ldap_port                             = '636',
+  String $ldap_base                             = 'dc=example,dc=com',
+  String $ldap_user                             = 'cn=ldap_query,ou=user,dc=example,dc=com',
+  String $ldap_pass                             = 'default_password',
+  String $ldap_group                            = '',
+  String $ldap_user_field                       = '',
+  String $ldap_group_field                      = '',
+  String $ldap_user_group_field                 = '',
+  Boolean $ldap_mapping_generate                = false,
+  Integer $ldap_mapping_timeout                 = 300,
+  String $ldap_mapping_filename                 = "${facts['networking']['hostname']}.yaml",
+  Hash $ldap_mappings                           = {},
+  String $ldap_mapping_key                      = '',
+  String $ldap_mapping_default                  = '',
   Boolean $repo_enable                          = true,
   String $ssh_priv_key_param                    = $one::params::ssh_priv_key_param,
   String $ssh_pub_key                           = $one::params::ssh_pub_key,
