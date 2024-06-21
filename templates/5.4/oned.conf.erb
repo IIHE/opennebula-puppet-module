@@ -271,12 +271,12 @@ NETWORK_SIZE = 254
 MAC_PREFIX   = "02:00"
 
 VLAN_IDS = [
-    START    = "<%= scope['one::vlan_ids_start'] %>",
-    RESERVED = "<%= scope['one::vlan_ids_reserved'] %>"
+    START    = "<%= scope['one::oned_vlan_ids_start'] %>",
+    RESERVED = "<%= scope['one::oned_vlan_ids_reserved'] %>"
 ]
 
 VXLAN_IDS = [
-    START = "<%= scope['one::vxlan_ids_start'] %>"
+    START = "<%= scope['one::oned_vxlan_ids_start'] %>"
 ]
 
 #PCI_PASSTHROUGH_BUS = "0x01"
