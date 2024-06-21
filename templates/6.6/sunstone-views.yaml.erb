@@ -1,5 +1,5 @@
 ---
-<% if scope['one::sunstone_logo_png'] != '' -%>
+<% unless scope['one::sunstone_logo_png'].nil? -%>
 logo: images/custom_logo.png
 <% else -%>
 logo: images/opennebula-5.0.png

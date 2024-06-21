@@ -38,7 +38,7 @@ server 1:
 
     # group the users need to belong to. If not set any user will do
     #:group: 'cn=cloud,ou=groups,dc=domain'
-<% if scope['one::ldap_group'] != '' -%>
+<% unless scope['one::ldap_group'].nil? -%>
     :group: '<%= scope['one::ldap_group'] %>'
 <% end -%>
 
