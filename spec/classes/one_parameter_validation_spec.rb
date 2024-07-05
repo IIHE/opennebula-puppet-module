@@ -8,7 +8,7 @@ describe 'one', type: :class do
   on_supported_os.each do |os, os_facts|
     context "On #{os}" do
       let(:facts) { os_facts }
-      %w<xmlrpc_maxconn xmlrpc_maxconn_backlog xmlrpc_keepalive_timeout xmlrpc_keepalive_max_conn xmlrpc_timeout>.each do |param|
+      %w<oned_xmlrpc_maxconn oned_xmlrpc_maxconn_backlog oned_xmlrpc_keepalive_timeout oned_xmlrpc_keepalive_max_conn oned_xmlrpc_timeout>.each do |param|
         context "given a non-string value for #{param}" do
           let(:params) {
             { param => ['foo', 'bar'] }
@@ -26,7 +26,7 @@ describe 'one', type: :class do
           end
         end
       end
-      %w<inherit_datastore_attrs hook_scripts_pkgs>.each do |param|
+      %w<oned_inherit_datastore_attrs hook_scripts_pkgs>.each do |param|
         context "given a non-array value for #{param}" do
           let(:params) {
             {

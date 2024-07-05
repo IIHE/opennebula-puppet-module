@@ -71,8 +71,8 @@ LOG = [
 
 #MANAGER_TIMER = 30
 
-MONITORING_INTERVAL = <%= scope['one::monitoring_interval'] %>
-MONITORING_THREADS  = <%= scope['one::monitoring_threads'] %>
+MONITORING_INTERVAL = <%= scope['one::oned_monitoring_interval'] %>
+MONITORING_THREADS  = <%= scope['one::oned_monitoring_threads'] %>
 
 #HOST_PER_INTERVAL               = 15
 #HOST_MONITORING_EXPIRATION_TIME = 43200
@@ -192,11 +192,11 @@ DEFAULT_COST = [
 #     %% -- %
 #*******************************************************************************
 
-MAX_CONN           = <%= scope['one::xmlrpc_maxconn'] %>
-MAX_CONN_BACKLOG   = <%= scope['one::xmlrpc_maxconn_backlog'] %>
-KEEPALIVE_TIMEOUT  = <%= scope['one::xmlrpc_keepalive_timeout'] %>
-KEEPALIVE_MAX_CONN = <%= scope['one::xmlrpc_keepalive_max_conn'] %>
-TIMEOUT            = <%= scope['one::xmlrpc_timeout'] %>
+MAX_CONN           = <%= scope['one::oned_xmlrpc_maxconn'] %>
+MAX_CONN_BACKLOG   = <%= scope['one::oned_xmlrpc_maxconn_backlog'] %>
+KEEPALIVE_TIMEOUT  = <%= scope['one::oned_xmlrpc_keepalive_timeout'] %>
+KEEPALIVE_MAX_CONN = <%= scope['one::oned_xmlrpc_keepalive_max_conn'] %>
+TIMEOUT            = <%= scope['one::oned_xmlrpc_timeout'] %>
 #RPC_LOG            = NO
 #MESSAGE_SIZE       = 1073741824
 #LOG_CALL_FORMAT    = "Req:%i UID:%u %m invoked %l"
@@ -231,12 +231,12 @@ MAC_PREFIX   = "02:00"
 <% if scope['one::version_gte_5_0'] -%>
 
 VLAN_IDS = [
-    START    = "<%= scope['one::vlan_ids_start'] %>",
-    RESERVED = "<%= scope['one::vlan_ids_reserved'] %>"
+    START    = "<%= scope['one::oned_vlan_ids_start'] %>",
+    RESERVED = "<%= scope['one::oned_vlan_ids_reserved'] %>"
 ]
 
 VXLAN_IDS = [
-    START = "<%= scope['one::vxlan_ids_start'] %>"
+    START = "<%= scope['one::oned_vxlan_ids_start'] %>"
 ]
 <% end -%>
 
@@ -336,7 +336,7 @@ DEFAULT_CDROM_DEVICE_PREFIX = "<%= scope['one::default_cdrom_device_prefix'] %>"
 IM_MAD = [
       name       = "collectd",
       executable = "collectd",
-      arguments  = "-p 4124 -f 5 -t 50 -i <%= scope['one::information_collector_interval'] %>" ]
+      arguments  = "-p 4124 -f 5 -t 50 -i <%= scope['one::oned_information_collector_interval'] %>" ]
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -1104,8 +1104,12 @@ DEFAULT_UMASK = 177
 #   MUST be consistent with the values in onegate-server.conf
 #*******************************************************************************
 
-<% if scope['one::resulting_oned_onegate_endpoint'] -%>
-ONEGATE_ENDPOINT = "<%= scope['one::resulting_oned_onegate_endpoint'] %>"
+<% unless scope['one::oned_onegate_endpoint'].nil? -%>
+ONEGATE_ENDPOINT = "<%= scope['one::oned_onegate_endpoint'] %>"
+<% end -%>
+
+<% unless scope['one::oned_onegate_ip'].nil? -%>
+ONEGATE_ENDPOINT = "http://<%= scope['one::oned_onegate_ip'] %>:5030"
 <% else -%>
 #ONEGATE_ENDPOINT = "http://frontend:5030"
 <% end -%>
@@ -1221,8 +1225,8 @@ INHERIT_DATASTORE_ATTR  = "DISK_TYPE"
 INHERIT_DATASTORE_ATTR  = "ADAPTER_TYPE"
 <% end -%>
 
-<%- if @inherit_datastore_attrs != nil -%>
-  <%- @inherit_datastore_attrs.each do |attr| -%>
+<%- if @oned_inherit_datastore_attrs != nil -%>
+  <%- @oned_inherit_datastore_attrs.each do |attr| -%>
 INHERIT_DATASTORE_ATTR  = "<%= attr %>"
   <%- end -%>
 

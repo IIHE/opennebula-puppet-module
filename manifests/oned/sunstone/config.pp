@@ -17,21 +17,20 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::oned::sunstone::config (
-  String $listen_ip                 = $one::sunstone_listen_ip,
-  String $enable_support            = $one::enable_support,
-  String $enable_marketplace        = $one::enable_marketplace,
-  String $tmpdir                    = $one::sunstone_tmpdir,
-  String $sessions                  = $one::sunstone_sessions,
-  String $vnc_proxy_port            = $one::vnc_proxy_port,
-  String $vnc_proxy_support_wss     = $one::vnc_proxy_support_wss,
-  String $vnc_proxy_cert            = $one::vnc_proxy_cert,
-  String $vnc_proxy_key             = $one::vnc_proxy_key,
-  String $vnc_proxy_ipv6            = $one::vnc_proxy_ipv6,
-  String $sunstone_logo_png         = $one::sunstone_logo_png,
-  String $sunstone_logo_small_png   = $one::sunstone_logo_small_png,
-  Boolean $fireedge                  = $one::sunstone_fireedge,
-  String $fireedge_private_endpoint = $one::sunstone_fireedge_priv_endpoint,
-  String $fireedge_public_endpoint  = $one::sunstone_fireedge_pub_endpoint,
+  String $listen_ip                            = $one::sunstone_listen_ip,
+  String $enable_support                       = $one::sunstone_enable_support,
+  String $enable_marketplace                   = $one::sunstone_enable_marketplace,
+  String $tmpdir                               = $one::sunstone_tmpdir,
+  String $vnc_proxy_port                       = $one::sunstone_vnc_proxy_port,
+  String $vnc_proxy_support_wss                = $one::sunstone_vnc_proxy_support_wss,
+  Optional[String[1]] $vnc_proxy_cert          = $one::sunstone_vnc_proxy_cert,
+  Optional[String[1]] $vnc_proxy_key           = $one::sunstone_vnc_proxy_key,
+  String $vnc_proxy_ipv6                       = $one::sunstone_vnc_proxy_ipv6,
+  Optional[String[1]] $sunstone_logo_png       = $one::sunstone_logo_png,
+  Optional[String[1]] $sunstone_logo_small_png = $one::sunstone_logo_small_png,
+  Boolean $fireedge                            = $one::sunstone_fireedge,
+  String $fireedge_private_endpoint            = $one::sunstone_fireedge_priv_endpoint,
+  String $fireedge_public_endpoint             = $one::sunstone_fireedge_pub_endpoint,
 ) inherits one {
   $sunstone_views_root = $one::version_gte_5_8 ? {
     true    => '/etc/one/sunstone-views/mixed',
@@ -78,14 +77,14 @@ class one::oned::sunstone::config (
     }
   }
 
-  if $sunstone_logo_png != '' or $sunstone_logo_small_png != '' {
+  if defined('$sunstone_logo_png') or defined('$sunstone_logo_small_png') {
     file { '/usr/lib/one/sunstone/public/images':
       ensure => directory,
       mode   => '0755',
     }
   }
 
-  if $sunstone_logo_png != '' {
+  if defined('$sunstone_logo_png') {
     file { '/usr/lib/one/sunstone/public/images/custom_logo.png':
       ensure  => file,
       mode    => '0644',
@@ -94,7 +93,7 @@ class one::oned::sunstone::config (
     }
   }
 
-  if $sunstone_logo_small_png != '' {
+  if defined('$sunstone_logo_small_png') {
     file { '/usr/lib/one/sunstone/public/images/custom_logo_small.png':
       ensure  => file,
       mode    => '0644',

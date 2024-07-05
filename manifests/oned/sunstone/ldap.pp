@@ -18,8 +18,8 @@
 #
 class one::oned::sunstone::ldap (
   Array[String] $oned_sunstone_ldap_pkg = $one::oned_sunstone_ldap_pkg,
-  Hash $oned_ldap_mappings              = $one::oned_ldap_mappings,
-  String $oned_ldap_mapping_filename    = $one::oned_ldap_mapping_filename,
+  Hash $ldap_mappings              = $one::ldap_mappings,
+  String $ldap_mapping_filename    = $one::ldap_mapping_filename,
   String $package_ensure                = $one::package_ensure,
 ) inherits one {
   package { $oned_sunstone_ldap_pkg:
@@ -39,9 +39,9 @@ class one::oned::sunstone::ldap (
     content => template('one/ldap_auth.conf.erb'),
     notify  => Service['opennebula'],
   }
-  if $oned_ldap_mappings != undef {
-    validate_hash($oned_ldap_mappings)
-    file { "/var/lib/one/${oned_ldap_mapping_filename}":
+  if $ldap_mappings != undef {
+    validate_hash($ldap_mappings)
+    file { "/var/lib/one/${ldap_mapping_filename}":
       ensure  => file,
       owner   => 'oneadmin',
       group   => 'oneadmin',

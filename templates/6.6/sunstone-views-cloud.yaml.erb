@@ -1,4 +1,4 @@
-<% if scope['one::sunstone_logo_small_png'] != '' -%>
+<% unless scope['one::sunstone_logo_small_png'].nil? -%>
 provision_logo: images/custom_logo_small.png
 <% else -%>
 provision_logo: images/opennebula-5.0.png

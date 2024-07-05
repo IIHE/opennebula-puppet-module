@@ -32,10 +32,10 @@ describe 'one', type: :class do
           oned: true,
           one_version: '5.8',
           workernode: false,
-          monitoring_interval_host: '200',
-          monitoring_interval_vm: '200',
-          monitoring_interval_datastore: '400',
-          monitoring_interval_market: '800',
+          oned_monitoring_interval_host: '200',
+          oned_monitoring_interval_vm: '200',
+          oned_monitoring_interval_datastore: '400',
+          oned_monitoring_interval_market: '800',
         } }
         it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_HOST\s+= 200/m) }
         it { is_expected.to contain_file(oned_config).with_content(/^MONITORING_INTERVAL_VM\s+= 200/m) }
