@@ -44,7 +44,7 @@ class one::compute_node::config (
   #For RedHat: As of libvirtd 5.6.0, the libvirtd daemon uses systemd socket activation.
   #For this reason, with CentOS 8, you must not use the --listen parameter.
   #Source: https://bugzilla.redhat.com/show_bug.cgi?id=1750340
-  if ( $facts['os']['family'] == 'RedHat' and $facts['os']['name'] == 'CentOS' ) {
+  if ( $facts['os']['family'] == 'RedHat' ) {
     $systemd_socket_activation = true
   } else {
     $systemd_socket_activation = false
