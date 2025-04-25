@@ -512,10 +512,7 @@ class one (
     fail('The ssh_pub_key is mandatory for all nodes')
   }
 
-  if ( $workernode == false ) {
-    if ($ssh_priv_key_param != '') {
-      fail('The ssh_priv_key_param is mandatory for the head')
-    }
+  if ($ssh_priv_key_param != '') {
     $ssh_priv_key = $ssh_priv_key_param
   }
 
