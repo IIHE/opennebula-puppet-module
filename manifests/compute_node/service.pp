@@ -17,8 +17,14 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::compute_node::service (
-  String $libvirtd_srv = $one::libvirtd_srv
+  String $libvirtd_srv = $one::libvirtd_srv,
+  String $dbus_srv = $one::dbus_srv
 ) {
+  service { $dbus_srv:
+    ensure    => running,
+    enable    => true,
+    hasstatus => true,
+  }
   service { $libvirtd_srv:
     ensure    => running,
     hasstatus => true,
