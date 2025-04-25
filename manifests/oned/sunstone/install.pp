@@ -26,6 +26,9 @@ class one::oned::sunstone::install (
     ensure => $package_ensure,
   }
   if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge) {
+    package { ['opennebula-fireedge', 'opennebula-guacd']:
+      ensure => $package_ensure,
+    }
     case $facts['os']['name'] {
       'CentOS': {
         if ($facts['os']['release']['major'] == '7') {
@@ -33,13 +36,8 @@ class one::oned::sunstone::install (
             ensure => $package_ensure,
           }
         }
-        package { ['opennebula-fireedge', 'opennebula-guacd']:
-          ensure => $package_ensure,
-        }
       }
-      default: {
-        fail("Your OS - ${facts['os']['name']} - is not yet supported.")
-      }
+      default: {}
     }
   }
 }
