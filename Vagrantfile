@@ -24,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network "private_network", type: "dhcp"
 
-  config.vm.synced_folder '.', '/etc/puppet/modules/one/', type: 'nfs', nfs_version: 4, nfs_udp: false
+  config.vm.synced_folder '.', '/etc/puppet/modules/one/', type: 'nfs', mount_options: ["vers=4,tcp"]
 
   config.vm.define 'rockylinux-head' do |centos|
     centos.vm.box = "eurolinux-vagrant/rocky-#{OS_RELEASE_MAJOR}"
