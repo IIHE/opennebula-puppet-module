@@ -37,9 +37,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     centos.vm.provision 'shell', inline: 'puppet module install puppetlabs-inifile'
     centos.vm.provision 'puppet' do |puppet|
       puppet.synced_folder_type = 'nfs'
-      puppet.synced_folder_opts = {
-        mount_options: ['rw', 'vers=3', 'tcp', 'nolock', 'noacl', 'no_subtree_check']
-      }
       puppet.manifests_path = 'manifests'
       puppet.manifest_file = 'init.pp'
       puppet.options = [
