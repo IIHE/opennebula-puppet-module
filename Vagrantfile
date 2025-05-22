@@ -35,14 +35,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     centos.vm.provision 'shell', inline: 'dnf install -y puppet-agent'
     centos.vm.provision 'shell', inline: 'puppet module install puppetlabs-stdlib'
     centos.vm.provision 'shell', inline: 'puppet module install puppetlabs-inifile'
-    centos.vm.provision 'puppet' do |puppet|
-      puppet.manifests_path = 'manifests'
-      puppet.manifest_file = 'init.pp'
-      puppet.options = [
-          '--verbose',
-          "-e 'class { one: oned => true, sunstone => true, }'"
-      ]
-    end
+    # centos.vm.provision 'puppet' do |puppet|
+    #   puppet.manifests_path = 'manifests'
+    #   puppet.manifest_file = 'init.pp'
+    #   puppet.options = [
+    #       '--verbose',
+    #       "-e 'class { one: oned => true, sunstone => true, }'"
+    #   ]
+    # end
   end
 
   config.vm.define 'rockylinux-node' do |centos|
