@@ -38,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     centos.vm.provision 'puppet' do |puppet|
       puppet.synced_folder_type = 'rsync'
       puppet.manifests_path = ['vm', '/etc/puppet/modules/one/manifests']
-      puppet.manifest_file = 'init.pp'
+      puppet.manifest_file = 'initt.pp'
       puppet.options = [
           '--verbose',
           "-e 'class { one: oned => true, sunstone => true, }'"
