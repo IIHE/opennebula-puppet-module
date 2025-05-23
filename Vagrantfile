@@ -28,7 +28,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define 'rockylinux-head' do |centos|
     centos.vm.box = "eurolinux-vagrant/rocky-#{OS_RELEASE_MAJOR}"
-    #config.vm.box_version = '1.0.1'
     centos.vm.provision :hosts, :sync_hosts => true
     centos.vm.provision 'shell', inline: "rpm -Uvh #{PUPPET_REPO_URL}"
     centos.vm.provision 'shell', inline: '/usr/bin/yum -y install epel-release'
@@ -49,7 +48,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define 'rockylinux-node' do |centos|
     centos.vm.box = "eurolinux-vagrant/rocky-#{OS_RELEASE_MAJOR}"
-    #config.vm.box_version = '1.0.1'
     centos.vm.provision :hosts, :sync_hosts => true
     centos.vm.provision 'shell', inline: "rpm -Uvh #{PUPPET_REPO_URL}"
     centos.vm.provision 'shell', inline: '/usr/bin/yum -y install epel-release'
