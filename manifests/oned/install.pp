@@ -31,7 +31,7 @@ class one::oned::install (
   if $use_gems {
     package { $rubygems :
       ensure   => $package_ensure,
-      provider => 'gem',
+      provider => 'puppet_gem',
     }
   } else {
     package { $rubygems_rpm :
