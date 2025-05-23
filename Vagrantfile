@@ -35,6 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     centos.vm.provision 'shell', inline: 'dnf install -y puppet-agent'
     centos.vm.provision 'shell', inline: 'puppet module install puppetlabs-stdlib'
     centos.vm.provision 'shell', inline: 'puppet module install puppetlabs-inifile'
+    centos.vm.provision 'shell', inline: 'ln -s /etc/puppet/modules/one /etc/puppetlabs/code/environments/production/modules/one'
     centos.vm.provision 'puppet' do |puppet|
       puppet.synced_folder_type = 'rsync'
       puppet.manifests_path = ['vm', '/etc/puppet/modules/one/manifests']
@@ -55,8 +56,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     centos.vm.provision 'shell', inline: 'dnf install -y puppet-agent'
     centos.vm.provision 'shell', inline: 'puppet module install puppetlabs-stdlib'
     centos.vm.provision 'shell', inline: 'puppet module install puppetlabs-inifile'
+    centos.vm.provision 'shell', inline: 'ln -s /etc/puppet/modules/one /etc/puppetlabs/code/environments/production/modules/one'
     centos.vm.provision 'puppet' do |puppet|
-      puppet.manifests_path = 'manifests'
+      puppet.synced_folder_type = 'rsync'
+      puppet.manifests_path = ['vm', '/etc/puppet/modules/one/manifests']
       puppet.manifest_file = 'init.pp'
       puppet.options = [
           '--verbose',
