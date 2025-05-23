@@ -40,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifests_path = ['vm', '/etc/puppet/modules/one/manifests']
       puppet.manifest_file = 'init.pp'
       puppet.options = [
-          '--verbose --debug',
+          '--verbose',
           "-e 'class { one: oned => true, sunstone => true, }'"
       ]
     end
