@@ -498,7 +498,7 @@ class one (
   String $default_image_type                    = 'OS',
   String $default_device_prefix                 = 'hd',
   String $default_cdrom_device_prefix           = 'hd',
-  String $one_version                           = '4.12',
+  String $one_version                           = '6.6',
 ) inherits one::params {
   # Data Validation
 
