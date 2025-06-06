@@ -535,30 +535,6 @@ class one (
     fail("\"${oned_log_system}\" is not a valid logging subsystem. Valid values are [\"file\", \"syslog\"].")
   }
 
-  # check if version greater than or equal to 4.14 (used in templates)
-  if ( versioncmp($one_version, '4.14') >= 0 ) {
-    $version_gte_4_14 = true
-  }
-  else {
-    $version_gte_4_14 = false
-  }
-
-  # check if version greater than or equal to 5.0 (used in templates)
-  if ( versioncmp($one_version, '5.0') >= 0 ) {
-    $version_gte_5_0 = true
-  }
-  else {
-    $version_gte_5_0 = false
-  }
-
-  # check if version greater than or equal to 5.8 (used in templates)
-  if ( versioncmp($one_version, '5.8') >= 0 ) {
-    $version_gte_5_8 = true
-  }
-  else {
-    $version_gte_5_8 = false
-  }
-
   # for some things we only need X.Y not X.Y.Z so trim off any extra points
   $one_version_array = split($one_version,'[.]')
   $one_version_short = "${one_version_array[0]}.${one_version_array[1]}"
@@ -567,26 +543,19 @@ class one (
   # keys are the one_version_short for which we have templates
   # values are the folder paths to use
   $templated_versions_mapping = {
-    '5.0'  => '5.0',
-    '5.2'  => '5.2',
-    '5.4'  => '5.4',
-    '5.8'  => '5.8',
     '5.12' => '5.12',
     '6.2'  => '6.2',
     '6.4'  => '6.4',
     '6.6'  => '6.6',
+    '6.8'  => '6.6',
+    '6.10' => '6.6',
   }
 
   if member(keys($templated_versions_mapping), $one_version_short) {
     $template_path = $templated_versions_mapping[$one_version_short]
   }
   else {
-    if $version_gte_5_0 {
-      fail("One_version ${one_version} not in templated_versions_mapping. Compare templates for this new version and add to puppet module.")
-    }
-    else {
-      $template_path = 'unversioned'
-    }
+    fail("One_version ${one_version} not supported.")
   }
 
   if ( ! empty($oned_onegate_endpoint) ) {
