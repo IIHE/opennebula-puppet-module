@@ -59,20 +59,10 @@ class one::compute_node (
 
   if ($puppetdb == true) {
     # Register the node as a onehost in the puppetdb
-    if $one::version_gte_5_0 {
-      @@onehost { $facts['networking']['fqdn'] :
-        tag    => $oneid,
-        im_mad => $im_mad,
-        vm_mad => $vm_mad,
-      }
-    }
-    else {
-      @@onehost { $facts['networking']['fqdn'] :
-        tag    => $oneid,
-        im_mad => $im_mad,
-        vm_mad => $vm_mad,
-        vn_mad => $vn_mad,
-      }
+    @@onehost { $facts['networking']['fqdn'] :
+      tag    => $oneid,
+      im_mad => $im_mad,
+      vm_mad => $vm_mad,
     }
   }
 }
