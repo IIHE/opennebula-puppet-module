@@ -32,10 +32,7 @@ class one::oned::sunstone::config (
   String $fireedge_private_endpoint            = $one::sunstone_fireedge_priv_endpoint,
   String $fireedge_public_endpoint             = $one::sunstone_fireedge_pub_endpoint,
 ) inherits one {
-  $sunstone_views_root = $one::version_gte_5_8 ? {
-    true    => '/etc/one/sunstone-views/mixed',
-    default => '/etc/one/sunstone-views',
-  }
+  $sunstone_views_root = '/etc/one/sunstone-views/mixed'
 
   File {
     owner   => 'root',
@@ -68,13 +65,11 @@ class one::oned::sunstone::config (
     content => template("one/${one::template_path}/sunstone-views-user.yaml.erb"),
   }
 
-  if $one::version_gte_5_0 {
-    file { "${sunstone_views_root}/cloud.yaml":
-      ensure  => file,
-      mode    => '0640',
-      content => template("one/${one::template_path}/sunstone-views-cloud.yaml.erb"),
-      require => File["${sunstone_views_root}/user.yaml"],
-    }
+  file { "${sunstone_views_root}/cloud.yaml":
+    ensure  => file,
+    mode    => '0640',
+    content => template("one/${one::template_path}/sunstone-views-cloud.yaml.erb"),
+    require => File["${sunstone_views_root}/user.yaml"],
   }
 
   if defined('$sunstone_logo_png') or defined('$sunstone_logo_small_png') {

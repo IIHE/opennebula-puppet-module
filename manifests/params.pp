@@ -88,7 +88,7 @@ class one::params {
   $imaginator_sudoers_file = '/etc/sudoers.d/20_imaginator'
 
   # OS specific params for nodes
-  $oneversion = lookup('one::one_version', undef, undef, '4.12')
+  $oneversion = lookup('one::one_version', undef, undef, '6.6')
   case $facts['os']['family'] {
     'RedHat': {
       if $facts['os']['release']['major'] >= '7' {
