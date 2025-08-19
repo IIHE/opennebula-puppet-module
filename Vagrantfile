@@ -26,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.synced_folder '.', '/etc/puppet/modules/one/', nfs_version: 4
 
-  config.vm.define 'rockylinux-head' do |centos|
+  config.vm.define 'one-head' do |centos|
     centos.vm.box = "eurolinux-vagrant/rocky-#{OS_RELEASE_MAJOR}"
     centos.vm.provision :hosts, :sync_hosts => true
     centos.vm.provision 'shell', inline: "rpm -Uvh #{PUPPET_REPO_URL}"
@@ -46,7 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define 'rockylinux-node' do |centos|
+  config.vm.define 'one-node' do |centos|
     centos.vm.box = "eurolinux-vagrant/rocky-#{OS_RELEASE_MAJOR}"
     centos.vm.provision :hosts, :sync_hosts => true
     centos.vm.provision 'shell', inline: "rpm -Uvh #{PUPPET_REPO_URL}"
@@ -67,3 +67,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
 end
+
