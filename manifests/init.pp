@@ -82,9 +82,10 @@
 #   defines whether novnc should be started for sunstone web interface
 #   fully optional and only used if $sunstone is set to true
 #
-# $sunstone_fireedge - default false
+# $sunstone_fireedge - default true
 #   defines whether fireedge will be used
-#   fully optional and only used if $sunstone is set to true
+#   ONE version < 7 -> fully optional and only used if $sunstone is set to true
+#   ONE version >= 7 -> fireedge is mandatory if sunstone is used
 #
 # $ldap true|false - default false
 #   defines whether sunstone authentication to ldap should be enabled
@@ -375,7 +376,7 @@ class one (
   Boolean $sunstone                             = false,
   Boolean $sunstone_passenger                   = false,
   Boolean $sunstone_novnc                       = false,
-  Boolean $sunstone_fireedge                    = false,
+  Boolean $sunstone_fireedge                    = true,
   Boolean $ldap                                 = false,
   Boolean $oneflow                              = false,
   Boolean $onegate                              = false,
@@ -549,6 +550,7 @@ class one (
     '6.6'  => '6.6',
     '6.8'  => '6.6',
     '6.10' => '6.6',
+    '7.0'  => '7.0',
   }
 
   if member(keys($templated_versions_mapping), $one_version_short) {

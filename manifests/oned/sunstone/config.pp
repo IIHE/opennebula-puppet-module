@@ -31,6 +31,7 @@ class one::oned::sunstone::config (
   Boolean $fireedge                            = $one::sunstone_fireedge,
   String $fireedge_private_endpoint            = $one::sunstone_fireedge_priv_endpoint,
   String $fireedge_public_endpoint             = $one::sunstone_fireedge_pub_endpoint,
+  String $one_version                          = $one::one_version,
 ) inherits one {
   $sunstone_views_root = '/etc/one/sunstone-views/mixed'
 
@@ -38,62 +39,65 @@ class one::oned::sunstone::config (
     owner   => 'root',
     group   => 'oneadmin',
   }
-  # file { '/usr/lib/one/sunstone':
-  #   ensure  => directory,
-  #   owner   => 'oneadmin',
-  #   mode    => '0755',
-  #   recurse => true,
-  # } ->
-  file { '/etc/one/sunstone-server.conf':
-    ensure  => file,
-    content => template("one/${one::template_path}/sunstone-server.conf.erb"),
-    notify  => Service['opennebula-sunstone'],
-  }
-  -> file { '/etc/one/sunstone-views.yaml':
-    ensure  => file,
-    mode    => '0640',
-    content => template("one/${one::template_path}/sunstone-views.yaml.erb"),
-  }
-  -> file { "${sunstone_views_root}/admin.yaml":
-    ensure  => file,
-    mode    => '0640',
-    content => template("one/${one::template_path}/sunstone-views-admin.yaml.erb"),
-  }
-  -> file { "${sunstone_views_root}/user.yaml":
-    ensure  => file,
-    mode    => '0640',
-    content => template("one/${one::template_path}/sunstone-views-user.yaml.erb"),
-  }
 
-  file { "${sunstone_views_root}/cloud.yaml":
-    ensure  => file,
-    mode    => '0640',
-    content => template("one/${one::template_path}/sunstone-views-cloud.yaml.erb"),
-    require => File["${sunstone_views_root}/user.yaml"],
-  }
-
-  if defined('$sunstone_logo_png') or defined('$sunstone_logo_small_png') {
-    file { '/usr/lib/one/sunstone/public/images':
-      ensure => directory,
-      mode   => '0755',
-    }
-  }
-
-  if defined('$sunstone_logo_png') {
-    file { '/usr/lib/one/sunstone/public/images/custom_logo.png':
+  if (versioncmp($one_version, '7') < 0) {
+    file { '/etc/one/sunstone-server.conf':
       ensure  => file,
-      mode    => '0644',
-      source  => $sunstone_logo_png,
-      require => File['/usr/lib/one/sunstone/public/images'],
+      content => template("one/${one::template_path}/sunstone-server.conf.erb"),
+      notify  => Service['opennebula-sunstone'],
     }
-  }
-
-  if defined('$sunstone_logo_small_png') {
-    file { '/usr/lib/one/sunstone/public/images/custom_logo_small.png':
+    -> file { '/etc/one/sunstone-views.yaml':
       ensure  => file,
-      mode    => '0644',
-      source  => $sunstone_logo_small_png,
-      require => File['/usr/lib/one/sunstone/public/images'],
+      mode    => '0640',
+      content => template("one/${one::template_path}/sunstone-views.yaml.erb"),
+    }
+    -> file { "${sunstone_views_root}/admin.yaml":
+      ensure  => file,
+      mode    => '0640',
+      content => template("one/${one::template_path}/sunstone-views-admin.yaml.erb"),
+    }
+    -> file { "${sunstone_views_root}/user.yaml":
+      ensure  => file,
+      mode    => '0640',
+      content => template("one/${one::template_path}/sunstone-views-user.yaml.erb"),
+    }
+
+    file { "${sunstone_views_root}/cloud.yaml":
+      ensure  => file,
+      mode    => '0640',
+      content => template("one/${one::template_path}/sunstone-views-cloud.yaml.erb"),
+      require => File["${sunstone_views_root}/user.yaml"],
+    }
+
+    if defined('$sunstone_logo_png') or defined('$sunstone_logo_small_png') {
+      file { '/usr/lib/one/sunstone/public/images':
+        ensure => directory,
+        mode   => '0755',
+      }
+    }
+
+    if defined('$sunstone_logo_png') {
+      file { '/usr/lib/one/sunstone/public/images/custom_logo.png':
+        ensure  => file,
+        mode    => '0644',
+        source  => $sunstone_logo_png,
+        require => File['/usr/lib/one/sunstone/public/images'],
+      }
+    }
+
+    if defined('$sunstone_logo_small_png') {
+      file { '/usr/lib/one/sunstone/public/images/custom_logo_small.png':
+        ensure  => file,
+        mode    => '0644',
+        source  => $sunstone_logo_small_png,
+        require => File['/usr/lib/one/sunstone/public/images'],
+      }
+    }
+  } else {
+    file { '/etc/one/fireedge-server.conf':
+      ensure  => file,
+      content => template("one/${one::template_path}/fireedge-server.conf.erb"),
+      notify  => Service['opennebula-sunstone'],
     }
   }
 }
