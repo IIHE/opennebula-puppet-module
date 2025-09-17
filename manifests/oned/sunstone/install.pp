@@ -25,7 +25,7 @@ class one::oned::sunstone::install (
   package { $oned_sunstone_packages:
     ensure => $package_ensure,
   }
-  if (versioncmp($one_version, '6') >= 0 and $sunstone_fireedge) {
+  if (versioncmp($one_version, '6') >= 0 and versioncmp($one_version, '7') < 0 and $sunstone_fireedge) {
     package { ['opennebula-fireedge', 'opennebula-guacd']:
       ensure => $package_ensure,
     }
@@ -38,6 +38,11 @@ class one::oned::sunstone::install (
         }
       }
       default: {}
+    }
+  }
+  if (versioncmp($one_version, '7') >= 0) {
+    package { 'opennebula-fireedge':
+      ensure => $package_ensure,
     }
   }
 }
