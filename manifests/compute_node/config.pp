@@ -20,15 +20,6 @@
 # http://www.apache.org/licenses/LICENSE-2.0.html
 #
 class one::compute_node::config (
-  String $networkconfig           = $one::kickstart_network,
-  String $partitions              = $one::kickstart_partition,
-  String $rootpw                  = $one::kickstart_rootpw,
-  #Hash $data                      = $one::kickstart_data,
-  String $kickstart_tmpl          = $one::kickstart_tmpl,
-  #Hash $preseed_data              = $one::preseed_data,
-  String $ohd_deb_repo            = $one::preseed_ohd_deb_repo,
-  String $debian_mirror_url       = $one::preseed_debian_mirror_url,
-  String $preseed_tmpl            = $one::preseed_tmpl,
   String $libvirtd_cfg            = $one::libvirtd_cfg,
   String $libvirtd_source         = $one::libvirtd_source,
   String $libvirtd_srv            = $one::libvirtd_srv,
@@ -109,16 +100,6 @@ class one::compute_node::config (
     mode   => '0771',
   }
 
-  # -> file { ['/var/lib/one/etc/kickstart.d', '/var/lib/one/etc/preseed.d']:
-  #   ensure  => directory,
-  #   owner   => 'oneadmin',
-  #   group   => 'oneadmin',
-  #   purge   => true,
-  #   recurse => true,
-  #   force   => true,
-  #   mode    => '0755',
-  # }
-
   -> file { '/var/lib/one/bin/imaginator':
     ensure => file,
     owner  => 'root',
@@ -155,17 +136,4 @@ class one::compute_node::config (
     }
   }
 
-  # if $data {
-  #   $data_keys = keys ($data)
-  #   one::compute_node::add_kickstart { $data_keys:
-  #     data => $data,
-  #   }
-  # }
-
-  # if $preseed_data {
-  #   $preseed_keys = keys ($preseed_data)
-  #   one::compute_node::add_preseed { $preseed_keys:
-  #     data => $preseed_data,
-  #   }
-  # }
 }

@@ -47,18 +47,6 @@ class one::params {
   $vm_hook_scripts   = lookup('one::head::vm_hook_scripts', undef, undef, {})
   $host_hook_scripts = lookup('one::head::host_hook_scripts', undef, undef, {})
 
-  # E-POST imaginator parameters
-  $kickstart_network         = lookup ('one::node::kickstart::network', undef, undef, '')
-  $kickstart_partition       = lookup ('one::node::kickstart::partition', undef, undef, '')
-  $kickstart_rootpw          = lookup ('one::node::kickstart::rootpw', undef, undef, '')
-  $kickstart_data            = lookup ('one::node::kickstart::data', undef, undef, {})
-  $kickstart_tmpl            = lookup ('one::node::kickstart::kickstart_tmpl', undef, undef, 'one/kickstart.ks.erb')
-
-  $preseed_data              = lookup ('one::node::preseed::data', undef, undef, {})
-  $preseed_debian_mirror_url = lookup ('one::node::preseed::debian_mirror_url', undef, undef, 'http://ftp.debian.org/debian')
-  $preseed_ohd_deb_repo      = lookup ('one::node::preseed::ohd_deb_repo', undef, undef, '')
-  $preseed_tmpl              = lookup ('one::node::preseed::preseed_tmpl', undef, undef, 'one/preseed.cfg.erb')
-
   # OpenNebula DB backup parameters
   $backup_script_path        = lookup ('one::oned::backup::script_path', undef, undef, '/var/lib/one/bin/one_db_backup.sh')
   $backup_dir                = lookup ('one::oned::backup::dir', undef, undef, '/srv/backup')

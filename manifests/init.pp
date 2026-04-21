@@ -277,18 +277,6 @@
 # $oned_onegate_ip - default undef
 #   which ip should the onegate daemon listen on
 #
-# ==== Imaginator configuration
-#
-# $kickstart_network - default undef
-# $kickstart_partition - default undef
-# $kickstart_rootpw - default undef
-# $kickstart_data - default undef
-# $kickstart_tmpl - default one/kickstart.ks.erb
-# $preseed_data - default {}
-# $preseed_debian_mirror_url - default http://ftp.debian.org/debian
-# $preseed_ohd_deb_repo - default undef
-# $preseed_tmpl - default  one/preseed.cfg.erb
-#
 # ==== Database Backup configuration
 #
 # $backup_script_path - default /var/lib/one/bin/one_db_backup.sh
@@ -445,15 +433,6 @@ class one (
   Array[String] $oned_inherit_datastore_attrs   = [],
   Optional[String] $oned_onegate_ip             = undef,
   Optional[String] $oned_onegate_endpoint       = undef,
-  String $kickstart_network                     = $one::params::kickstart_network,
-  String $kickstart_partition                   = $one::params::kickstart_partition,
-  String $kickstart_rootpw                      = $one::params::kickstart_rootpw,
-  Hash $kickstart_data                          = $one::params::kickstart_data,
-  String $kickstart_tmpl                        = $one::params::kickstart_tmpl,
-  Hash $preseed_data                            = $one::params::preseed_data,
-  String $preseed_debian_mirror_url             = $one::params::preseed_debian_mirror_url,
-  String $preseed_ohd_deb_repo                  = $one::params::preseed_ohd_deb_repo,
-  String $preseed_tmpl                          = $one::params::preseed_tmpl,
   String $backup_script_path                    = $one::params::backup_script_path,
   String $backup_dir                            = $one::params::backup_dir,
   String $backup_opts                           = $one::params::backup_opts,
