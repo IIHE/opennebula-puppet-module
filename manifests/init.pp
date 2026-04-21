@@ -310,8 +310,6 @@
 #                         config. you'll have to manage the config yourself then
 # $oneadmin_sudoers_file - default '/etc/sudoers.d/10_oneadmin'
 #   where to place the file with the oneadmin sudoer rules
-# $imaginator_sudoers_file - default '/etc/sudoers.d/20_imaginator'
-#   where to place the file with the imaginator sudoer rules
 #
 # ==== Environment specific configuration
 #
@@ -456,7 +454,6 @@ class one (
   String $libvirtd_source                       = $one::params::libvirtd_source,
   Boolean $manage_sudoer_config                 = true,
   Stdlib::Absolutepath $oneadmin_sudoers_file   = $one::params::oneadmin_sudoers_file,
-  Stdlib::Absolutepath $imaginator_sudoers_file = $one::params::imaginator_sudoers_file,
   String $oned_vlan_ids_start                   = '2',
   String $oned_vlan_ids_reserved                = '0, 1, 4095',
   String $oned_vxlan_ids_start                  = '2',

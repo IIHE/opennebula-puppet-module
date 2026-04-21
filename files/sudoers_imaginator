@@ -1,3 +1,0 @@
-Cmnd_Alias ONEADMIN_IMAGINATOR = /var/lib/one/bin/imaginator
-oneadmin ALL = NOPASSWD: ONEADMIN_IMAGINATOR
-

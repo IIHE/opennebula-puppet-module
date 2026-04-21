@@ -25,7 +25,6 @@ class one::compute_node::config (
   String $libvirtd_srv            = $one::libvirtd_srv,
   Boolean $manage_sudoer_config   = $one::manage_sudoer_config,
   String $oneadmin_sudoers_file   = $one::oneadmin_sudoers_file,
-  String $imaginator_sudoers_file = $one::imaginator_sudoers_file
 ) {
   $_polkit_file_path = $facts['os']['family'] ? {
     'RedHat' => '/etc/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla',
@@ -100,14 +99,6 @@ class one::compute_node::config (
     mode   => '0771',
   }
 
-  # -> file { '/var/lib/one/bin/imaginator':
-  #   ensure => file,
-  #   owner  => 'root',
-  #   group  => 'oneadmin',
-  #   mode   => '0550',
-  #   source => 'puppet:///modules/one/imaginator',
-  # }
-
   if ($manage_sudoer_config == true) {
     file { $oneadmin_sudoers_file:
       ensure => file,
@@ -117,13 +108,6 @@ class one::compute_node::config (
       mode   => '0440',
     }
 
-    file { $imaginator_sudoers_file:
-      ensure => file,
-      source => 'puppet:///modules/one/sudoers_imaginator',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0440',
-    }
   }
 
   if ( $facts['os']['family'] == 'Debian')

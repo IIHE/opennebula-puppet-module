@@ -73,7 +73,6 @@ class one::params {
 
   # Where to place the sudo rule files
   $oneadmin_sudoers_file   = '/etc/sudoers.d/10_oneadmin'
-  $imaginator_sudoers_file = '/etc/sudoers.d/20_imaginator'
 
   # OS specific params for nodes
   $oneversion = lookup('one::one_version', undef, undef, '6.6')
