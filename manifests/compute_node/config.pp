@@ -23,9 +23,9 @@ class one::compute_node::config (
   String $networkconfig           = $one::kickstart_network,
   String $partitions              = $one::kickstart_partition,
   String $rootpw                  = $one::kickstart_rootpw,
-  Hash $data                      = $one::kickstart_data,
+  #Hash $data                      = $one::kickstart_data,
   String $kickstart_tmpl          = $one::kickstart_tmpl,
-  Hash $preseed_data              = $one::preseed_data,
+  #Hash $preseed_data              = $one::preseed_data,
   String $ohd_deb_repo            = $one::preseed_ohd_deb_repo,
   String $debian_mirror_url       = $one::preseed_debian_mirror_url,
   String $preseed_tmpl            = $one::preseed_tmpl,
@@ -109,15 +109,15 @@ class one::compute_node::config (
     mode   => '0771',
   }
 
-  -> file { ['/var/lib/one/etc/kickstart.d', '/var/lib/one/etc/preseed.d']:
-    ensure  => directory,
-    owner   => 'oneadmin',
-    group   => 'oneadmin',
-    purge   => true,
-    recurse => true,
-    force   => true,
-    mode    => '0755',
-  }
+  # -> file { ['/var/lib/one/etc/kickstart.d', '/var/lib/one/etc/preseed.d']:
+  #   ensure  => directory,
+  #   owner   => 'oneadmin',
+  #   group   => 'oneadmin',
+  #   purge   => true,
+  #   recurse => true,
+  #   force   => true,
+  #   mode    => '0755',
+  # }
 
   -> file { '/var/lib/one/bin/imaginator':
     ensure => file,
