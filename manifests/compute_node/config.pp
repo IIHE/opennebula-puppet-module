@@ -100,13 +100,13 @@ class one::compute_node::config (
     mode   => '0771',
   }
 
-  -> file { '/var/lib/one/bin/imaginator':
-    ensure => file,
-    owner  => 'root',
-    group  => 'oneadmin',
-    mode   => '0550',
-    source => 'puppet:///modules/one/imaginator',
-  }
+  # -> file { '/var/lib/one/bin/imaginator':
+  #   ensure => file,
+  #   owner  => 'root',
+  #   group  => 'oneadmin',
+  #   mode   => '0550',
+  #   source => 'puppet:///modules/one/imaginator',
+  # }
 
   if ($manage_sudoer_config == true) {
     file { $oneadmin_sudoers_file:
