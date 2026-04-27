@@ -33,7 +33,7 @@ class one::prerequisites (
           gpgcheck => 0,
         }
       }
-      notice("We use repo ${repourl} for opennebula.")
+      notice("We use repo ${repourl} for opennebula."
     }
     default: {
       fail("Your OS - ${facts['os']['family']} - is not yet supported.")
