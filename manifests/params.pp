@@ -117,34 +117,6 @@ class one::params {
       $rubygems        = ['builder', 'sinatra']
       $rubygems_rpm    = ['rubygem-builder', 'rubygem-sinatra']
     }
-    'Debian': {
-      $use_gems        = true
-      $node_packages   = [
-        'opennebula-node',
-        'virtinst',
-        'ipset',
-      ]
-      $rubygems       = ['parse-cron', 'builder', 'sinatra']
-      $oned_packages   = ['opennebula', 'opennebula-tools', 'ruby-opennebula']
-      if ( versioncmp($oneversion, '6.0') >= 0 ) {
-        $oned_packages   = ['opennebula', 'opennebula-rubygems', 'opennebula-tools']
-      } else {
-        $oned_packages   = ['opennebula', 'opennebula-tools', 'ruby-opennebula']
-      }
-      $dbus_srv        = 'dbus'
-      $dbus_pkg        = 'dbus'
-      $oned_sunstone_packages = 'opennebula-sunstone'
-      $oned_sunstone_ldap_pkg = ['ruby-ldap','ruby-net-ldap']
-      $oned_oneflow_packages = [
-        'opennebula-flow',
-        'ruby-treetop',
-        'ruby-polyglot',
-      ]
-      $oned_onegate_packages = ['opennebula-gate']
-      $libvirtd_srv = 'libvirt-bin'
-      $libvirtd_cfg = '/etc/default/libvirt-bin'
-      $libvirtd_source = 'one/libvirt-bin.debian.erb'
-    }
     default: {
       fail("Your OS - ${facts['os']['family']} - is not yet supported. Please add required functionality to params.pp")
     }
