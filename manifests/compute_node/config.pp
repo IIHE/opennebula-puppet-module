@@ -26,19 +26,13 @@ class one::compute_node::config (
   Boolean $manage_sudoer_config   = $one::manage_sudoer_config,
   String $oneadmin_sudoers_file   = $one::oneadmin_sudoers_file,
 ) {
-  $_polkit_file_path = $facts['os']['family'] ? {
-    'RedHat' => '/etc/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla',
-    'Debian' => '/var/lib/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla',
-  }
+
+  $_polkit_file_path = '/etc/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla'
 
   #For RedHat: As of libvirtd 5.6.0, the libvirtd daemon uses systemd socket activation.
   #For this reason, with CentOS 8, you must not use the --listen parameter.
   #Source: https://bugzilla.redhat.com/show_bug.cgi?id=1750340
-  if ( $facts['os']['family'] == 'RedHat' ) {
-    $systemd_socket_activation = true
-  } else {
-    $systemd_socket_activation = false
-  }
+  $systemd_socket_activation = true
 
   file { '/etc/libvirt/libvirtd.conf':
     ensure => file,
@@ -109,15 +103,5 @@ class one::compute_node::config (
     }
 
   }
-
-  # if ( $facts['os']['family'] == 'Debian')
-  # or ($facts['os']['family  '] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') < 0) {
-  #   file { '/sbin/brctl':
-  #     ensure => link,
-  #     target => '/usr/sbin/brctl',
-  #     owner  => 'root',
-  #     group  => 'root',
-  #   }
-  # }
 
 }
