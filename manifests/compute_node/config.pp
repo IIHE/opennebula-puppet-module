@@ -110,14 +110,14 @@ class one::compute_node::config (
 
   }
 
-  if ( $facts['os']['family'] == 'Debian')
-  or ($facts['os']['family  '] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') < 0) {
-    file { '/sbin/brctl':
-      ensure => link,
-      target => '/usr/sbin/brctl',
-      owner  => 'root',
-      group  => 'root',
-    }
-  }
+  # if ( $facts['os']['family'] == 'Debian')
+  # or ($facts['os']['family  '] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') < 0) {
+  #   file { '/sbin/brctl':
+  #     ensure => link,
+  #     target => '/usr/sbin/brctl',
+  #     owner  => 'root',
+  #     group  => 'root',
+  #   }
+  # }
 
 }
