@@ -29,16 +29,6 @@ class one::oned::sunstone::install (
     package { ['opennebula-fireedge', 'opennebula-guacd']:
       ensure => $package_ensure,
     }
-    case $facts['os']['name'] {
-      'CentOS': {
-        if ($facts['os']['release']['major'] == '7') {
-          package { 'centos-release-scl-rh':
-            ensure => $package_ensure,
-          }
-        }
-      }
-      default: {}
-    }
   }
   if (versioncmp($one_version, '7') >= 0) {
     package { 'opennebula-fireedge':

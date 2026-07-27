@@ -78,20 +78,11 @@ class one::params {
   $oneversion = lookup('one::one_version', undef, undef, '6.6')
   case $facts['os']['family'] {
     'RedHat': {
-      if $facts['os']['release']['major'] >= '7' {
-        $node_packages = [
-          'device-mapper-libs',
-          'opennebula-node-kvm',
-          'ipset',
-        ]
-      } else {
-        $node_packages = [
-          'device-mapper-libs',
-          'opennebula-node-kvm',
-          'python-virtinst',
-          'ipset',
-        ]
-      }
+      
+      $node_packages = [
+        'opennebula-node-kvm',
+      ]
+
       if ( versioncmp($oneversion, '6.0') >= 0 ) {
         $oned_packages   = ['opennebula', 'opennebula-rubygems', 'opennebula-tools']
       } else {
