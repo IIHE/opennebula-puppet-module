@@ -35,9 +35,11 @@ class one::oned::sunstone::service (
     enable  => $srv_enable,
     require => Service['opennebula'],
   }
-  service { 'opennebula-novnc':
-    ensure => $_sunstone_novnc_ensure,
-    enable => $sunstone_novnc,
+  if (versioncmp($one::one_version, '7') < 0) {
+    service { 'opennebula-novnc':
+      ensure => $_sunstone_novnc_ensure,
+      enable => $sunstone_novnc,
+    }
   }
   if $sunstone_fireedge {
     service { 'opennebula-fireedge':
