@@ -22,8 +22,10 @@ class one::oned::sunstone::install (
   Boolean $sunstone_fireedge    = $one::sunstone_fireedge,
   String $one_version           = $one::one_version,
 ) inherits one {
-  package { $oned_sunstone_packages:
-    ensure => $package_ensure,
+  if (versioncmp($one_version, '7') < 0) {
+    package { $oned_sunstone_packages:
+      ensure => $package_ensure,
+    }
   }
   if (versioncmp($one_version, '6') >= 0 and versioncmp($one_version, '7') < 0 and $sunstone_fireedge) {
     package { ['opennebula-fireedge', 'opennebula-guacd']:
