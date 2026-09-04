@@ -97,7 +97,7 @@ class one::oned::sunstone::config (
     file { '/etc/one/fireedge-server.conf':
       ensure  => file,
       content => template("one/${one::template_path}/fireedge-server.conf.erb"),
-      notify  => Service['opennebula-sunstone'],
+      notify  => Service['opennebula-fireedge'],
     }
   }
 }
