@@ -33,7 +33,7 @@ class one::oned::sunstone::install (
     }
   }
   if (versioncmp($one_version, '7') >= 0) {
-    package { 'opennebula-fireedge':
+    package { ['opennebula-fireedge', 'opennebula-guacd']:
       ensure => $package_ensure,
     }
   }
