@@ -26,7 +26,7 @@ Puppet::Type.type(:onehost).provide(:cli_5_0) do
   end
   desc 'onehost provider for opennebula 5.0 and up'
 
-  commands(onehost: 'onehost') do
+  has_command(:onehost, 'onehost') do
     environment HOME: '/root', ONE_AUTH: '/var/lib/one/.one/one_auth'
   end
 
