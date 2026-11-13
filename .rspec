@@ -1,2 +1,3 @@
 --color
 --format documentation
+--exclude-pattern "spec/acceptance/**/*_spec.rb,spec/fixtures/**/*_spec.rb,spec/fixtures/modules/one/**/*_spec.rb,vendor/**/*_spec.rb"

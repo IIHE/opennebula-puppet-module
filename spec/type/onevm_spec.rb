@@ -6,30 +6,17 @@ res_type_name = :onevm
 res_type = Puppet::Type.type(res_type_name)
 
 describe res_type do
-  let(:provider) {
-    prov = stub 'provider'
-    prov.stubs(:name).returns(res_type_name)
-    prov
-  }
-  let(:res_type) {
-    val = res_type
-    val.stubs(:defaultprovider).returns provider
-    val
-  }
-  #  let(:resource) {
-  #    res_type.new({:name => 'test'})
-  #  }
   before :each do
     @vm = res_type.new(name: 'test')
   end
 
   it 'has :name be its namevar' do
-    res_type.key_attributes.should == [:name]
+    expect(res_type.key_attributes).to eq([:name])
   end
 
   it 'has property :template' do
     @vm[:template] = 'abc'
-    @vm[:template].should == 'abc'
+    expect(@vm[:template]).to eq('abc')
   end
 
   parameter_tests = {

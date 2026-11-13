@@ -2,25 +2,28 @@
 
 require 'spec_helper'
 
-provider_class = Puppet::Type.type(:onecluster).provider(:onecluster)
-describe provider_class do
-  let(:resource) {
-    Puppet::Type::Onecluster.new({ name: 'new_cluster', })
-  }
+provider_class = Puppet::Type.type(:onecluster).provider(:cli)
 
-  let(:provider) {
-    @provider = provider_class.new(@resource)
-  }
+describe provider_class do
+  let(:resource) do
+    Puppet::Type::Onecluster.new(name: 'new_cluster')
+  end
+
+  subject(:provider) { described_class.new(resource) }
 
   it 'exists' do
-    @provider
+    expect(described_class).to be_a(Class)
+  end
+
+  it 'can be instantiated' do
+    expect(provider).to be_a(described_class)
   end
 
   context 'when checking if resource exists' do
     it 'returns true if resource exists' do
       skip('needs test to verify existance')
     end
-    it 'returns false if reosurce does not exists' do
+    it 'returns false if resource does not exist' do
       skip('needs test to verify absence')
     end
   end
@@ -30,7 +33,7 @@ describe provider_class do
     end
   end
   context 'when deleting' do
-    it 'runs onevnet delete <name>' do
+    it 'runs onecluster delete <name>' do
       skip('needs test to verify removal')
     end
   end

@@ -7,7 +7,7 @@ describe 'one::oned::sunstone', type: :class do
     context "On #{os}" do
       let(:facts) { os_facts }
       let (:hiera_config) { hiera_config }
-      let (:pre_condition) { 'include one' }
+      let(:pre_condition) { "class { 'one': workernode => false, oned => true }" }
       context 'general' do
         let (:params) { { ldap: false } }
         it { is_expected.to contain_class('one::prerequisites') }

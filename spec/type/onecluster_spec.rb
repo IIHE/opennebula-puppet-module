@@ -6,48 +6,38 @@ res_type_name = :onecluster
 res_type = Puppet::Type.type(res_type_name)
 
 describe res_type do
-  let(:provider) {
-    prov = stub 'provider'
-    prov.stubs(:name).returns(res_type_name)
-    prov
-  }
-  let(:res_type) {
-    val = res_type
-    val.stubs(:defaultprovider).returns provider
-    val
-  }
   before :each do
     @cluster = res_type.new(name: 'test', hosts: ['node1', 'node2'])
   end
 
   it 'has :name be its namevar' do
-    res_type.key_attributes.should == [:name]
+    expect(res_type.key_attributes).to eq([:name])
   end
 
   properties = [:hosts, :vnets, :datastores]
 
   properties.each do |property|
     it "has a #{property} property" do
-      described_class.attrclass(property).ancestors.should be_include(Puppet::Property)
+      expect(described_class.attrclass(property).ancestors).to include(Puppet::Property)
     end
 
     it "has documentation for its #{property} property" do
-      described_class.attrclass(property).doc.should be_instance_of(String)
+      expect(described_class.attrclass(property).doc).to be_a(String)
     end
   end
 
   it 'has property :hosts' do
-    @cluster[:hosts].should == ['node1', 'node2']
+    expect(@cluster[:hosts]).to eq(['node1', 'node2'])
   end
 
   it 'has property :vnets' do
     @cluster[:vnets] = ['vnet1', 'vnet2']
-    @cluster[:vnets].should == ['vnet1', 'vnet2']
+    expect(@cluster[:vnets]).to eq(['vnet1', 'vnet2'])
   end
 
   it 'has property :datastores' do
     @cluster[:datastores] = ['ds1', 'ds2']
-    @cluster[:datastores].should == ['ds1', 'ds2']
+    expect(@cluster[:datastores]).to eq(['ds1', 'ds2'])
   end
 
   parameter_tests = {

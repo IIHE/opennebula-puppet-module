@@ -6,88 +6,64 @@ res_type_name = :onevnet
 res_type = Puppet::Type.type(res_type_name)
 
 describe res_type do
-  let(:provider) {
-    prov = stub 'provider'
-    prov.stubs(:name).returns(res_type_name)
-    prov
-  }
-  let(:res_type) {
-    val = res_type
-    val.stubs(:defaultprovider).returns provider
-    val
-  }
-  #  let(:resource) {
-  #    res_type.new({:name => 'test'})
-  #  }
-
   before :each do
     @vnet = res_type.new(name: 'test')
-    @vnet4 = res_type.new(name: 'test')
-    @vnet6 = res_type.new(name: 'test')
   end
 
   it 'has :name be its namevar' do
-    res_type.key_attributes.should == [:name]
-  end
-
-  parameters = []
-
-  parameters.each do |params|
-    it "has a #{params} parameter" do
-      expect(described_class.attrtype(params)).to eq :param
-    end
+    expect(res_type.key_attributes).to eq([:name])
   end
 
   properties = [:dnsservers, :gateway, :model, :bridge, :vlanid, :context, :phydev, :netmask, :network_address]
 
   properties.each do |property|
     it "has a #{property} property" do
-      described_class.attrclass(property).ancestors.should be_include(Puppet::Property)
+      expect(described_class.attrclass(property).ancestors).to include(Puppet::Property)
     end
 
     it "has documentation for its #{property} property" do
-      described_class.attrclass(property).doc.should be_instance_of(String)
+      expect(described_class.attrclass(property).doc).to be_a(String)
     end
   end
 
   it 'has property :dnsservers' do
     @vnet[:dnsservers] = ['8.8.8.8', '4.4.4.4']
-    @vnet[:dnsservers].should == ['8.8.8.8', '4.4.4.4']
+    expect(@vnet[:dnsservers]).to eq(['8.8.8.8', '4.4.4.4'])
   end
 
   it 'has property :gateway' do
     @vnet[:gateway] = '10.0.2.1'
-    @vnet[:gateway].should == '10.0.2.1'
+    expect(@vnet[:gateway]).to eq('10.0.2.1')
   end
 
   it 'has property :model' do
     @vnet[:model] = 'vlan'
-    @vnet[:model].should == :vlan
+    expect(@vnet[:model]).to eq(:vlan)
   end
 
   it 'has property :bridge' do
     @vnet[:bridge] = 'br0'
-    @vnet[:bridge].should == 'br0'
+    expect(@vnet[:bridge]).to eq('br0')
   end
 
   it 'has property :context' do
     @vnet[:context] = 'foo'
-    @vnet[:context].should == 'foo'
+    expect(@vnet[:context]).to eq('foo')
   end
 
   it 'has property :phydev' do
     @vnet[:phydev] = 'eth0'
-    @vnet[:phydev].should == 'eth0'
+    expect(@vnet[:phydev]).to eq('eth0')
   end
 
   it 'has property :netmask' do
     @vnet[:netmask] = '255.255.0.0'
-    @vnet[:netmask].should == '255.255.0.0'
+    expect(@vnet[:netmask]).to eq('255.255.0.0')
   end
 
   it 'has property network_address' do
     @vnet[:network_address] = '10.0.2.0'
-    @vnet[:network_address].should == '10.0.2.0'
+    expect(@vnet[:network_address]).to eq('10.0.2.0')
   end
 
   parameter_tests = {
@@ -106,10 +82,6 @@ describe res_type do
   end
 
   it 'fails when passing ipv4 and not providing DNS server' do
-    # expect {
-    #     @vnet4[:dnsservers] = :undef
-    # }.to raise_error(Puppet::Error)
     skip('needs parameter validation')
   end
-
 end

@@ -1,8 +1,8 @@
 ---
-:backends:
-  - yaml
-:hierarchy:
-  - test
-
-:yaml:
-    :datadir: 'spec/fixtures/hiera'
+version: 5
+defaults:
+  datadir: .
+  data_hash: yaml_data
+hierarchy:
+  - name: test
+    path: test.yaml
