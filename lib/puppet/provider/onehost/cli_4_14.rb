@@ -17,7 +17,7 @@ require 'nokogiri' if Puppet.features.nokogiri?
 Puppet::Type.type(:onehost).provide(:cli_4_14) do
   confine feature: :nokogiri
   confine true: begin
-    if File.exists?('/var/lib/one/remotes/VERSION')
+    if File.exist?('/var/lib/one/remotes/VERSION')
       file = File.open('/var/lib/one/remotes/VERSION', 'r')
       one_version = file.read
       file.close

@@ -6,6 +6,7 @@ describe 'one::oned::sunstone::service', type: :class do
   on_supported_os.each do |os, os_facts|
     context "On #{os}" do
       let(:facts) { os_facts }
+      let(:pre_condition) { "class { 'one': workernode => false, oned => true }" }
       let (:hiera_config) { hiera_config }
       context 'general' do
         it { is_expected.to contain_class('one::oned::sunstone::service') }
@@ -13,7 +14,7 @@ describe 'one::oned::sunstone::service', type: :class do
       context 'with passenger disabled' do
         it { is_expected.to contain_service('opennebula-sunstone') \
           .with_ensure('running') \
-          .with_enable('true') \
+          .with_enable(true) \
           .with_require('Service[opennebula]')
         }
       end
@@ -21,7 +22,7 @@ describe 'one::oned::sunstone::service', type: :class do
         let (:params) { { sunstone_passenger: true } }
         it { is_expected.to contain_service('opennebula-sunstone') \
           .with_ensure('stopped') \
-          .with_enable('false') \
+          .with_enable(false) \
           .with_require('Service[opennebula]')
         }
       end

@@ -4,10 +4,8 @@ RSpec.configure do |c|
   c.mock_with :rspec
 end
 
-require 'hiera'
 require 'puppetlabs_spec_helper/module_spec_helper'
 require 'rspec-puppet-facts'
-
 
 require 'spec_helper_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_local.rb'))
 
@@ -38,8 +36,11 @@ default_facts.each do |fact, value|
   add_custom_fact fact, value
 end
 
+hiera_config_path = File.expand_path(File.join(__dir__, 'fixtures', 'hiera', 'hiera.yaml'))
+
 RSpec.configure do |c|
   c.default_facts = default_facts
+  c.hiera_config = hiera_config_path if File.file?(hiera_config_path)
   c.before :each do
     # set to strictest setting for testing
     # by default Puppet runs at warning level
@@ -72,5 +73,7 @@ def ensure_module_defined(module_name)
     last_module.const_get(next_module, false)
   end
 end
+
+Dir[File.join(__dir__, 'support', '**', '*.rb')].sort.each { |f| require f }
 
 # 'spec_overrides' from sync.yml will appear below this line

@@ -6,85 +6,72 @@ res_type_name = :oneimage
 res_type = Puppet::Type.type(res_type_name)
 
 describe res_type do
-  let(:provider) {
-    prov = stub 'provider'
-    prov.stubs(:name).returns(res_type_name)
-    prov
-  }
-  let(:res_type) {
-    val = res_type
-    val.stubs(:defaultprovider).returns provider
-    val
-  }
-  #  let(:resource) {
-  #    res_type.new({:name => 'test'})
-  #  }
   before :each do
     @image = res_type.new(name: 'test')
   end
 
   it 'has :name be its namevar' do
-    res_type.key_attributes.should == [:name]
+    expect(res_type.key_attributes).to eq([:name])
   end
 
   it 'has property :datastore' do
     @image[:datastore] = 'ds1'
-    @image[:datastore].should == 'ds1'
+    expect(@image[:datastore]).to eq('ds1')
   end
 
   it 'has property :description' do
     @image[:description] = 'foo'
-    @image[:description].should == 'foo'
+    expect(@image[:description]).to eq('foo')
   end
 
   it 'has property :type' do
     @image[:type] = 'os'
-    @image[:type].should == :OS
+    expect(@image[:type]).to eq(:OS)
   end
 
   it 'has property :persistent' do
     @image[:persistent] = :true
-    @image[:persistent].should == :true
+    expect(@image[:persistent]).to eq(:true)
   end
 
   it 'has property :dev_prefix' do
     @image[:dev_prefix] = 'hd'
-    @image[:dev_prefix].should == 'hd'
+    expect(@image[:dev_prefix]).to eq('hd')
   end
 
   it 'has propery :target' do
     @image[:target] = 'hda'
-    @image[:target].should == 'hda'
+    expect(@image[:target]).to eq('hda')
   end
 
   it 'has property :path' do
     @image[:path] = '/foo'
-    @image[:path].should == '/foo'
+    expect(@image[:path]).to eq('/foo')
   end
 
   it 'has property :driver' do
     @image[:driver] = 'raw'
-    @image[:driver].should == 'raw'
+    expect(@image[:driver]).to eq('raw')
   end
 
   it 'has property :disk_type' do
     @image[:disk_type] = 'block'
-    @image[:disk_type].should == 'block'
+    expect(@image[:disk_type]).to eq('block')
   end
 
-  it 'has property :soruce' do
+  it 'has property :source' do
     @image[:source] = 'foo'
-    @image[:source].should == 'foo'
+    expect(@image[:source]).to eq('foo')
   end
 
   it 'has property :size' do
     @image[:size] = '4096'
-    @image[:size].should == '4096'
+    expect(@image[:size]).to eq('4096')
   end
 
   it 'has property :fstype' do
     @image[:fstype] = 'ext2'
-    @image[:fstype].should == 'ext2'
+    expect(@image[:fstype]).to eq('ext2')
   end
 
   parameter_tests = {

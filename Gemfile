@@ -41,26 +41,15 @@ group :system_tests do
   gem "puppet_litmus", '~> 1.0', require: false, platforms: [:ruby, :x64_mingw]
   gem "serverspec", '~> 2.41',   require: false
 end
-group :release_prep do
-  gem "puppet-strings", '~> 4.0',         require: false
-  gem "puppetlabs_spec_helper", '~> 6.0', require: false
-end
-
-
 puppet_version = ENV['PUPPET_GEM_VERSION']
 facter_version = ENV['FACTER_GEM_VERSION']
-hiera_version = ENV['HIERA_GEM_VERSION']
 
 gems = {}
 
 gems['puppet'] = location_for(puppet_version)
 
-# If facter or hiera versions have been specified via the environment
-# variables
-
+# If facter version has been specified via the environment variable
 gems['facter'] = location_for(facter_version) if facter_version
-#gems['hiera'] = location_for(hiera_version) if hiera_version
-gems['hiera'] = location_for(hiera_version)
 
 gems.each do |gem_name, gem_params|
   gem gem_name, *gem_params

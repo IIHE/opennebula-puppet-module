@@ -2,25 +2,28 @@
 
 require 'spec_helper'
 
-provider_class = Puppet::Type.type(:onesecgroup).provider(:onesecgroup)
-describe provider_class do
-  let(:resource) {
-    Puppet::Type::onesecgroup.new({ name: 'new_secgroup', })
-  }
+provider_class = Puppet::Type.type(:onesecgroup).provider(:cli)
 
-  let(:provider) {
-    @provider = provider_class.new(@resource)
-  }
+describe provider_class do
+  let(:resource) do
+    Puppet::Type::Onesecgroup.new(name: 'new_secgroup')
+  end
+
+  subject(:provider) { described_class.new(resource) }
 
   it 'exists' do
-    @provider
+    expect(described_class).to be_a(Class)
+  end
+
+  it 'can be instantiated' do
+    expect(provider).to be_a(described_class)
   end
 
   context 'when checking if resource exists' do
     it 'returns true if resource exists' do
       skip('needs test to verify existance')
     end
-    it 'returns false if reosurce does not exists' do
+    it 'returns false if resource does not exist' do
       skip('needs test to verify absence')
     end
   end
@@ -37,5 +40,4 @@ describe provider_class do
   context 'when updating' do
     skip('update needs all tests')
   end
-
 end

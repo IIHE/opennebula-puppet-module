@@ -6,8 +6,9 @@ describe 'one::oned::sunstone::ldap', type: :class do
   on_supported_os.each do |os, os_facts|
     context "On #{os}" do
       let(:facts) { os_facts }
+      let(:pre_condition) { "class { 'one': workernode => false, oned => true }" }
       let (:hiera_config) { hiera_config }
-      let (:params) { { oned_sunstone_ldap_pkg: 'bogus-ldap-package' } }
+      let (:params) { { oned_sunstone_ldap_pkg: ['bogus-ldap-package'] } }
       context 'general' do
         it { is_expected.to contain_class('one::oned::sunstone::ldap') }
         it { is_expected.to contain_package('bogus-ldap-package').with_ensure('latest') }

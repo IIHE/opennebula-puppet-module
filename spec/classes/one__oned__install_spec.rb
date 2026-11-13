@@ -9,10 +9,10 @@ describe 'one::oned::install', type: :class do
       let (:hiera_config) { hiera_config }
       let (:pre_condition) { 'include one' }
       context 'general' do
-        it { is_expected.to contain_package('sinatra').with_provider('gem') }
-        it { is_expected.to contain_package('builder').with_provider('gem') }
+        it { is_expected.to contain_package('sinatra').with_provider('puppet_gem') }
+        it { is_expected.to contain_package('builder').with_provider('puppet_gem') }
         if os_facts[:osfamily] == 'Debian'
-          it { is_expected.to contain_package('parse-cron').with_provider('gem') }
+          it { is_expected.to contain_package('parse-cron').with_provider('puppet_gem') }
         end
       end
       if os_facts[:osfamily] == 'RedHat'
@@ -20,8 +20,8 @@ describe 'one::oned::install', type: :class do
           let (:params) { { use_gems: false } }
           it { is_expected.to contain_package('rubygem-sinatra') }
           it { is_expected.to contain_package('rubygem-builder') }
-          it { is_expected.not_to contain_package('sinatra').with_provider('gem') }
-          it { is_expected.not_to contain_package('builder').with_provider('gem') }
+          it { is_expected.not_to contain_package('sinatra').with_provider('puppet_gem') }
+          it { is_expected.not_to contain_package('builder').with_provider('puppet_gem') }
         end
       end
     end

@@ -6,37 +6,27 @@ res_type_name = :onehost
 res_type = Puppet::Type.type(res_type_name)
 
 describe res_type do
-  let(:provider) {
-    prov = stub 'provider'
-    prov.stubs(:name).returns(res_type_name)
-    prov
-  }
-  let(:res_type) {
-    val = res_type
-    val.stubs(:defaultprovider).returns provider
-    val
-  }
   before :each do
     @host = res_type.new(name: 'test')
   end
 
   it 'has :name be its namevar' do
-    res_type.key_attributes.should == [:name]
+    expect(res_type.key_attributes).to eq([:name])
   end
 
   it 'has property :im_mad' do
     @host[:im_mad] = 'kvm'
-    @host[:im_mad].should == :kvm
+    expect(@host[:im_mad]).to eq(:kvm)
   end
 
   it 'has property :im_mad with kvm_pull' do
     @host[:im_mad] = 'kvm_pull'
-    @host[:im_mad].should == :kvm_pull
+    expect(@host[:im_mad]).to eq(:kvm_pull)
   end
 
   it 'has property :vm_mad' do
     @host[:vm_mad] = 'kvm'
-    @host[:vm_mad].should == :kvm
+    expect(@host[:vm_mad]).to eq(:kvm)
   end
 
   parameter_tests = {
@@ -45,12 +35,6 @@ describe res_type do
       default: 'test',
       invalid: ['0./fouzb&$', '&fr5'],
     },
-    # :im_mad => {
-    # },
-    # :vm_mad => {
-    # },
-    # :tm_mad => {
-    # },
   }
   it_should_behave_like 'a puppet type', parameter_tests, res_type_name
 end

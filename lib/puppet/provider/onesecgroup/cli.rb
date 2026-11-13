@@ -12,6 +12,7 @@
 #
 
 require 'rubygems'
+require 'tempfile'
 require 'nokogiri' if Puppet.features.nokogiri?
 
 Puppet::Type.type(:onesecgroup).provide(:cli) do
