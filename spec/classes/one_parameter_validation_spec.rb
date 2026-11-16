@@ -89,6 +89,12 @@ describe 'one', type: :class do
         it { is_expected.to compile.and_raise_error(/One_version 5\.8 not supported/) }
       end
 
+      context 'with OpenNebula 5.12, which is no longer supported' do
+        let(:params) { { 'one_version' => '5.12', 'sunstone_fireedge' => false } }
+
+        it { is_expected.to compile.and_raise_error(/One_version 5\.12 not supported/) }
+      end
+
       context 'with fireedge and an OpenNebula version older than 6' do
         let(:params) { { 'one_version' => '5.12', 'sunstone_fireedge' => true } }
 

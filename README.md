@@ -23,7 +23,7 @@ The one (short for OpenNebula) module allows to install and manage your OpenNebu
 
 **Centos**
 
-We support Puppet >= 7 on CentOS 7-8 with OpenNebula 5.0-6.6.
+We support Puppet >= 7 on CentOS 7-8 with OpenNebula 6.2-7.4.
 You need to add the EPEL repository because the module needs some packages from there.
 
 Note, there is a required package on the oned controller node that is not managed by this module, the gem nokogiri (or the yum package rubygem-nokori).  This can be installed elsewhere in that node's puppet catalog like this:
@@ -37,14 +37,16 @@ Note, there is a required package on the oned controller node that is not manage
 The ONe-Module needs the following other modules:
 
 - [puppetlabs/stdlib  > 7.1.0](https://github.com/puppetlabs/puppetlabs-stdlib)
-- [puppetlabs/apt     > 8.5.0](https://github.com/puppetlabs/puppetlabs-apt)
 - [puppetlabs/inifile > 5.4.0](https://github.com/puppetlabs/puppetlabs-inifile)
+- [puppetlabs/yumrepo_core >= 2.0.0 < 4.0.0](https://github.com/puppetlabs/puppetlabs-yumrepo_core)
+- [puppetlabs/cron_core >= 2.0.0 < 3.0.0](https://github.com/puppetlabs/puppetlabs-cron_core)
 
 **How to install**:
 
     puppet module install puppetlabs-stdlib
-    puppet module install puppetlabs-apt
     puppet module install puppetlabs-inifile
+    puppet module install puppetlabs-yumrepo_core
+    puppet module install puppetlabs-cron_core
 
 ## Using the Module
 
@@ -71,7 +73,7 @@ Create a ONE Vnet
 
     onevnet { '<name>':
         ensure          => present | absent,
-        # driver to use (only for OpenNebula 5.0 and above)
+        # driver to use
         vn_mad          => '802.1Q | ebtables | fw | ovswtich | vxlan | vcenter | dummy',
         # name of the bridge to use
         bridge          => 'basebr0',
@@ -139,10 +141,7 @@ Create a ONE Host
         ensure  => present | absent,
         im_mad  => 'kvm' | 'xen' | 'vmware' | 'ec2' | 'ganglia' | 'dummy' | 'custom',
         vm_mad  => 'kvm' | 'xen' | 'vmware' | 'ec2' | 'dummy' | 'custom' | 'qemu',
-        vn_mad  => 'dummy' | 'firewall' | 'vlan' | 'ebtables' | 'ovswitch' | 'vmware' | 'custom',
     }
-
-Note - in OpenNebula 5.0 vn_mad is no longer specified per host, so do not pass the vn_mad parameter here (it will not fail, but it will generate a warning)
 
 
 Create a ONE Cluster
