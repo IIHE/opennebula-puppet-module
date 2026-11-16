@@ -13,13 +13,11 @@
 # - Stephane Gerard (Vrije Universiteit Brussel)
 #
 # === Parameters
-# backend sqlite|mysql - default: sqlite
-# Set the OpenNebula backend.
-# Set by init.pp
 #
-# ldap true|false - default: false
-# Enable ldap authentication in Sunstone
-# Set by init.pp
+# $backend:: Database backend (`sqlite` or `mysql`).
+# $ldap:: Whether to enable LDAP authentication in Sunstone.
+# $puppetdb:: Whether to use PuppetDB to discover compute nodes.
+# $oneid:: Identifier of the OpenNebula cloud.
 #
 # === Usage
 #

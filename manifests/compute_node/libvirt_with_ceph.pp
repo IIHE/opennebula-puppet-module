@@ -1,5 +1,11 @@
 # to configure libvirt so that it can use a ceph rbd pool
 # source: https://github.com/openstack/puppet-nova/blob/master/manifests/compute/rbd.pp
+#
+# === Parameters
+#
+# $libvirt_rbd_secret_uuid:: UUID of the Ceph RBD secret.
+# $libvirt_rbd_secret_key:: Base64-encoded Ceph RBD secret key.
+#
 class one::compute_node::libvirt_with_ceph (
   String $libvirt_rbd_secret_uuid = hiera('one::compute_node::libvirt_rbd_secret_uuid', undef),
   String $libvirt_rbd_secret_key  = hiera('one::compute_node::libvirt_rbd_secret_key', undef),
@@ -28,7 +34,7 @@ class one::compute_node::libvirt_with_ceph (
       require => File[$secret_dir],
     }
     # define the virsh secret
-    $cm = "/usr/bin/virsh secret-define --file ${secret_xml_path} | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > ${virsh_secret_path}"
+    $cm = "/usr/bin/virsh secret-define --file ${secret_xml_path} | /usr/bin/awk \'{print \$2}\' | sed \'/^$/d\' > ${virsh_secret_path}"
     exec { 'get-or-set virsh secret':
       command => $cm,
       unless  => "/usr/bin/virsh secret-list | grep -i ${libvirt_rbd_secret_uuid}",

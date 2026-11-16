@@ -12,6 +12,11 @@
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
 #
+# === Parameters
+#
+# $oned_oneflow_packages:: Packages required by the OneFlow service.
+# $package_ensure:: Package ensure value (`latest` or `present`).
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html

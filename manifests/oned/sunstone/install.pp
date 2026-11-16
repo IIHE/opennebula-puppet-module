@@ -12,6 +12,13 @@
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
 #
+# === Parameters
+#
+# $oned_sunstone_packages:: Packages required by Sunstone before OpenNebula 7.
+# $package_ensure:: Package ensure value (`latest` or `present`).
+# $sunstone_fireedge:: Whether FireEdge packages are managed.
+# $one_version:: OpenNebula version used to select the packages.
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html

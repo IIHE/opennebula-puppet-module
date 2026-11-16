@@ -15,6 +15,10 @@
 # - Thomas Fricke (Endocode AG)
 # - Stephane Gerard (Vrije Universiteit Brussel)
 #
+# === Parameters
+#
+# $one_repo_enable:: Whether the official OpenNebula repository is enabled.
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html

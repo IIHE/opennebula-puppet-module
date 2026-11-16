@@ -15,7 +15,15 @@
 # - Stephane Gerard (Vrije Universiteit Brussel)
 #
 # === Parameters
-# none
+#
+# $puppetdb:: Whether to export the node as a onehost resource through PuppetDB.
+# $oneid:: Identifier of the OpenNebula cloud.
+# $im_mad:: Information Manager driver.
+# $vm_mad:: Virtualization driver.
+# $vn_mad:: Network driver.
+# $libvirt_with_ceph:: Whether to configure libvirt for a Ceph RBD secret.
+# $libvirt_rbd_secret_uuid:: UUID of the Ceph RBD secret.
+# $libvirt_rbd_secret_key:: Base64-encoded Ceph RBD secret key.
 #
 # === Usage
 #
@@ -44,13 +52,13 @@ class one::compute_node (
   include one::compute_node::service
   include one::compute_node::install
 
-  Class['one::prerequisites'] ->
-  Class['one::install'] ->
-  Class['one::config'] ->
-  Class['one::compute_node::install'] ->
-  Class['one::compute_node::config'] ~>
-  Class['one::compute_node::service'] ~>
-  Class['one::service']
+  Class['one::prerequisites']
+  -> Class['one::install']
+  -> Class['one::config']
+  -> Class['one::compute_node::install']
+  -> Class['one::compute_node::config']
+  ~> Class['one::compute_node::service']
+  ~> Class['one::service']
 
   if ( $libvirt_with_ceph ) {
     include one::compute_node::libvirt_with_ceph

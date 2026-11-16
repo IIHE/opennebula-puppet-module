@@ -22,13 +22,13 @@
 #
 # ==== OpenNebula general parameters
 #
-# $oneid <string> - default to one-cloud
+# $oneid:: <string> - default to one-cloud
 #   set the id of the cloud
 #
-# $workernode true|false - default true
+# $workernode:: true|false - default true
 #  defines whether the host is node (virtualization host/worker)
 #
-# $im_mad - default kvm
+# $im_mad:: - default kvm
 #  set Information Manager driver for opennebula compute node
 #  supported types:
 #   - kvm
@@ -38,7 +38,7 @@
 #   - ganglia
 #   - dummy
 #
-# $vm_mad - default kvm
+# $vm_mad:: - default kvm
 #  set virtualization type for opennebula compute node
 #  supported types:
 #   - kvm
@@ -48,7 +48,7 @@
 #   - dummy
 #   - qemu
 #
-# $vn_mad - default 802.1Q
+# $vn_mad:: - default 802.1Q
 #  set network type for opennebula compute node
 #  supported types:
 #   - 802.1Q
@@ -58,182 +58,182 @@
 #   - vmware
 #   - dummy
 #
-# $oned true|false - default false
+# $oned:: true|false - default false
 #   defines whether OpenNebula-Daemon should be installed.
 #   OpenNebula-Daemon needs to run on the system where you want to manage your
 #   OpenNebula systems.
 #   You need exactly one OpenNebula Daemon in your infrastructure.
 #
-# $backend sqlite|mysql - default to sqlite
+# $backend:: sqlite|mysql - default to sqlite
 #   defines which backend should be used
 #   supports sqlite or mysql
 #   does not install mysql server, only uses information from params.pp
 #
-# $sunstone true|false - default false
+# $sunstone:: true|false - default false
 #   defines where the Sunstone Webinterface should be installed.
 #   Sunstone Webinterface is fully optional.
 #
-# $sunstone_passenger - default false
+# $sunstone_passenger:: - default false
 #   defines whether Sunstone Webinterface should be started by apache instead of webrick
 #   needs separate apache config
 #   only used if $sunstone is set to true
 #
-# $sunstone_novnc - default false
+# $sunstone_novnc:: - default false
 #   defines whether novnc should be started for sunstone web interface
 #   fully optional and only used if $sunstone is set to true
 #
-# $sunstone_fireedge - default true
+# $sunstone_fireedge:: - default true
 #   defines whether fireedge will be used
 #   ONE version < 7 -> fully optional and only used if $sunstone is set to true
 #   ONE version >= 7 -> fireedge is mandatory if sunstone is used
 #
-# $ldap true|false - default false
+# $ldap:: true|false - default false
 #   defines whether sunstone authentication to ldap should be enabled
 #   ldap is fully optional
 #
-# $ha_setup true | false - default false
+# $ha_setup:: true | false - default false
 #   defines whether the oned should be run on boot
 #
-# $oneflow true|false - default false
+# $oneflow:: true|false - default false
 #   defines whether the oneflow service should be installed
 #
-# $puppetdb true|false - default false
+# $puppetdb:: true|false - default false
 #   defines to use puppetDB to discover peer nodes (hypervisors)
 #
-# $debug_level - default 0
+# $debug_level:: - default 0
 #   defines the debug level under which oned and sunstone are running
 #
 # ==== OpenNebula configuration parameters
 #
-# $oned_log_system - default 'file'
+# $oned_log_system:: - default 'file'
 #   the log subsystem to use, valid values are [file, syslog]
 #
 # ===== OpenNebula Database configuration
 #
-# $oned_db - default oned
+# $oned_db:: - default oned
 #   name of the oned database
 #
-# $oned_db_user - default oned
+# $oned_db_user:: - default oned
 #   name of the database user
 #
-# $oned_db_password - default oned
+# $oned_db_password:: - default oned
 #   password of the database user
 #
-# $oned_db_host - default localhost
+# $oned_db_host:: - default localhost
 #   oned database host
 #
 # ===== OpenNebula LDAP configuration
 # optional needs $ldap set to true
 #
-# $ldap_host - default ldap
+# $ldap_host:: - default ldap
 #   hostname of the ldap server
 #
-# $ldap_port - default 636
+# $ldap_port:: - default 636
 #   port of the ldap service
 #
-# $ldap_base - default dc=example,dc=com
+# $ldap_base:: - default dc=example,dc=com
 #   ldap base
 #
-# $ldap_user - default cn=ldap_query,ou=user,dc=example,dc=com
+# $ldap_user:: - default cn=ldap_query,ou=user,dc=example,dc=com
 #   ldap user for queries - can be empty if anonymous query is possible
 #
-# $ldap_pass - default default_password
+# $ldap_pass:: - default default_password
 #   ldap user password for queries - can be empty if anonymous query is possible
 #
-# $ldap_group - default undef
+# $ldap_group:: - default undef
 #   restrict access to certain groups - cen be undef to allow all user access
 #
-# $ldap_user_field - default undef
+# $ldap_user_field:: - default undef
 #   defaults to uid, can be set to the field, that holds the username in ldap
 #
-# $ldap_group_field - default undef
+# $ldap_group_field:: - default undef
 #   default to member, can be set to the filed that holds the groupname
 #
-# $ldap_user_group_field - default undef
+# $ldap_user_group_field:: - default undef
 #   default to dn, can be set to the user field that is in the group group_field
 #
 # ===== OpenNebula User configuration
 #
-# $oneuid - default 9869
+# $oneuid:: - default 9869
 #   set the oneadmin user id
 #
-# $onegid - default 9869
+# $onegid:: - default 9869
 #   set the oneadmin group id
 #
-# $ssh_priv_key_param - default undef
+# $ssh_priv_key_param:: - default undef
 #   add the private key to oneadmin user
 #
-# $ssh_pub_key - default undef
+# $ssh_pub_key:: - default undef
 #   add public key to oneadmin user
 #
 # ===== OpenNebula XMLRPC configuration
 #
-# $xmlrpc_max_conn - default 15
+# $oned_xmlrpc_maxconn:: - default 15
 #   set maximum number of connections
 #
-# $xmlrpc_maxconn_backlog - default 15
+# $oned_xmlrpc_maxconn_backlog:: - default 15
 #   set maximum number of queued connections
 #
-# $xmlrpc_keepalive_timeout - default 15
+# $oned_xmlrpc_keepalive_timeout:: - default 15
 #   set xmlrpc keepalive timeout in seconds
 #
-# $xmlrpc_keepalive_max_conn - default 30
+# $oned_xmlrpc_keepalive_max_conn:: - default 30
 #   set xmlrpc active connection timeout in seconds
 #
-# $xmlrpc_timeout - default 15
+# $oned_xmlrpc_timeout:: - default 15
 #   set xmlrpc timout in seconds
 #
 # ===== OpenNebula Sunstone configuration
 #
-# $sunstone_listen_ip - default 127.0.0.1
+# $sunstone_listen_ip:: - default 127.0.0.1
 #   set the ip where sunstone interface should listen
 #
-# $sunstone_enable_support - default yes
+# $sunstone_enable_support:: - default yes
 #   enable support button in sunstone
 #
-# $sunstone_enable_marketplace - default yes
+# $sunstone_enable_marketplace:: - default yes
 #   enable marketplace button in sunstone
 #
-# $sunstone_tmpdir - default /var/tmp
+# $sunstone_tmpdir:: - default /var/tmp
 #   define a different tmp dir for sunstone
 #
-# $sunstone_logo_png - default use ONE logo
+# $sunstone_logo_png:: - default use ONE logo
 #   use custom logo on sunstone login page
 #   used as the 'source' for image file resource
 #   e.g. puppet:///modules/mymodule/my-custom-logo.png
 #
-# $sunstone_logo_small_png - default use ONE logo
+# $sunstone_logo_small_png:: - default use ONE logo
 #   use custom small logo in upper left corner of sunstone admin
 #   used as the 'source' for image file resource
 #   e.g. puppet:///modules/mymodule/my-custom-small-logo.png
 #
-# $sunstone_fireedge_priv_endpoint - default http://localhost:2616
+# $sunstone_fireedge_priv_endpoint:: - default http://localhost:2616
 #   url of the private fireedge endpoint for sunstone
 #
-# $sunstone_fireedge_pub_endpoint -default http://localhost:2616
+# $sunstone_fireedge_pub_endpoint:: -default http://localhost:2616
 #   url of the public fireedge endpoint for sunstone
 #
 # ===== OpenNebula host monitoring configuration
-# $oned_monitoring_interval - default 60
+# $oned_monitoring_interval:: - default 60
 #
 # ===== Host monitoring configuration options
-# $oned_monitoring_interval_host - default 180
-# $oned_monitoring_interval_vm - default 180
-# $oned_monitoring_interval_datastore - default 300
-# $oned_monitoring_interval_market - default 600
+# $oned_monitoring_interval_host:: - default 180
+# $oned_monitoring_interval_vm:: - default 180
+# $oned_monitoring_interval_datastore:: - default 300
+# $oned_monitoring_interval_market:: - default 600
 #   when should monitoring start again in seconds
 #
-# $oned_monitoring_threads - default 50
+# $oned_monitoring_threads:: - default 50
 #   how many monitoring threads should be started
 #
-# $oned_information_collector_interval - default 20
+# $oned_information_collector_interval:: - default 20
 #   how often should monitoring data get collected
 #
 # ===== OpenNebula Hook Script configuration
 #
 # hook scripts can either be placed in puppet or in a package
 #
-# $hook_scripts - default undef
+# $hook_scripts:: - default undef
 #   should hook script be installed
 #   either undef or a hash. two keys are supported:
 #       - VM - VM hook scripts
@@ -261,10 +261,10 @@
 #              arguments:  '$ID -r'
 #              remote:      'no'
 #
-# $hook_scripts_path - default puppet:///modules/one/hookscripts
+# $hook_scripts_path:: - default puppet:///modules/one/hookscripts
 #   path where puppet will look for hook scripts
 #
-# $hook_scripts_pkgs - default undef
+# $hook_scripts_pkgs:: - default undef
 #   package which will have the hook scripts
 #   hiera data example:
 #        #Install additional packages which contains the hook scripts
@@ -274,55 +274,101 @@
 #
 # ===== OpenNebula OneGate configuration
 #
-# $oned_onegate_ip - default undef
+# $oned_onegate_ip:: - default undef
 #   which ip should the onegate daemon listen on
 #
 # ==== Database Backup configuration
 #
-# $backup_script_path - default /var/lib/one/bin/one_db_backup.sh
-# $backup_dir - default /srv/backup
-# $backup_opts - default -C -q -e
-# $backup_db - default oned
-# $backup_db_user - default onebackup
-# $backup_db_password - default onebackup
-# $backup_db_host - default localhost
-# $backup_intervall - default */10
-# $backup_keep - default -mtime +15
+# $backup_script_path:: - default /var/lib/one/bin/one_db_backup.sh
+# $backup_dir:: - default /srv/backup
+# $backup_opts:: - default -C -q -e
+# $backup_db:: - default oned
+# $backup_db_user:: - default onebackup
+# $backup_db_password:: - default onebackup
+# $backup_db_host:: - default localhost
+# $backup_intervall:: - default */10
+# $backup_keep:: - default -mtime +15
 #
 # ==== OS specific configuration
 #
 # set in manifests/params for each os.
 #
-# $node_packages
-# $oned_packages
-# $dbus_srv
-# $dbus_pkg
-# $oned_sunstone_packages
-# $oned_sunstone_ldap_pkg
-# $oned_oneflow_packages
-# $oned_onegate_packages
-# $libvirtd_srv
-# $libvirtd_cfg
-# $libvirtd_source
-# $rubygems
+# $node_packages:: Value inherited from one::params.
+# $oned_packages:: Value inherited from one::params.
+# $dbus_srv:: Value inherited from one::params.
+# $dbus_pkg:: Value inherited from one::params.
+# $oned_sunstone_packages:: Value inherited from one::params.
+# $oned_sunstone_ldap_pkg:: Value inherited from one::params.
+# $oned_oneflow_packages:: Value inherited from one::params.
+# $oned_onegate_packages:: Value inherited from one::params.
+# $libvirtd_srv:: Value inherited from one::params.
+# $libvirtd_cfg:: Value inherited from one::params.
+# $libvirtd_source:: Value inherited from one::params.
+# $rubygems:: Value inherited from one::params.
 #
-# $manage_sudoer_config - default true, set false to disable management of the sudoer
+# $manage_sudoer_config:: - default true, set false to disable management of the sudoer
 #                         config. you'll have to manage the config yourself then
-# $oneadmin_sudoers_file - default '/etc/sudoers.d/10_oneadmin'
+# $oneadmin_sudoers_file:: - default '/etc/sudoers.d/10_oneadmin'
 #   where to place the file with the oneadmin sudoer rules
 #
 # ==== Environment specific configuration
 #
-# $http_proxy - default undef
+# $http_proxy:: - default undef
 #   set to proxy if you can not install gems directly
 #
-# $repo_enable - default true
+# $repo_enable:: - default true
 #   should the official opennebula repositories be enabled?
 #
-# $package_ensure_latest - default true
+# $package_ensure_latest:: - default true
 #   if true then all package declarations will be set latest
 #   if false they will be set present (use if using ha_setup as the service
 #     will not be restarted after installing the package)
+#
+# ==== Additional OpenNebula parameters
+#
+# $onegate:: Whether to install and configure the OneGate service.
+# $oned_onegate_endpoint:: Public OneGate endpoint URL.
+# $oned_listen_address:: IP address on which the OpenNebula XML-RPC server listens.
+# $oned_port:: TCP port used by the OpenNebula XML-RPC server.
+# $oned_vm_submit_on_hold:: Whether virtual machines are submitted on hold (`YES` or `NO`).
+# $oned_default_auth:: Default authentication driver.
+#
+# $ldap_mapping_generate:: Whether to generate an LDAP group mapping file.
+# $ldap_mapping_timeout:: Cache timeout for LDAP group mappings.
+# $ldap_mapping_filename:: Filename of the generated LDAP group mapping file.
+# $ldap_mappings:: LDAP group mappings.
+# $ldap_mapping_key:: Key used in LDAP group mappings.
+# $ldap_mapping_default:: Default value used in LDAP group mappings.
+#
+# $sunstone_vnc_proxy_port:: Port used by the Sunstone VNC proxy.
+# $sunstone_vnc_proxy_support_wss:: Whether the Sunstone VNC proxy supports secure WebSockets.
+# $sunstone_vnc_proxy_cert:: Path to the VNC proxy certificate.
+# $sunstone_vnc_proxy_key:: Path to the VNC proxy private key.
+# $sunstone_vnc_proxy_ipv6:: Whether the Sunstone VNC proxy supports IPv6.
+#
+# $oned_inherit_datastore_attrs:: Datastore attributes inherited by virtual machines.
+# $oned_vlan_ids_start:: First VLAN ID available to OpenNebula.
+# $oned_vlan_ids_reserved:: Comma-separated list of reserved VLAN IDs.
+# $oned_vxlan_ids_start:: First VXLAN ID available to OpenNebula.
+# $kvm_driver_emulator:: KVM emulator binary.
+# $kvm_driver_nic_attrs:: KVM NIC attributes.
+#
+# $sched_interval:: Scheduler interval in seconds.
+# $sched_max_vm:: Maximum number of virtual machines considered per scheduling cycle.
+# $sched_max_dispatch:: Maximum number of dispatch actions per scheduling cycle.
+# $sched_max_host:: Maximum number of hosts considered per scheduling cycle.
+# $sched_live_rescheds:: Number of live rescheduling attempts.
+# $sched_default_policy:: Default placement policy.
+# $sched_default_rank:: Default placement rank expression.
+# $sched_default_ds_policy:: Default datastore placement policy.
+# $sched_default_ds_rank:: Default datastore rank expression.
+# $sched_log_system:: Scheduler log system (`file` or `syslog`).
+# $sched_log_debug_level:: Scheduler debug level.
+# $datastore_capacity_check:: Whether datastore capacity checks are enabled.
+# $default_image_type:: Default image type.
+# $default_device_prefix:: Default device prefix.
+# $default_cdrom_device_prefix:: Default CD-ROM device prefix.
+# $one_version:: OpenNebula version to manage.
 #
 # === Usage
 #
@@ -558,10 +604,10 @@ class one (
   contain one::config
   contain one::service
 
-  Class['one::prerequisites'] ->
-  Class['one::install'] ->
-  Class['one::config'] ->
-  Class['one::service']
+  Class['one::prerequisites']
+  -> Class['one::install']
+  -> Class['one::config']
+  -> Class['one::service']
 
   if ($oned) {
     if ( member(['kvm','xen','vmware','ec2', 'ganglia','dummy'], $im_mad) ) {

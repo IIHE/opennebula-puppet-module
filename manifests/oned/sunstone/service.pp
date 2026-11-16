@@ -10,6 +10,12 @@
 # Contributors:
 # - Martin Alfke
 #
+# === Parameters
+#
+# $sunstone_passenger:: Whether Sunstone is run by Apache Passenger.
+# $sunstone_novnc:: Whether the noVNC service is enabled.
+# $sunstone_fireedge:: Whether the FireEdge service is enabled.
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html

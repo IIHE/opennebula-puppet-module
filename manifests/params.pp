@@ -78,7 +78,6 @@ class one::params {
   $oneversion = lookup('one::one_version', undef, undef, '6.6')
   case $facts['os']['family'] {
     'RedHat': {
-      
       $node_packages = [
         'opennebula-node-kvm',
       ]

@@ -12,6 +12,13 @@
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
 #
+# === Parameters
+#
+# $oned_sunstone_ldap_pkg:: Packages required for LDAP authentication.
+# $ldap_mappings:: LDAP group mappings.
+# $ldap_mapping_filename:: Filename of the generated LDAP group mapping file.
+# $package_ensure:: Package ensure value (`latest` or `present`).
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html
