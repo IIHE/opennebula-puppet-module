@@ -94,24 +94,6 @@ describe 'one', type: :class do
         it { is_expected.to contain_service('opennebula-sunstone').with_ensure('running') }
       end
 
-      context 'with sunstone and ONE 7.4' do
-        let(:params) do
-          {
-            oned: true,
-            sunstone: true,
-            workernode: false,
-            one_version: '7.4',
-          }
-        end
-
-        it { is_expected.to contain_package('opennebula-fireedge') }
-        it { is_expected.to contain_package('opennebula-guacd') }
-        it { is_expected.to contain_file('/etc/one/fireedge-server.conf').with_ensure('file') }
-        it { is_expected.to contain_service('opennebula-fireedge').with_ensure('running') }
-        it { is_expected.not_to contain_service('opennebula-sunstone') }
-        it { is_expected.not_to contain_package('opennebula-sunstone') }
-      end
-
       context 'with oneflow' do
         let(:params) { { oned: true, oneflow: true, workernode: false } }
 

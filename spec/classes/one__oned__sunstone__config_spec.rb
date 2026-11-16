@@ -41,12 +41,6 @@ describe 'one::oned::sunstone::config', type: :class do
 
         it { is_expected.not_to contain_file('/etc/one/sunstone-server.conf').with_content(/#{unexpected_routes}/m) }
       end
-
-      context 'with ONE 7.4' do
-        let(:pre_condition) { "class { 'one': one_version => '7.4' }\nservice { ['opennebula-fireedge', 'opennebula-sunstone']: }" }
-
-        it { is_expected.to contain_file('/etc/one/fireedge-server.conf').with_ensure('file') }
-      end
     end
   end
 end

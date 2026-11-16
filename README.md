@@ -23,7 +23,12 @@ The one (short for OpenNebula) module allows to install and manage your OpenNebu
 
 **Centos**
 
-We support Puppet >= 7 on CentOS 7-8 with OpenNebula 6.2-7.4.
+We support Puppet >= 7 on CentOS 7-8 with OpenNebula 6.2-7.4, including
+7.0.x, 7.2.x and 7.4.x patch releases.
+
+OpenNebula 7.x versions newer than 7.4 are rejected explicitly until a matching
+configuration template is added to the module.
+
 You need to add the EPEL repository because the module needs some packages from there.
 
 Note, there is a required package on the oned controller node that is not managed by this module, the gem nokogiri (or the yum package rubygem-nokori).  This can be installed elsewhere in that node's puppet catalog like this:
