@@ -3,5 +3,5 @@ class { 'one':
   oned        => true,
   workernode  => true,
   sunstone    => true,
-  one_version => $one_version,
+  one_version => '7.4',
 }

@@ -14,12 +14,13 @@ class httpd {
   }
 }
 
+# Legacy Apache Passenger / Sunstone example, valid for OpenNebula < 7.
 class { 'one':
   oned               => true,
   workernode         => false,
   sunstone           => true,
   sunstone_passenger => true,
-  one_version        => $one_version,
+  one_version        => '6.6',
 }
 
 -> class { 'httpd': }

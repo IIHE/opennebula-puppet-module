@@ -3,5 +3,6 @@ class { 'one':
   oned                  => true,
   workernode            => false,
   sunstone              => true,
+  one_version           => '7.4',
   package_ensure_latest => false,
 }

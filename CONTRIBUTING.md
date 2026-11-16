@@ -40,52 +40,18 @@ And run the tests and puppet-lint:
 
 ### Acceptance Tests
 
-Please note: Acceptance tests require vagrant & virtualbox to be installed.
+Acceptance tests use [Litmus](https://github.com/puppetlabs/puppet_litmus)
+and a local Vagrant VM. They must not be run against production OpenNebula.
 
-The unit tests uses [Beaker](https://github.com/puppetlabs/beaker).
+See [TESTING.md](TESTING.md) for the full procedure, including Vagrant,
+the Litmus inventory and the smoke test.
 
-To run acceptance tests on the default centos 6 vm:
+### Legacy Beaker tests
 
-     bundle exec rake beaker
-
-### Vagrant
-
-To deploy a Opennebula instance locally run:
-
-     vagrant up <boxname>
-
-where "boxname" is currently centos.
+The old Beaker specs are kept in `spec/legacy_acceptance/` for future
+rewriting. They are not executed.
 
 ### Docker
 
-To deploy a OpenNebula instance locally in a docker container run these commands:
-
-First build an image with puppet and the sources in it (Depending on centos:6):
-
-    cd docker
-    docker build --rm -t epost-dev/one .
-    cd ..
-
-Run puppet in the container, choose one:
-
-Only build a container which acts as a OpenNebula head, gui, but not the kvm things:
-
-    docker run --rm -v $(pwd):/etc/puppet/modules/one:z epost-dev/one puppet apply --hiera_config=/etc/puppet/hiera.yaml --modulepath=/etc/puppet/modules:/etc/puppetlabs/code/environments/production/modules /etc/puppet/modules/one/spec/docker-int/one-head.pp
-
-Only build a container which acts like an OpenNebula node:
-
-    # here is a common error i wasn't able to fix. centos 6 in docker has some issues with ksm
-    docker run --rm -v $(pwd):/etc/puppet/modules/one:z epost-dev/one puppet apply --hiera_config=/etc/puppet/hiera.yaml --modulepath=/etc/puppet/modules:/etc/puppetlabs/code/environments/production/modules /etc/puppet/modules/one/spec/docker-int/one-node.pp
-
-Build a container which acts as head and node
-
-    docker run --rm -v $(pwd):/etc/puppet/modules/one:z epost-dev/one puppet apply --hiera_config=/etc/puppet/hiera.yaml --modulepath=/etc/puppet/modules:/etc/puppetlabs/code/environments/production/modules /etc/puppet/modules/one/spec/docker-int/one-head-node.pp
-
-Build a container which has an apache for the OpenNebula Sunstone configured:
-
-    docker run --rm -v $(pwd):/etc/puppet/modules/one:z epost-dev/one puppet apply --hiera_config=/etc/puppet/hiera.yaml --modulepath=/etc/puppet/modules:/etc/puppetlabs/code/environments/production/modules /etc/puppet/modules/one/spec/docker-int/one-head-httpd.pp
-
-This Docker command will add the current directory as ```ect/puppet/modules/one```. So one can test each new change without committing or rebuilding the image.
-
-The "spec" files can be found in the spec/docker-int directory of this project. One will build a one head,
-one will build a node and one a head which also can be a node. 
+The `docker/` directory contains an AlmaLinux 8 smoke-test image with Puppet 8.
+See [TESTING.md](TESTING.md) for the container workflow.
