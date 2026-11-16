@@ -1,0 +1,14 @@
+---
+groups:
+  - name: ssh_nodes
+    targets:
+      - uri: one-acceptance.example.test
+        config:
+          transport: ssh
+          ssh:
+            user: vagrant
+            password: vagrant
+            host-key-check: false
+        facts:
+          provisioner: vagrant
+          platform: rockylinux-9-x86_64

@@ -1,84 +1,43 @@
 require 'spec_helper_acceptance'
 
 describe 'one class' do
-  describe 'without parameters' do
-    it 'idempotently runs' do
-      pp = <<-EOS
-        class { one: }
-      EOS
-
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
-    end
-  end
-  describe 'as ONE HEAD' do
-    it 'set up ONE HEAD' do
-      pp = <<-EOS
-        class { one: oned => true, node => false,}
-      EOS
-
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+  context 'with an OpenNebula 7.4 frontend' do
+    let(:manifest) do
+      <<~MANIFEST
+        class { 'one':
+          oned        => true,
+          workernode  => false,
+          sunstone    => true,
+          backend     => 'sqlite',
+          one_version => '7.4',
+        }
+      MANIFEST
     end
 
-    describe user('oneadmin') do
-      it { should exist }
-    end
-    describe package('opennebula') do
-      it { should be_installed }
-    end
-    describe service('opennebula') do
-      it { should be_enabled }
-      it { should be_running }
+    it 'installs and configures the frontend idempotently' do
+      apply_manifest(manifest, catch_failures: true)
+      apply_manifest(manifest, catch_changes: true)
     end
 
-    describe package('opennebula-sunstone') do
-      it { should_not be_installed }
+    it 'installs the expected OpenNebula packages' do
+      expect(run_shell('rpm -q opennebula').exit_code).to eq(0)
+      expect(run_shell('rpm -q opennebula-fireedge').exit_code).to eq(0)
+      expect(run_shell('rpm -q opennebula-guacd').exit_code).to eq(0)
     end
 
-    describe service('opennebula-sunstone') do
-      it { should_not be_running }
-    end
-  end
-
-  describe 'as ONE Head with Sunstone' do
-    it 'installs Opennebula Head with sunstone' do
-      pp = <<-EOS
-        class { one: oned => true, sunstone => true, node => false}
-      EOS
-
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+    it 'does not install the legacy Sunstone package' do
+      result = run_shell('rpm -q opennebula-sunstone', expect_failures: true)
+      expect(result.exit_code).not_to eq(0)
     end
 
-    describe package('opennebula-sunstone') do
-      it { should be_installed }
+    it 'runs the OpenNebula and FireEdge services' do
+      expect(run_shell('systemctl is-active opennebula').stdout.strip).to eq('active')
+      expect(run_shell('systemctl is-active opennebula-fireedge').stdout.strip).to eq('active')
     end
 
-    describe service('opennebula-sunstone') do
-      it { should be_enabled }
-      it { should be_running }
-    end
-
-    describe port(9869) do
-      it { is_expected.to be_listening }
-    end
-  end
-
-  describe 'as ONE Node' do
-    it 'set up ONE Node' do
-      pp = <<-EOS
-        class { one: workernode => true }
-      EOS
-
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
-    end
-
-    if fact('osfamily') == 'RedHat'
-      describe package('opennebula-node-kvm') do
-        it { should be_installed }
-      end
+    it 'writes the expected configuration files' do
+      expect(run_shell('test -f /etc/one/oned.conf').exit_code).to eq(0)
+      expect(run_shell('test -f /etc/one/fireedge-server.conf').exit_code).to eq(0)
     end
   end
 end

@@ -13,9 +13,9 @@ Les tests actuellement pris en charge sont les tests unitaires :
 - `spec/provider` : chargement et instanciation des providers ;
 - `spec/support` : exemples partagés entre plusieurs specs.
 
-Les tests présents dans `spec/acceptance` utilisent Beaker et des machines
-virtuelles CentOS 6/7. Ils ne sont pas exécutés par défaut et ne font pas partie
-de la réparation actuelle. Ils sont exclus par `.rspec`.
+Les tests d'acceptation utilisent désormais Litmus et une VM locale Vagrant.
+Les anciennes specs Beaker sont conservées dans `spec/legacy_acceptance/` pour
+être réécrites progressivement, mais ne sont pas exécutées.
 
 ## Pourquoi un conteneur Ruby 3.2 ?
 
@@ -74,8 +74,17 @@ bundle exec rake spec_prep
 Tous les tests unitaires :
 
 ```bash
-bundle exec rspec spec
+bundle exec rspec spec/classes spec/type spec/provider
 ```
+
+ou :
+
+```bash
+bundle exec rake spec
+```
+
+Ne pas utiliser `bundle exec rspec spec` pour les tests unitaires : cette
+commande inclut aussi `spec/acceptance` et nécessite alors une cible Litmus.
 
 Les tests d'un sous-répertoire :
 
@@ -287,15 +296,72 @@ Utiliser Ruby 3.2 via le conteneur décrit ci-dessus. Ne pas tenter
 
 ## Tests d'acceptation
 
-Ils ne sont pas exécutés par `bundle exec rspec spec` et sont exclus par
-`.rspec` :
+Les tests d'acceptation utilisent Litmus et une VM Vagrant locale. Ils ne
+doivent pas être exécutés contre `cloud2` en production.
 
-```text
---exclude-pattern "spec/acceptance/**/*_spec.rb,..."
+Les anciennes specs Beaker sont dans `spec/legacy_acceptance/` et ne sont pas
+exécutées. Elles seront réécrites progressivement.
+
+### Prérequis
+
+- Vagrant ;
+- provider Vagrant libvirt et `/dev/kvm` ;
+- plugins `vagrant-libvirt` et `vagrant-hosts`.
+
+```bash
+sudo systemctl enable --now libvirtd
+vagrant plugin install vagrant-libvirt
+vagrant plugin install vagrant-hosts
 ```
 
-Pour les réactiver plus tard, il faudra :
+### Démarrer la VM
 
-- ajouter `beaker-rspec` aux dépendances de test ;
-- remplacer les nodesets CentOS 6/7 obsolètes ;
-- disposer d'un environnement OpenNebula réel ou de conteneurs dédiés.
+```bash
+vagrant up one-acceptance
+```
+
+La VM `one-acceptance` utilise Rocky 9 et installe Puppet 8 ainsi que les
+dépendances du module. OpenNebula 7.2 et 7.4 ne sont publiés que pour EL9 ;
+7.0 est la dernière version disposant d'un dépôt EL8.
+
+### Inventaire Litmus
+
+Créer `spec/fixtures/litmus_inventory.yaml` à partir de l'exemple :
+
+```bash
+cp spec/fixtures/litmus_inventory.yaml.example spec/fixtures/litmus_inventory.yaml
+```
+
+Adapter l'adresse et les identifiants avec la sortie de :
+
+```bash
+vagrant ssh-config one-acceptance
+```
+
+Le fichier `spec/fixtures/litmus_inventory.yaml` est ignoré par Git.
+
+### Lancer les tests
+
+```bash
+bundle exec rake litmus:install_module
+bundle exec rspec spec/acceptance/one_spec.rb
+```
+
+Pour relancer après une modification du module :
+
+```bash
+bundle exec rake litmus:reinstall_module
+bundle exec rspec spec/acceptance/one_spec.rb
+```
+
+### Conteneur Docker/Podman
+
+Le `Dockerfile` dans `docker/` permet un smoke test rapide dans un conteneur
+AlmaLinux 8 avec systemd :
+
+```bash
+podman build -t one-acceptance docker/
+podman run --rm -d --name one-acceptance --systemd=always -p 2222:22 one-acceptance
+```
+
+Le conteneur ne remplace pas la VM Vagrant pour les tests KVM/libvirt.

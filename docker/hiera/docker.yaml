@@ -1,9 +1,12 @@
 ---
 one::head::ssh_pub_key: 'ssh pub key'
-one::head::ssh_priv_key: 'ssh-dsa priv key'
-one::oned::db: oneadmin
-one::oned::db_user: oneadmin
-one::oned::db_password: oneadmin
-one::oned::db_host: localhost
-one::oned::sunstone_listen_ip: '0.0.0.0'
-one::one_version: '6.6'
+one::head::ssh_priv_key: 'ssh private key'
+one::repo_enable: true
+one::one_version: '7.4'
+one::oned_db: oneadmin
+one::oned_db_user: oneadmin
+one::oned_db_password: oneadmin
+one::oned_db_host: localhost
+one::sunstone_listen_ip: '0.0.0.0'
+one::sunstone_fireedge_priv_endpoint: 'http://localhost:2616'
+one::sunstone_fireedge_pub_endpoint: 'http://localhost:2616'

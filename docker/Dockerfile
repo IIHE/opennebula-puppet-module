@@ -1,27 +1,36 @@
-FROM centos:8
+FROM almalinux:9
 
-ENV HOSTNAME localhost
+ENV container=oci
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US.UTF-8
-ENV FACTER_operatingsystemmajrelease="8"
-ENV FACTER_operatingsystemrelease="8"
-ENV FACTER_lsbmajdistrelease="8"
-
-RUN cd /etc/yum.repos.d/
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-RUN yum -y install http://yum.puppetlabs.com/puppet/puppet-release-el-8.noarch.rpm epel-release
-RUN yum makecache && yum -y install puppet-agent tar hostname openssh-server
-
 ENV PATH="${PATH}:/opt/puppetlabs/bin"
 
-RUN puppet module install puppetlabs-inifile
-RUN puppet module install puppetlabs-stdlib
-RUN puppet module install puppetlabs-concat
-RUN puppet module install puppetlabs-mysql
-RUN puppet module install puppetlabs-apache
-RUN puppet module install puppetlabs-corosync
-RUN puppet module install rodjek-logrotate
+RUN dnf install -y epel-release dnf-plugins-core \
+    && dnf config-manager --set-enabled crb \
+    && dnf install -y \
+        hostname \
+        iproute \
+        openssh-server \
+        procps-ng \
+        rubygem-nokogiri \
+        sudo \
+        systemd \
+        tar \
+        https://yum.puppet.com/puppet8-release-el-9.noarch.rpm \
+    && dnf install -y puppet-agent \
+    && dnf clean all \
+    && ssh-keygen -A \
+    && ln -sf /usr/lib/systemd/system/sshd.service /etc/systemd/system/multi-user.target.wants/sshd.service
 
-COPY hiera/hiera.yaml /etc/puppet/
-COPY hiera/docker.yaml /etc/puppet/data/
+RUN puppet module install puppetlabs-stdlib --version 8.6.0 \
+    && puppet module install puppetlabs-inifile --version 5.4.1 \
+    && puppet module install puppetlabs-yumrepo_core --version 2.1.0 \
+    && puppet module install puppetlabs-cron_core --version 1.3.0
+
+COPY hiera/hiera.yaml /etc/puppetlabs/code/environments/production/hiera.yaml
+COPY hiera/docker.yaml /etc/puppetlabs/code/environments/production/data/docker.yaml
+
+EXPOSE 22
+
+STOPSIGNAL SIGRTMIN+3
+CMD ["/usr/sbin/init"]
