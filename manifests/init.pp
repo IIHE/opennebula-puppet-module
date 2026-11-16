@@ -216,7 +216,7 @@
 # ===== OpenNebula host monitoring configuration
 # $oned_monitoring_interval - default 60
 #
-# ===== These options are for OpenNebula >= 5.8
+# ===== Host monitoring configuration options
 # $oned_monitoring_interval_host - default 180
 # $oned_monitoring_interval_vm - default 180
 # $oned_monitoring_interval_datastore - default 300
@@ -520,7 +520,6 @@ class one (
   # keys are the one_version_short for which we have templates
   # values are the folder paths to use
   $templated_versions_mapping = {
-    '5.12' => '5.12',
     '6.2'  => '6.2',
     '6.4'  => '6.4',
     '6.6'  => '6.6',
