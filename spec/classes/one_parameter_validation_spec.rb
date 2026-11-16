@@ -95,6 +95,14 @@ describe 'one', type: :class do
         it { is_expected.to compile.and_raise_error(/One_version 5\.12 not supported/) }
       end
 
+      %w<7.5.0 7.6.0>.each do |one_version|
+        context "with unsupported OpenNebula #{one_version}" do
+          let(:params) { { 'one_version' => one_version, 'sunstone_fireedge' => false } }
+
+          it { is_expected.to compile.and_raise_error(/One_version #{Regexp.escape(one_version)} not supported/) }
+        end
+      end
+
       context 'with fireedge and an OpenNebula version older than 6' do
         let(:params) { { 'one_version' => '5.12', 'sunstone_fireedge' => true } }
 

@@ -144,6 +144,11 @@ faits fournis par `let(:facts)`.
 systèmes testés sont déduits de `metadata.json` (RedHat 7 et 8). Pour chaque
 système, un contexte distinct est exécuté.
 
+Les versions OpenNebula 7.x sont couvertes par
+`spec/classes/opennebula_7_x_spec.rb` : `7.0.x`, `7.2.x` et `7.4.x` utilisent
+respectivement les templates `7.0`, `7.2` et `7.4`. Les versions 7.x inconnues
+doivent échouer explicitement.
+
 ### Hiera
 
 `spec/spec_helper.rb` configure Hiera avec
