@@ -44,7 +44,7 @@ The ONe-Module needs the following other modules:
 - [puppetlabs/stdlib  > 7.1.0](https://github.com/puppetlabs/puppetlabs-stdlib)
 - [puppetlabs/inifile > 5.4.0](https://github.com/puppetlabs/puppetlabs-inifile)
 - [puppetlabs/yumrepo_core >= 2.0.0 < 4.0.0](https://github.com/puppetlabs/puppetlabs-yumrepo_core)
-- [puppetlabs/cron_core >= 2.0.0 < 3.0.0](https://github.com/puppetlabs/puppetlabs-cron_core)
+- [puppetlabs/cron_core >= 1.3.0 < 3.0.0](https://github.com/puppetlabs/puppetlabs-cron_core)
 
 **How to install**:
 
