@@ -12,6 +12,24 @@
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
 #
+# === Parameters
+#
+# $listen_ip:: Address on which Sunstone or FireEdge listens.
+# $enable_support:: Whether the support tab is enabled in Sunstone.
+# $enable_marketplace:: Whether the marketplace tab is enabled in Sunstone.
+# $tmpdir:: Temporary directory used by Sunstone.
+# $vnc_proxy_port:: Port used by the Sunstone VNC proxy.
+# $vnc_proxy_support_wss:: Whether the VNC proxy supports secure WebSockets.
+# $vnc_proxy_cert:: Path to the VNC proxy certificate.
+# $vnc_proxy_key:: Path to the VNC proxy private key.
+# $vnc_proxy_ipv6:: Whether the VNC proxy supports IPv6.
+# $sunstone_logo_png:: Source of a custom Sunstone login logo.
+# $sunstone_logo_small_png:: Source of a custom small Sunstone logo.
+# $fireedge:: Whether FireEdge is enabled.
+# $fireedge_private_endpoint:: Private FireEdge endpoint URL.
+# $fireedge_public_endpoint:: Public FireEdge endpoint URL.
+# $one_version:: OpenNebula version used to select the configuration template.
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html

@@ -13,6 +13,11 @@
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
 #
+# === Parameters
+#
+# $node_packages:: Packages required on an OpenNebula compute node.
+# $package_ensure:: Package ensure value (`latest` or `present`).
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html

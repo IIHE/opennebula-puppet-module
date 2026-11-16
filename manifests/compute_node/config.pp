@@ -15,6 +15,14 @@
 # - Sebastian Saemann (Netways GmbH)
 # - Robert Waffen
 #
+# === Parameters
+#
+# $libvirtd_cfg:: Path to the libvirt daemon configuration file.
+# $libvirtd_source:: Puppet template used to render the libvirt daemon configuration.
+# $libvirtd_srv:: Name of the libvirt service.
+# $manage_sudoer_config:: Whether to manage the oneadmin sudoers file.
+# $oneadmin_sudoers_file:: Path to the oneadmin sudoers file.
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html
@@ -26,7 +34,6 @@ class one::compute_node::config (
   Boolean $manage_sudoer_config   = $one::manage_sudoer_config,
   String $oneadmin_sudoers_file   = $one::oneadmin_sudoers_file,
 ) {
-
   $_polkit_file_path = '/etc/polkit-1/localauthority/50-local.d/50-org.libvirt.unix.manage-opennebula.pkla'
 
   #For RedHat: As of libvirtd 5.6.0, the libvirtd daemon uses systemd socket activation.
@@ -101,7 +108,5 @@ class one::compute_node::config (
       group  => 'root',
       mode   => '0440',
     }
-
   }
-
 }

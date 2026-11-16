@@ -13,6 +13,20 @@
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
 #
+# === Parameters
+#
+# $oneflow_one_xmlrpc:: OpenNebula XML-RPC endpoint used by OneFlow.
+# $oneflow_lcm_interval:: Lifecycle manager interval in seconds.
+# $oneflow_host:: Address on which the OneFlow server listens.
+# $oneflow_port:: TCP port used by the OneFlow server.
+# $oneflow_default_cooldown:: Default cooldown between lifecycle actions.
+# $oneflow_shutdown_action:: Default action used to shut down services.
+# $oneflow_action_number:: Number of lifecycle actions performed per period.
+# $oneflow_action_period:: Period used to throttle lifecycle actions.
+# $oneflow_vm_name_template:: Template used to name service virtual machines.
+# $oneflow_core_auth:: Authentication method used by OneFlow core.
+# $oneflow_debug_level:: OneFlow debug level.
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html

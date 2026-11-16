@@ -12,6 +12,15 @@
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
 #
+# === Parameters
+#
+# $use_gems:: Whether Ruby gems are installed through the `puppet_gem` provider.
+# $rubygems:: Ruby gems required by OpenNebula.
+# $rubygems_rpm:: RPM packages providing the required Ruby gems.
+# $oned_packages:: OpenNebula packages installed on the management node.
+# $hook_scripts_pkgs:: Packages providing OpenNebula hook scripts.
+# $package_ensure:: Package ensure value (`latest` or `present`).
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html

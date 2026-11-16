@@ -12,6 +12,10 @@
 # - Achim Ledermueller (Netways GmbH)
 # - Sebastian Saemann (Netways GmbH)
 #
+# === Parameters
+#
+# $ha_setup:: Whether the OpenNebula service is managed by a high-availability setup.
+#
 # === License
 # Apache License Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0.html
